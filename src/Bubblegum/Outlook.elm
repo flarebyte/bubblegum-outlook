@@ -278,7 +278,6 @@ type alias LinkedFieldModel = {
 
 type alias IncSpinnerModel = {
     field: FieldModel
-    , regex: Maybe String
     , min: Int
     , max: Int
     , steps: Int
@@ -289,15 +288,22 @@ type alias DateViewerModel = {
     , format: String
     }
 
-type Widget =
-    CheckboxWidget FieldModel Bool
-    | IncSpinner IncSpinnerModel Int
-    | MediumText TextModel String
-    | BoundedListBox LinkedFieldModel String
-    | UnboundedListBox LinkedFieldModel String
-    | RangeSlider IncSpinnerModel Int
-    | DateViewer DateViewerModel String
-    | LongText TextModel String
-    | TextArea TextAreaModel String
-    | MarkdownArea TextAreaModel String
-    | BoundedRadio LinkedFieldModel String
+type WidgetModel =
+    CheckboxWidget FieldModel
+    | IncSpinnerWidget IncSpinnerModel
+    | MediumTextWidget TextModel
+    | BoundedListBoxWidget LinkedFieldModel
+    | UnboundedListBoxWidget LinkedFieldModel
+    | RangeSliderWidget IncSpinnerModel
+    | DateViewerWidget DateViewerModel
+    | LongTextWidget TextModel
+    | TextAreaWidget TextAreaModel
+    | MarkdownAreaWidget TextAreaModel
+    | BoundedRadioWidget LinkedFieldModel
+
+type WidgetValue = Widget (Maybe String)
+
+type alias PanelModel = {
+        field: FieldModel
+        , widgets: List WidgetModel
+    }
