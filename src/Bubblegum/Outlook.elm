@@ -267,6 +267,7 @@ type alias TextAreaModel = {
     field: FieldModel
     , minLines: Int
     , maxLines: Int
+    , maxLength: Int
     }
 
 type alias LinkedFieldModel = {
@@ -286,4 +287,17 @@ type alias IncSpinnerModel = {
 type alias DateViewerModel = {
     field: FieldModel
     , format: String
-    }           
+    }
+
+type Widget =
+    CheckboxWidget FieldModel Bool
+    | IncSpinner IncSpinnerModel Int
+    | MediumText TextModel String
+    | BoundedListBox LinkedFieldModel String
+    | UnboundedListBox LinkedFieldModel String
+    | RangeSlider IncSpinnerModel Int
+    | DateViewer DateViewerModel String
+    | LongText TextModel String
+    | TextArea TextAreaModel String
+    | MarkdownArea TextAreaModel String
+    | BoundedRadio LinkedFieldModel String
