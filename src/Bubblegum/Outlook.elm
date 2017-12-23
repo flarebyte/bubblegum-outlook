@@ -243,3 +243,47 @@ createTriple s p o = { subject = s, predicate = p, object = o }
 filter: FilterExpr -> List Triple -> List Triple
 filter tripleFilter list =
   List.filter (tripleCompare tripleFilter) list
+
+-- here
+
+type Prominence = Hidden | ReadOnly| Visible | Important 
+
+type alias FieldModel = {
+    id: String
+    , label: String
+    , hint: String
+    , prominence: Prominence
+    , style: String
+    , query: String
+    }
+
+type alias TextModel = {
+    field: FieldModel
+    , regex: Maybe String
+    , maxLength: Int
+    }
+
+type alias TextAreaModel = {
+    field: FieldModel
+    , minLines: Int
+    , maxLines: Int
+    }
+
+type alias LinkedFieldModel = {
+    field: FieldModel
+    , filtering: Maybe String
+    , sorting: Maybe String
+    }
+
+type alias IncSpinnerModel = {
+    field: FieldModel
+    , regex: Maybe String
+    , min: Int
+    , max: Int
+    , steps: Int
+    }
+
+type alias DateViewerModel = {
+    field: FieldModel
+    , format: String
+    }           
