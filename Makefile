@@ -1,6 +1,11 @@
 SRC = src
 BUILD = build
 
+reset:
+	rm -rf elm-stuff
+	rm -rf tests/elm-stuff
+	rm -rf build
+
 build: test build-directory js
 
 install:
