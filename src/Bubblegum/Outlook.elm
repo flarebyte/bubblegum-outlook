@@ -249,9 +249,17 @@ filter tripleFilter list =
 type Prominence = Hidden | ReadOnly| Visible | Important 
 
 {-| The core representation of a field.
+    id: unique id for the field
+    position: 0 to 7
+    label: the label of the field
+    hint: a hint about the purpose of the field
+    prominence: the prominence of the field (Hidden, ReadOnly, Visible, Important)
+    style: the style of the field
+    query: a query attached to the field
 -}
 type alias FieldModel = {
     id: String
+    , position: Int
     , label: String
     , hint: String
     , prominence: Prominence
@@ -377,21 +385,21 @@ type WidgetModel =
 -}
 type alias PanelModel = {
         field: FieldModel
-        , widgets: List WidgetModel
+        , widgets: Set WidgetModel
     }
 
 {-| A model for a section containing several panels.
 -}
 type alias SectionModel = {
         field: FieldModel
-        , panels: List PanelModel
+        , panels: Set PanelModel
     }
 
 {-| A model for a division containing several sections.
 -}
 type alias DivisionModel = {
         field: FieldModel
-        , sections: List SectionModel
+        , sections: Set SectionModel
     }
 
 {-| A widget possibly containing a value.
