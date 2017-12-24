@@ -248,6 +248,8 @@ filter tripleFilter list =
 
 type Prominence = Hidden | ReadOnly| Visible | Important 
 
+{-| The core representation of a field.
+-}
 type alias FieldModel = {
     id: String
     , label: String
@@ -257,12 +259,16 @@ type alias FieldModel = {
     , query: String
     }
 
+{-| A model for a single line of text.
+-}
 type alias TextModel = {
     field: FieldModel
     , regex: Maybe String
     , maxLength: Int
     }
 
+{-| A model for multiple lines of text.
+-}
 type alias TextAreaModel = {
     field: FieldModel
     , minLines: Int
@@ -270,12 +276,17 @@ type alias TextAreaModel = {
     , maxLength: Int
     }
 
+{-| A model for field representing a relation to a different collection of data.
+-}
 type alias LinkedFieldModel = {
     field: FieldModel
     , filtering: Maybe String
     , sorting: Maybe String
     }
 
+
+{-| A model for field representing a decimal counter.
+-}
 type alias IncSpinnerModel = {
     field: FieldModel
     , min: Int
@@ -283,11 +294,72 @@ type alias IncSpinnerModel = {
     , steps: Int
     }
 
+{-| A model for field representing a date.
+-}
 type alias DateViewerModel = {
     field: FieldModel
     , format: String
     }
 
+{-| A model for a widget.
+
+## CheckboxWidget
+A widget representing a checkbox.
+
+    CheckboxWidget fieldModel
+
+## IncSpinnerWidget
+A widget representing a counter spinner.
+
+    IncSpinnerWidget incSpinnerModel
+
+## MediumTextWidget
+A widget representing a text field of medium size.
+
+    MediumTextWidget textModel
+
+## BoundedListBoxWidget
+A widget representing a listbox with a bounded list of items.
+
+    BoundedListBoxWidget linkedFieldModel
+
+## UnboundedListBoxWidget
+A widget representing a listbox with an unlimited list of items.
+
+    UnboundedListBoxWidget linkedFieldModel
+
+## RangeSliderWidget
+A widget representing a range slider.
+
+    RangeSliderWidget incSpinnerModel
+
+## DateViewerWidget
+A widget representing a date.
+
+    DateViewerWidget dateViewerModel
+
+## LongTextWidget
+A widget representing a long text field.
+
+    LongTextWidget textModel
+
+## TextAreaWidget
+A widget representing a multiple lines text area.
+
+    TextAreaWidget textAreaModel
+
+## MarkdownAreaWidget
+A widget representing a markdown text area.
+
+    MarkdownAreaWidget textAreaModel
+
+## BoundedRadioWidget
+A widget representing a radio button.
+
+    BoundedRadioWidget linkedFieldModel
+
+
+-}
 type WidgetModel =
     CheckboxWidget FieldModel
     | IncSpinnerWidget IncSpinnerModel
@@ -301,9 +373,48 @@ type WidgetModel =
     | MarkdownAreaWidget TextAreaModel
     | BoundedRadioWidget LinkedFieldModel
 
-type WidgetValue = Widget (Maybe String)
-
+{-| A model for a panel containing several widgets.
+-}
 type alias PanelModel = {
         field: FieldModel
         , widgets: List WidgetModel
     }
+
+{-| A model for a section containing several panels.
+-}
+type alias SectionModel = {
+        field: FieldModel
+        , panels: List PanelModel
+    }
+
+{-| A model for a division containing several sections.
+-}
+type alias DivisionModel = {
+        field: FieldModel
+        , sections: List SectionModel
+    }
+
+{-| A widget possibly containing a value.
+-}
+type WidgetValue = Widget (Maybe String)
+
+{-| A panel possibly containing values.
+-}
+type alias PanelValues = {
+    model: PanelModel
+    , values: List WidgetValue
+}
+
+{-| A section containing values for panels.
+-}
+type alias SectionValues = {
+    model: SectionModel
+    , values: List PanelValues
+}
+    
+{-| A division containing values for sections.
+-}
+type alias DivisionValues = {
+    model: DivisionModel
+    , values: List SectionValues
+}    
