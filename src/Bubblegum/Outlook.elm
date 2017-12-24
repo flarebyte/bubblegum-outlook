@@ -11,7 +11,9 @@ More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
 
 -}
 import List
+import Set exposing (Set)
 import Maybe
+import Tuple exposing(first, second)
 import String
 import Regex exposing (Regex)
 import Result
@@ -425,4 +427,16 @@ type alias SectionValues = {
 type alias DivisionValues = {
     model: DivisionModel
     , values: List SectionValues
-}    
+}
+
+findProperty : String -> List (String, String) -> Maybe String
+findProperty name list =
+    case list of
+        [] ->
+            Nothing
+        
+        hd::rest ->
+            if first(hd) == name then
+                Just (second(hd))
+            else
+                findProperty name rest

@@ -1,0 +1,281 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty = F2(
+	function (name, list) {
+		findProperty:
+		while (true) {
+			var _p0 = list;
+			if (_p0.ctor === '[]') {
+				return _elm_lang$core$Maybe$Nothing;
+			} else {
+				var _p1 = _p0._0;
+				if (_elm_lang$core$Native_Utils.eq(
+					_elm_lang$core$Tuple$first(_p1),
+					name)) {
+					return _elm_lang$core$Maybe$Just(
+						_elm_lang$core$Tuple$second(_p1));
+				} else {
+					var _v1 = name,
+						_v2 = _p0._1;
+					name = _v1;
+					list = _v2;
+					continue findProperty;
+				}
+			}
+		}
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createTriple = F3(
+	function (s, p, o) {
+		return {subject: s, predicate: p, object: o};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldCompare = F2(
+	function (comparator, value) {
+		var _p2 = comparator;
+		switch (_p2.ctor) {
+			case 'Ignore':
+				return true;
+			case 'IsEmpty':
+				return _elm_lang$core$String$isEmpty(value);
+			case 'Equals':
+				return _elm_lang$core$Native_Utils.eq(value, _p2._0);
+			case 'StartsWith':
+				return A2(_elm_lang$core$String$startsWith, _p2._0, value);
+			case 'EndsWith':
+				return A2(_elm_lang$core$String$endsWith, _p2._0, value);
+			case 'Contains':
+				return A2(_elm_lang$core$String$contains, _p2._0, value);
+			case 'Regx':
+				return A2(_elm_lang$core$Regex$contains, _p2._0, value);
+			case 'IsTrue':
+				return _elm_lang$core$Native_Utils.eq(value, 'true');
+			case 'IsFalse':
+				return _elm_lang$core$Native_Utils.eq(value, 'true');
+			case 'EqualsAny':
+				return A2(
+					_elm_lang$core$List$any,
+					function (n) {
+						return _elm_lang$core$Native_Utils.eq(n, value);
+					},
+					_p2._0);
+			case 'GreaterThan':
+				return A2(
+					_elm_lang$core$Result$withDefault,
+					false,
+					A2(
+						_elm_lang$core$Result$map,
+						function (n) {
+							return _elm_lang$core$Native_Utils.cmp(n, _p2._0) > 0;
+						},
+						_elm_lang$core$String$toFloat(value)));
+			case 'GreaterThanOrEqual':
+				return A2(
+					_elm_lang$core$Result$withDefault,
+					false,
+					A2(
+						_elm_lang$core$Result$map,
+						function (n) {
+							return _elm_lang$core$Native_Utils.cmp(n, _p2._0) > -1;
+						},
+						_elm_lang$core$String$toFloat(value)));
+			case 'LessThan':
+				return A2(
+					_elm_lang$core$Result$withDefault,
+					false,
+					A2(
+						_elm_lang$core$Result$map,
+						function (n) {
+							return _elm_lang$core$Native_Utils.cmp(n, _p2._0) < 0;
+						},
+						_elm_lang$core$String$toFloat(value)));
+			case 'LessThanOrEqual':
+				return A2(
+					_elm_lang$core$Result$withDefault,
+					false,
+					A2(
+						_elm_lang$core$Result$map,
+						function (n) {
+							return _elm_lang$core$Native_Utils.cmp(n, _p2._0) < 1;
+						},
+						_elm_lang$core$String$toFloat(value)));
+			default:
+				return A2(_p2._0, _p2._1, value);
+		}
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$tripleCompare = F2(
+	function (expr, triple) {
+		var _p3 = expr;
+		switch (_p3.ctor) {
+			case 'Boolean':
+				return _p3._0;
+			case 'Not':
+				return !A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$tripleCompare, _p3._0, triple);
+			case 'And':
+				return A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$tripleCompare, _p3._0, triple) && A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$tripleCompare, _p3._1, triple);
+			case 'Or':
+				return A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$tripleCompare, _p3._0, triple) || A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$tripleCompare, _p3._1, triple);
+			case 'WithSubject':
+				return A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldCompare, _p3._0, triple.subject);
+			case 'WithPredicate':
+				return A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldCompare, _p3._0, triple.predicate);
+			default:
+				return A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldCompare, _p3._0, triple.object);
+		}
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$filter = F2(
+	function (tripleFilter, list) {
+		return A2(
+			_elm_lang$core$List$filter,
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$tripleCompare(tripleFilter),
+			list);
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Triple = F3(
+	function (a, b, c) {
+		return {subject: a, predicate: b, object: c};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$FieldModel = F7(
+	function (a, b, c, d, e, f, g) {
+		return {id: a, position: b, label: c, hint: d, prominence: e, style: f, query: g};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$TextModel = F3(
+	function (a, b, c) {
+		return {field: a, regex: b, maxLength: c};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$TextAreaModel = F4(
+	function (a, b, c, d) {
+		return {field: a, minLines: b, maxLines: c, maxLength: d};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$LinkedFieldModel = F3(
+	function (a, b, c) {
+		return {field: a, filtering: b, sorting: c};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$IncSpinnerModel = F4(
+	function (a, b, c, d) {
+		return {field: a, min: b, max: c, steps: d};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$DateViewerModel = F2(
+	function (a, b) {
+		return {field: a, format: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$PanelModel = F2(
+	function (a, b) {
+		return {field: a, widgets: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$SectionModel = F2(
+	function (a, b) {
+		return {field: a, panels: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$DivisionModel = F2(
+	function (a, b) {
+		return {field: a, sections: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$PanelValues = F2(
+	function (a, b) {
+		return {model: a, values: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$SectionValues = F2(
+	function (a, b) {
+		return {model: a, values: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$DivisionValues = F2(
+	function (a, b) {
+		return {model: a, values: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Custom = F2(
+	function (a, b) {
+		return {ctor: 'Custom', _0: a, _1: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$LessThanOrEqual = function (a) {
+	return {ctor: 'LessThanOrEqual', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$LessThan = function (a) {
+	return {ctor: 'LessThan', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$GreaterThanOrEqual = function (a) {
+	return {ctor: 'GreaterThanOrEqual', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$GreaterThan = function (a) {
+	return {ctor: 'GreaterThan', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$EqualsAny = function (a) {
+	return {ctor: 'EqualsAny', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$IsFalse = {ctor: 'IsFalse'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$IsTrue = {ctor: 'IsTrue'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Regx = function (a) {
+	return {ctor: 'Regx', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Contains = function (a) {
+	return {ctor: 'Contains', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$EndsWith = function (a) {
+	return {ctor: 'EndsWith', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$StartsWith = function (a) {
+	return {ctor: 'StartsWith', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Equals = function (a) {
+	return {ctor: 'Equals', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$IsEmpty = {ctor: 'IsEmpty'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Ignore = {ctor: 'Ignore'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$WithObject = function (a) {
+	return {ctor: 'WithObject', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$WithPredicate = function (a) {
+	return {ctor: 'WithPredicate', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$WithSubject = function (a) {
+	return {ctor: 'WithSubject', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Or = F2(
+	function (a, b) {
+		return {ctor: 'Or', _0: a, _1: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$And = F2(
+	function (a, b) {
+		return {ctor: 'And', _0: a, _1: b};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Not = function (a) {
+	return {ctor: 'Not', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Boolean = function (a) {
+	return {ctor: 'Boolean', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Important = {ctor: 'Important'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Visible = {ctor: 'Visible'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$ReadOnly = {ctor: 'ReadOnly'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Hidden = {ctor: 'Hidden'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$BoundedRadioWidget = function (a) {
+	return {ctor: 'BoundedRadioWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$MarkdownAreaWidget = function (a) {
+	return {ctor: 'MarkdownAreaWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$TextAreaWidget = function (a) {
+	return {ctor: 'TextAreaWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$LongTextWidget = function (a) {
+	return {ctor: 'LongTextWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$DateViewerWidget = function (a) {
+	return {ctor: 'DateViewerWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$RangeSliderWidget = function (a) {
+	return {ctor: 'RangeSliderWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$UnboundedListBoxWidget = function (a) {
+	return {ctor: 'UnboundedListBoxWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$BoundedListBoxWidget = function (a) {
+	return {ctor: 'BoundedListBoxWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$MediumTextWidget = function (a) {
+	return {ctor: 'MediumTextWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$IncSpinnerWidget = function (a) {
+	return {ctor: 'IncSpinnerWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$CheckboxWidget = function (a) {
+	return {ctor: 'CheckboxWidget', _0: a};
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Widget = function (a) {
+	return {ctor: 'Widget', _0: a};
+};
