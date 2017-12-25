@@ -75,7 +75,7 @@ type alias IncSpinnerModel = {
 -}
 type alias DateViewerModel = {
     field: FieldModel
-    , format: Maybe String
+    , format: String
     }
 
 {-| A model for a widget.
@@ -281,7 +281,7 @@ createWidgetModel keyValueList =
             "medium-text" ->
                 MediumTextWidget { field = fieldModel
                     , regex = findProperty "regex" keyValueList
-                    , maxLength = findProperty "maxLength" keyValueList |> toIntOrDefault 40
+                    , maxLength = findProperty "max-length" keyValueList |> toIntOrDefault 40
                 }
             "bounded-listbox" ->    
                 BoundedListBoxWidget {
@@ -305,24 +305,24 @@ createWidgetModel keyValueList =
             "date-viewer" ->    
                 DateViewerWidget {
                     field = fieldModel
-                    , format = findProperty "format" keyValueList
+                    , format = findProperty "format" keyValueList |> Maybe.withDefault ""
                 }
             "long-text" ->
                 LongTextWidget { field = fieldModel
                     , regex = findProperty "regex" keyValueList
-                    , maxLength = findProperty "maxLength" keyValueList |> toIntOrDefault 80
+                    , maxLength = findProperty "max-length" keyValueList |> toIntOrDefault 80
                 }
             "text-area" ->
                 TextAreaWidget {
                     field = fieldModel
-                    , minLines = findProperty "minLines" keyValueList |> toIntOrDefault 3
-                    , maxLines = findProperty "maximum" keyValueList |> toIntOrDefault 10
+                    , minLines = findProperty "minimum-lines" keyValueList |> toIntOrDefault 3
+                    , maxLines = findProperty "maximum-lines" keyValueList |> toIntOrDefault 10
                 }
             "markdown-area" ->    
                 MarkdownAreaWidget {
                     field = fieldModel
-                    , minLines = findProperty "minLines" keyValueList |> toIntOrDefault 3
-                    , maxLines = findProperty "maximum" keyValueList |> toIntOrDefault 10
+                    , minLines = findProperty "minimum-lines" keyValueList |> toIntOrDefault 3
+                    , maxLines = findProperty "maximum-lines" keyValueList |> toIntOrDefault 10
                 }
             "bounded-radio" ->    
                 BoundedRadioWidget {
@@ -333,7 +333,7 @@ createWidgetModel keyValueList =
             _ ->
                 MediumTextWidget { field = fieldModel
                     , regex = findProperty "regex" keyValueList
-                    , maxLength = findProperty "maxLength" keyValueList |> toIntOrDefault 40
+                    , maxLength = findProperty "max-length" keyValueList |> toIntOrDefault 40
                 }
 
 {-| Convert a widget model to a list of tuples.
@@ -343,5 +343,23 @@ widgetModelToPropertyList model =
     case model of
         CheckboxWidget widget ->
             [("id", widget.id), ("label", widget.label), ("hint", widget.hint), ("prominence", widget.prominence |> prominenceToString),("query", widget.query), ("style", widget.style)] |> List.sort
-        _ ->
-            []
+        IncSpinnerWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("minimum", widget.minimum |> toString), ("maximum", widget.maximum |> toString), ("steps", widget.steps |> toString)] |> List.sort
+        MediumTextWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("max-length", widget.maxLength |> toString), ("regex", widget.regex |> Maybe.withDefault "")] |> List.sort
+        BoundedListBoxWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("filtering", widget.filtering |> Maybe.withDefault ""), ("sorting", widget.sorting |> Maybe.withDefault "")] |> List.sort
+        UnboundedListBoxWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("filtering", widget.filtering |> Maybe.withDefault ""), ("sorting", widget.sorting |> Maybe.withDefault "")] |> List.sort
+        RangeSliderWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("minimum", widget.minimum |> toString), ("maximum", widget.maximum |> toString), ("steps", widget.steps |> toString)] |> List.sort
+        DateViewerWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("format", widget.format)] |> List.sort
+        LongTextWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("max-length", widget.maxLength |> toString), ("regex", widget.regex |> Maybe.withDefault "")] |> List.sort
+        TextAreaWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("minimum-lines", widget.minLines |> toString), ("maximum-lines", widget.maxLines |> toString)] |> List.sort
+        MarkdownAreaWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("minimum-lines", widget.minLines |> toString), ("maximum-lines", widget.maxLines |> toString)] |> List.sort
+        BoundedRadioWidget widget ->
+            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("filtering", widget.filtering |> Maybe.withDefault ""), ("sorting", widget.sorting |> Maybe.withDefault "")] |> List.sort

@@ -13,71 +13,554 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString = function
 };
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = function (model) {
 	var _p1 = model;
-	if (_p1.ctor === 'CheckboxWidget') {
-		var _p2 = _p1._0;
-		return _elm_lang$core$List$sort(
-			{
-				ctor: '::',
-				_0: {ctor: '_Tuple2', _0: 'id', _1: _p2.id},
-				_1: {
+	switch (_p1.ctor) {
+		case 'CheckboxWidget':
+			var _p2 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'label', _1: _p2.label},
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p2.id},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'hint', _1: _p2.hint},
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p2.label},
 						_1: {
 							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: 'prominence',
-								_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p2.prominence)
-							},
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p2.hint},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'query', _1: _p2.query},
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p2.prominence)
+								},
 								_1: {
 									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'style', _1: _p2.style},
-									_1: {ctor: '[]'}
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p2.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p2.style},
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						}
 					}
-				}
-			});
-	} else {
-		return {ctor: '[]'};
+				});
+		case 'IncSpinnerWidget':
+			var _p3 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p3.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p3.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p3.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p3.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p3.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p3.field.style},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'minimum',
+												_1: _elm_lang$core$Basics$toString(_p3.minimum)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'maximum',
+													_1: _elm_lang$core$Basics$toString(_p3.maximum)
+												},
+												_1: {
+													ctor: '::',
+													_0: {
+														ctor: '_Tuple2',
+														_0: 'steps',
+														_1: _elm_lang$core$Basics$toString(_p3.steps)
+													},
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		case 'MediumTextWidget':
+			var _p4 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p4.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p4.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p4.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p4.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p4.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p4.field.style},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'max-length',
+												_1: _elm_lang$core$Basics$toString(_p4.maxLength)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'regex',
+													_1: A2(_elm_lang$core$Maybe$withDefault, '', _p4.regex)
+												},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		case 'BoundedListBoxWidget':
+			var _p5 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p5.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p5.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p5.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p5.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p5.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p5.field.style},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'filtering',
+												_1: A2(_elm_lang$core$Maybe$withDefault, '', _p5.filtering)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'sorting',
+													_1: A2(_elm_lang$core$Maybe$withDefault, '', _p5.sorting)
+												},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		case 'UnboundedListBoxWidget':
+			var _p6 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p6.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p6.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p6.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p6.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p6.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p6.field.style},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'filtering',
+												_1: A2(_elm_lang$core$Maybe$withDefault, '', _p6.filtering)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'sorting',
+													_1: A2(_elm_lang$core$Maybe$withDefault, '', _p6.sorting)
+												},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		case 'RangeSliderWidget':
+			var _p7 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p7.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p7.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p7.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p7.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p7.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p7.field.style},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'minimum',
+												_1: _elm_lang$core$Basics$toString(_p7.minimum)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'maximum',
+													_1: _elm_lang$core$Basics$toString(_p7.maximum)
+												},
+												_1: {
+													ctor: '::',
+													_0: {
+														ctor: '_Tuple2',
+														_0: 'steps',
+														_1: _elm_lang$core$Basics$toString(_p7.steps)
+													},
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		case 'DateViewerWidget':
+			var _p8 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p8.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p8.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p8.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p8.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p8.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p8.field.style},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'format', _1: _p8.format},
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		case 'LongTextWidget':
+			var _p9 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p9.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p9.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p9.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p9.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p9.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p9.field.style},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'max-length',
+												_1: _elm_lang$core$Basics$toString(_p9.maxLength)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'regex',
+													_1: A2(_elm_lang$core$Maybe$withDefault, '', _p9.regex)
+												},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		case 'TextAreaWidget':
+			var _p10 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p10.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p10.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p10.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p10.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p10.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p10.field.style},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'minimum-lines',
+												_1: _elm_lang$core$Basics$toString(_p10.minLines)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'maximum-lines',
+													_1: _elm_lang$core$Basics$toString(_p10.maxLines)
+												},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		case 'MarkdownAreaWidget':
+			var _p11 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p11.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p11.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p11.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p11.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p11.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p11.field.style},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'minimum-lines',
+												_1: _elm_lang$core$Basics$toString(_p11.minLines)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'maximum-lines',
+													_1: _elm_lang$core$Basics$toString(_p11.maxLines)
+												},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		default:
+			var _p12 = _p1._0;
+			return _elm_lang$core$List$sort(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'id', _1: _p12.field.id},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'label', _1: _p12.field.label},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'hint', _1: _p12.field.hint},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'prominence',
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString(_p12.field.prominence)
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'query', _1: _p12.field.query},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'style', _1: _p12.field.style},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'filtering',
+												_1: A2(_elm_lang$core$Maybe$withDefault, '', _p12.filtering)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'sorting',
+													_1: A2(_elm_lang$core$Maybe$withDefault, '', _p12.sorting)
+												},
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
 	}
 };
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault = F2(
 	function ($default, str) {
-		var _p3 = str;
-		if (_p3.ctor === 'Nothing') {
+		var _p13 = str;
+		if (_p13.ctor === 'Nothing') {
 			return $default;
 		} else {
 			return A2(
 				_elm_lang$core$Result$withDefault,
 				$default,
-				_elm_lang$core$String$toInt(_p3._0));
+				_elm_lang$core$String$toInt(_p13._0));
 		}
 	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty = F2(
 	function (name, list) {
 		findProperty:
 		while (true) {
-			var _p4 = list;
-			if (_p4.ctor === '[]') {
+			var _p14 = list;
+			if (_p14.ctor === '[]') {
 				return _elm_lang$core$Maybe$Nothing;
 			} else {
-				var _p5 = _p4._0;
+				var _p15 = _p14._0;
 				if (_elm_lang$core$Native_Utils.eq(
-					_elm_lang$core$Tuple$first(_p5),
+					_elm_lang$core$Tuple$first(_p15),
 					name)) {
 					return _elm_lang$core$Maybe$Just(
-						_elm_lang$core$Tuple$second(_p5));
+						_elm_lang$core$Tuple$second(_p15));
 				} else {
 					var _v4 = name,
-						_v5 = _p4._1;
+						_v5 = _p14._1;
 					name = _v4;
 					list = _v5;
 					continue findProperty;
@@ -138,11 +621,11 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Visible = {ctor: 'Visible'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$ReadOnly = {ctor: 'ReadOnly'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Hidden = {ctor: 'Hidden'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toProminence = function (str) {
-	var _p6 = str;
-	if (_p6.ctor === 'Nothing') {
+	var _p16 = str;
+	if (_p16.ctor === 'Nothing') {
 		return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Visible;
 	} else {
-		switch (_p6._0) {
+		switch (_p16._0) {
 			case 'visible':
 				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Visible;
 			case 'hidden':
@@ -259,8 +742,8 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 		_elm_lang$core$Maybe$withDefault,
 		'long-text',
 		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'type', keyValueList));
-	var _p7 = widgetType;
-	switch (_p7) {
+	var _p17 = widgetType;
+	switch (_p17) {
 		case 'checkbox':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$CheckboxWidget(fieldModel);
 		case 'inc-spinner':
@@ -288,7 +771,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 					maxLength: A2(
 						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
 						40,
-						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maxLength', keyValueList))
+						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'max-length', keyValueList))
 				});
 		case 'bounded-listbox':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$BoundedListBoxWidget(
@@ -325,7 +808,10 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$DateViewerWidget(
 				{
 					field: fieldModel,
-					format: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'format', keyValueList)
+					format: A2(
+						_elm_lang$core$Maybe$withDefault,
+						'',
+						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'format', keyValueList))
 				});
 		case 'long-text':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$LongTextWidget(
@@ -335,7 +821,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 					maxLength: A2(
 						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
 						80,
-						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maxLength', keyValueList))
+						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'max-length', keyValueList))
 				});
 		case 'text-area':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$TextAreaWidget(
@@ -344,11 +830,11 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 					minLines: A2(
 						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
 						3,
-						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'minLines', keyValueList)),
+						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'minimum-lines', keyValueList)),
 					maxLines: A2(
 						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
 						10,
-						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maximum', keyValueList))
+						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maximum-lines', keyValueList))
 				});
 		case 'markdown-area':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$MarkdownAreaWidget(
@@ -357,11 +843,11 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 					minLines: A2(
 						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
 						3,
-						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'minLines', keyValueList)),
+						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'minimum-lines', keyValueList)),
 					maxLines: A2(
 						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
 						10,
-						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maximum', keyValueList))
+						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maximum-lines', keyValueList))
 				});
 		case 'bounded-radio':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$BoundedRadioWidget(
@@ -378,7 +864,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 					maxLength: A2(
 						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
 						40,
-						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maxLength', keyValueList))
+						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'max-length', keyValueList))
 				});
 	}
 };
