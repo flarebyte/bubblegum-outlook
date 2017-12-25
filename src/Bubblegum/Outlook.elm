@@ -17,6 +17,7 @@ import Tuple exposing(first, second)
 import String
 import Regex exposing (Regex)
 import Result
+import Maybe.Extra exposing(or)
 
 -- TYPES
 
@@ -283,7 +284,6 @@ type alias TextAreaModel = {
     field: FieldModel
     , minLines: Int
     , maxLines: Int
-    , maxLength: Int
     }
 
 {-| A model for field representing a relation to a different collection of data.
@@ -299,8 +299,8 @@ type alias LinkedFieldModel = {
 -}
 type alias IncSpinnerModel = {
     field: FieldModel
-    , min: Int
-    , max: Int
+    , minimum: Int
+    , maximum: Int
     , steps: Int
     }
 
@@ -308,7 +308,7 @@ type alias IncSpinnerModel = {
 -}
 type alias DateViewerModel = {
     field: FieldModel
-    , format: String
+    , format: Maybe String
     }
 
 {-| A model for a widget.
@@ -440,3 +440,120 @@ findProperty name list =
                 Just (second(hd))
             else
                 findProperty name rest
+
+toIntOrDefault:  Int -> Maybe String -> Int
+toIntOrDefault default str =
+    case str of
+        Nothing ->
+            default
+        Just s ->
+            String.toInt s |> Result.withDefault default
+
+toProminence:  Maybe String -> Prominence
+toProminence str =
+    case str of
+        Nothing ->
+            Visible
+        Just "visible" ->
+            Visible
+        Just "hidden" ->
+            Hidden
+        Just "read-only" ->
+            ReadOnly
+        Just "important" ->
+            Important
+        Just anything ->
+            Visible
+
+createWidgetModel: List (String, String) -> WidgetModel
+createWidgetModel keyValueList =
+    let
+        widgetType = findProperty "type" keyValueList |> Maybe.withDefault "long-text"
+        fieldModel = {
+            id = findProperty "id" keyValueList |> Maybe.withDefault ""
+            , position = findProperty "position" keyValueList |> toIntOrDefault 0
+            , label= findProperty "label" keyValueList |> Maybe.withDefault ""
+            , hint = findProperty "hint" keyValueList |> Maybe.withDefault ""
+            , prominence = findProperty "prominence" keyValueList |> toProminence
+            , style = findProperty "style" keyValueList |> Maybe.withDefault ""
+            , query = findProperty "query" keyValueList |> Maybe.withDefault ""
+        }
+
+        regex = findProperty "regex" keyValueList
+        maxLength = findProperty "maxLength" keyValueList |> toIntOrDefault 80
+        minLines = findProperty "minLines" keyValueList |> toIntOrDefault 3
+        maxLines = findProperty "maxLines" keyValueList |> toIntOrDefault 10
+        filtering = findProperty "filtering" keyValueList |> Maybe.withDefault ""
+        sorting = findProperty "sorting" keyValueList |> Maybe.withDefault ""
+        minimum = findProperty "minimum" keyValueList |> toIntOrDefault 0
+        maximum = findProperty "maximum" keyValueList |> toIntOrDefault 10
+        steps = findProperty "steps" keyValueList |> toIntOrDefault 1
+        format = findProperty "format" keyValueList |> Maybe.withDefault ""
+    in
+        case widgetType of
+            "checkbox" ->
+                CheckboxWidget fieldModel
+            "inc-spinner" ->
+                IncSpinnerWidget {
+                    field = fieldModel
+                    , minimum = findProperty "minimum" keyValueList |> toIntOrDefault 0
+                    , maximum = findProperty "maximum" keyValueList |> toIntOrDefault 10
+                    , steps = findProperty "steps" keyValueList |> toIntOrDefault 1
+                }
+            "medium-text" ->
+                MediumTextWidget { field = fieldModel
+                    , regex = findProperty "regex" keyValueList
+                    , maxLength = findProperty "maxLength" keyValueList |> toIntOrDefault 40
+                }
+            "bounded-listbox" ->    
+                BoundedListBoxWidget {
+                    field = fieldModel
+                    , filtering = findProperty "filtering" keyValueList
+                    , sorting = findProperty "sorting" keyValueList
+                }
+            "unbounded-listbox" ->
+                UnboundedListBoxWidget {
+                    field = fieldModel
+                    , filtering = findProperty "filtering" keyValueList
+                    , sorting = findProperty "sorting" keyValueList
+                }
+            "range-slider" ->    
+                RangeSliderWidget {
+                    field = fieldModel
+                    , minimum = findProperty "minimum" keyValueList |> toIntOrDefault 0
+                    , maximum = findProperty "maximum" keyValueList |> toIntOrDefault 10
+                    , steps = findProperty "steps" keyValueList |> toIntOrDefault 1
+                }
+            "date-viewer" ->    
+                DateViewerWidget {
+                    field = fieldModel
+                    , format = findProperty "format" keyValueList
+                }
+            "long-text" ->
+                LongTextWidget { field = fieldModel
+                    , regex = findProperty "regex" keyValueList
+                    , maxLength = findProperty "maxLength" keyValueList |> toIntOrDefault 80
+                }
+            "text-area" ->
+                TextAreaWidget {
+                    field = fieldModel
+                    , minLines = findProperty "minLines" keyValueList |> toIntOrDefault 3
+                    , maxLines = findProperty "maximum" keyValueList |> toIntOrDefault 10
+                }
+            "markdown-area" ->    
+                MarkdownAreaWidget {
+                    field = fieldModel
+                    , minLines = findProperty "minLines" keyValueList |> toIntOrDefault 3
+                    , maxLines = findProperty "maximum" keyValueList |> toIntOrDefault 10
+                }
+            "bounded-radio" ->    
+                BoundedRadioWidget {
+                    field = fieldModel
+                    , filtering = findProperty "filtering" keyValueList
+                    , sorting = findProperty "sorting" keyValueList
+                }
+            _ ->
+                MediumTextWidget { field = fieldModel
+                    , regex = findProperty "regex" keyValueList
+                    , maxLength = findProperty "maxLength" keyValueList |> toIntOrDefault 40
+                }
