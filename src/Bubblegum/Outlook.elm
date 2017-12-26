@@ -241,32 +241,26 @@ prominenceToString prominence =
         Important -> "important"
 
 
+createFieldModel: List (String, String) -> FieldModel
+createFieldModel  keyValueList =
+    {
+    id = findProperty "id" keyValueList |> Maybe.withDefault ""
+    , position = findProperty "position" keyValueList |> toIntOrDefault 0
+    , label= findProperty "label" keyValueList |> Maybe.withDefault ""
+    , hint = findProperty "hint" keyValueList |> Maybe.withDefault ""
+    , prominence = findProperty "prominence" keyValueList |> toProminence
+    , style = findProperty "style" keyValueList |> Maybe.withDefault ""
+    , query = findProperty "query" keyValueList |> Maybe.withDefault ""
+    }
+ 
+
 {-| Create a widget model from a list of tuples.
 -}
 createWidgetModel: List (String, String) -> WidgetModel
 createWidgetModel keyValueList =
     let
         widgetType = findProperty "type" keyValueList |> Maybe.withDefault "long-text"
-        fieldModel = {
-            id = findProperty "id" keyValueList |> Maybe.withDefault ""
-            , position = findProperty "position" keyValueList |> toIntOrDefault 0
-            , label= findProperty "label" keyValueList |> Maybe.withDefault ""
-            , hint = findProperty "hint" keyValueList |> Maybe.withDefault ""
-            , prominence = findProperty "prominence" keyValueList |> toProminence
-            , style = findProperty "style" keyValueList |> Maybe.withDefault ""
-            , query = findProperty "query" keyValueList |> Maybe.withDefault ""
-        }
-
-        regex = findProperty "regex" keyValueList
-        maxLength = findProperty "maxLength" keyValueList |> toIntOrDefault 80
-        minLines = findProperty "minLines" keyValueList |> toIntOrDefault 3
-        maxLines = findProperty "maxLines" keyValueList |> toIntOrDefault 10
-        filtering = findProperty "filtering" keyValueList |> Maybe.withDefault ""
-        sorting = findProperty "sorting" keyValueList |> Maybe.withDefault ""
-        minimum = findProperty "minimum" keyValueList |> toIntOrDefault 0
-        maximum = findProperty "maximum" keyValueList |> toIntOrDefault 10
-        steps = findProperty "steps" keyValueList |> toIntOrDefault 1
-        format = findProperty "format" keyValueList |> Maybe.withDefault ""
+        fieldModel = createFieldModel keyValueList
     in
         case widgetType of
             "checkbox" ->

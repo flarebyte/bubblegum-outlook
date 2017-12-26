@@ -639,6 +639,36 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toProminence = function (str)
 		}
 	}
 };
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createFieldModel = function (keyValueList) {
+	return {
+		id: A2(
+			_elm_lang$core$Maybe$withDefault,
+			'',
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'id', keyValueList)),
+		position: A2(
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
+			0,
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'position', keyValueList)),
+		label: A2(
+			_elm_lang$core$Maybe$withDefault,
+			'',
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'label', keyValueList)),
+		hint: A2(
+			_elm_lang$core$Maybe$withDefault,
+			'',
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'hint', keyValueList)),
+		prominence: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toProminence(
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'prominence', keyValueList)),
+		style: A2(
+			_elm_lang$core$Maybe$withDefault,
+			'',
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'style', keyValueList)),
+		query: A2(
+			_elm_lang$core$Maybe$withDefault,
+			'',
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'query', keyValueList))
+	};
+};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$BoundedRadioWidget = function (a) {
 	return {ctor: 'BoundedRadioWidget', _0: a};
 };
@@ -673,71 +703,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$CheckboxWidget = function (a)
 	return {ctor: 'CheckboxWidget', _0: a};
 };
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function (keyValueList) {
-	var format = A2(
-		_elm_lang$core$Maybe$withDefault,
-		'',
-		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'format', keyValueList));
-	var steps = A2(
-		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
-		1,
-		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'steps', keyValueList));
-	var maximum = A2(
-		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
-		10,
-		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maximum', keyValueList));
-	var minimum = A2(
-		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
-		0,
-		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'minimum', keyValueList));
-	var sorting = A2(
-		_elm_lang$core$Maybe$withDefault,
-		'',
-		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'sorting', keyValueList));
-	var filtering = A2(
-		_elm_lang$core$Maybe$withDefault,
-		'',
-		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'filtering', keyValueList));
-	var maxLines = A2(
-		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
-		10,
-		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maxLines', keyValueList));
-	var minLines = A2(
-		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
-		3,
-		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'minLines', keyValueList));
-	var maxLength = A2(
-		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
-		80,
-		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'maxLength', keyValueList));
-	var regex = A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'regex', keyValueList);
-	var fieldModel = {
-		id: A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'id', keyValueList)),
-		position: A2(
-			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
-			0,
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'position', keyValueList)),
-		label: A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'label', keyValueList)),
-		hint: A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'hint', keyValueList)),
-		prominence: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toProminence(
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'prominence', keyValueList)),
-		style: A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'style', keyValueList)),
-		query: A2(
-			_elm_lang$core$Maybe$withDefault,
-			'',
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, 'query', keyValueList))
-	};
+	var fieldModel = _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createFieldModel(keyValueList);
 	var widgetType = A2(
 		_elm_lang$core$Maybe$withDefault,
 		'long-text',
