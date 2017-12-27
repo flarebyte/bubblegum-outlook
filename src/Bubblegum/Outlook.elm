@@ -15,8 +15,36 @@ import String
 import Regex exposing (Regex)
 import Result
 import Maybe.Extra exposing(or)
+import Ntriples.Filter exposing (createTriple, filter, FilterExpr(..), FieldComparator(..))
 
-type Prominence = Hidden | ReadOnly| Visible | Important 
+type Prominence = Hidden | ReadOnly| Visible | Important
+
+type alias Triple = { subject : String, predicate : String, object: String }
+
+p = "http://flarebyte.github.io/ontologies/2018/user-interface#"
+
+u =
+  {
+    id = "http://flarebyte.github.io/ontologies/2018/user-interface#id"
+    , widgetType = "http://flarebyte.github.io/ontologies/2018/user-interface#widget-type"
+    , position = "http://flarebyte.github.io/ontologies/2018/user-interface#position"
+    , label = "http://flarebyte.github.io/ontologies/2018/user-interface#label"
+    , hint = "http://flarebyte.github.io/ontologies/2018/user-interface#hint"
+    , prominence = "http://flarebyte.github.io/ontologies/2018/user-interface#prominence"
+    , style = "http://flarebyte.github.io/ontologies/2018/user-interface#style"
+    , query = "http://flarebyte.github.io/ontologies/2018/user-interface#query"
+    , regex = "http://flarebyte.github.io/ontologies/2018/user-interface#regex"
+    , maxLength = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length"
+    , minLines = "http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines"
+    , maxLines = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines"
+    , filtering = "http://flarebyte.github.io/ontologies/2018/user-interface#filtering"
+    , sorting = "http://flarebyte.github.io/ontologies/2018/user-interface#sorting"
+    , minimumInt = "http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int"
+    , maximumInt = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int"
+    , stepsInt = "http://flarebyte.github.io/ontologies/2018/user-interface#steps-int"
+    , format = "http://flarebyte.github.io/ontologies/2018/user-interface#format"
+ }
+ 
 
 {-| The core representation of a field.
     id: unique id for the field
@@ -244,13 +272,13 @@ prominenceToString prominence =
 createFieldModel: List (String, String) -> FieldModel
 createFieldModel  keyValueList =
     {
-    id = findProperty "id" keyValueList |> Maybe.withDefault ""
-    , position = findProperty "position" keyValueList |> toIntOrDefault 0
-    , label= findProperty "label" keyValueList |> Maybe.withDefault ""
-    , hint = findProperty "hint" keyValueList |> Maybe.withDefault ""
-    , prominence = findProperty "prominence" keyValueList |> toProminence
-    , style = findProperty "style" keyValueList |> Maybe.withDefault ""
-    , query = findProperty "query" keyValueList |> Maybe.withDefault ""
+    id = findProperty u.id keyValueList |> Maybe.withDefault ""
+    , position = findProperty u.position keyValueList |> toIntOrDefault 0
+    , label= findProperty u.label keyValueList |> Maybe.withDefault ""
+    , hint = findProperty u.hint keyValueList |> Maybe.withDefault ""
+    , prominence = findProperty u.prominence keyValueList |> toProminence
+    , style = findProperty u.style keyValueList |> Maybe.withDefault ""
+    , query = findProperty u.query keyValueList |> Maybe.withDefault ""
     }
  
 
@@ -259,7 +287,7 @@ createFieldModel  keyValueList =
 createWidgetModel: List (String, String) -> WidgetModel
 createWidgetModel keyValueList =
     let
-        widgetType = findProperty "type" keyValueList |> Maybe.withDefault "long-text"
+        widgetType = findProperty u.widgetType keyValueList |> Maybe.withDefault "long-text"
         fieldModel = createFieldModel keyValueList
     in
         case widgetType of
@@ -268,92 +296,96 @@ createWidgetModel keyValueList =
             "inc-spinner" ->
                 IncSpinnerWidget {
                     field = fieldModel
-                    , minimum = findProperty "minimum" keyValueList |> toIntOrDefault 0
-                    , maximum = findProperty "maximum" keyValueList |> toIntOrDefault 10
-                    , steps = findProperty "steps" keyValueList |> toIntOrDefault 1
+                    , minimum = findProperty u.minimumInt keyValueList |> toIntOrDefault 0
+                    , maximum = findProperty u.maximumInt keyValueList |> toIntOrDefault 10
+                    , steps = findProperty u.stepsInt keyValueList |> toIntOrDefault 1
                 }
             "medium-text" ->
                 MediumTextWidget { field = fieldModel
-                    , regex = findProperty "regex" keyValueList
-                    , maxLength = findProperty "max-length" keyValueList |> toIntOrDefault 40
+                    , regex = findProperty u.regex keyValueList
+                    , maxLength = findProperty u.maxLength keyValueList |> toIntOrDefault 40
                 }
             "bounded-listbox" ->    
                 BoundedListBoxWidget {
                     field = fieldModel
-                    , filtering = findProperty "filtering" keyValueList
-                    , sorting = findProperty "sorting" keyValueList
+                    , filtering = findProperty u.filtering keyValueList
+                    , sorting = findProperty u.sorting keyValueList
                 }
             "unbounded-listbox" ->
                 UnboundedListBoxWidget {
                     field = fieldModel
-                    , filtering = findProperty "filtering" keyValueList
-                    , sorting = findProperty "sorting" keyValueList
+                    , filtering = findProperty u.filtering keyValueList
+                    , sorting = findProperty u.sorting keyValueList
                 }
             "range-slider" ->    
                 RangeSliderWidget {
                     field = fieldModel
-                    , minimum = findProperty "minimum" keyValueList |> toIntOrDefault 0
-                    , maximum = findProperty "maximum" keyValueList |> toIntOrDefault 10
-                    , steps = findProperty "steps" keyValueList |> toIntOrDefault 1
+                    , minimum = findProperty u.minimumInt keyValueList |> toIntOrDefault 0
+                    , maximum = findProperty u.maximumInt keyValueList |> toIntOrDefault 10
+                    , steps = findProperty u.stepsInt keyValueList |> toIntOrDefault 1
                 }
             "date-viewer" ->    
                 DateViewerWidget {
                     field = fieldModel
-                    , format = findProperty "format" keyValueList |> Maybe.withDefault ""
+                    , format = findProperty u.format keyValueList |> Maybe.withDefault ""
                 }
             "long-text" ->
                 LongTextWidget { field = fieldModel
-                    , regex = findProperty "regex" keyValueList
-                    , maxLength = findProperty "max-length" keyValueList |> toIntOrDefault 80
+                    , regex = findProperty u.regex keyValueList
+                    , maxLength = findProperty u.maxLength keyValueList |> toIntOrDefault 80
                 }
             "text-area" ->
                 TextAreaWidget {
                     field = fieldModel
-                    , minLines = findProperty "minimum-lines" keyValueList |> toIntOrDefault 3
-                    , maxLines = findProperty "maximum-lines" keyValueList |> toIntOrDefault 10
+                    , minLines = findProperty u.minLines keyValueList |> toIntOrDefault 3
+                    , maxLines = findProperty u.maxLines keyValueList |> toIntOrDefault 10
                 }
             "markdown-area" ->    
                 MarkdownAreaWidget {
                     field = fieldModel
-                    , minLines = findProperty "minimum-lines" keyValueList |> toIntOrDefault 3
-                    , maxLines = findProperty "maximum-lines" keyValueList |> toIntOrDefault 10
+                    , minLines = findProperty u.minLines keyValueList |> toIntOrDefault 3
+                    , maxLines = findProperty u.maxLines keyValueList |> toIntOrDefault 10
                 }
             "bounded-radio" ->    
                 BoundedRadioWidget {
                     field = fieldModel
-                    , filtering = findProperty "filtering" keyValueList
-                    , sorting = findProperty "sorting" keyValueList
+                    , filtering = findProperty u.filtering keyValueList
+                    , sorting = findProperty u.sorting keyValueList
                 }
             _ ->
                 MediumTextWidget { field = fieldModel
-                    , regex = findProperty "regex" keyValueList
-                    , maxLength = findProperty "max-length" keyValueList |> toIntOrDefault 40
+                    , regex = findProperty u.regex keyValueList
+                    , maxLength = findProperty u.maxLength keyValueList |> toIntOrDefault 40
                 }
 
+fieldToProperties: FieldModel ->  List (String, String)
+fieldToProperties field =
+          [(u.id, field.id), (u.label, field.label), (u.hint, field.hint), (u.prominence, field.prominence |> prominenceToString),(u.query, field.query), (u.style, field.style)]
+ 
 {-| Convert a widget model to a list of tuples.
 -}
 widgetModelToPropertyList:  WidgetModel -> List (String, String)
 widgetModelToPropertyList model =
     case model of
         CheckboxWidget widget ->
-            [("id", widget.id), ("label", widget.label), ("hint", widget.hint), ("prominence", widget.prominence |> prominenceToString),("query", widget.query), ("style", widget.style)] |> List.sort
+            fieldToProperties widget |> List.sort
         IncSpinnerWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("minimum", widget.minimum |> toString), ("maximum", widget.maximum |> toString), ("steps", widget.steps |> toString)] |> List.sort
+            fieldToProperties widget.field ++ [(u.minimumInt, widget.minimum |> toString), (u.maximumInt, widget.maximum |> toString), (u.stepsInt, widget.steps |> toString)] |> List.sort
         MediumTextWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("max-length", widget.maxLength |> toString), ("regex", widget.regex |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.maxLength, widget.maxLength |> toString), (u.regex, widget.regex |> Maybe.withDefault "")] |> List.sort
         BoundedListBoxWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("filtering", widget.filtering |> Maybe.withDefault ""), ("sorting", widget.sorting |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")] |> List.sort
         UnboundedListBoxWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("filtering", widget.filtering |> Maybe.withDefault ""), ("sorting", widget.sorting |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")] |> List.sort
         RangeSliderWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("minimum", widget.minimum |> toString), ("maximum", widget.maximum |> toString), ("steps", widget.steps |> toString)] |> List.sort
+            fieldToProperties widget.field ++ [(u.minimumInt, widget.minimum |> toString), (u.maximumInt, widget.maximum |> toString), (u.stepsInt, widget.steps |> toString)] |> List.sort
         DateViewerWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("format", widget.format)] |> List.sort
+            fieldToProperties widget.field ++ [(u.format, widget.format)] |> List.sort
         LongTextWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("max-length", widget.maxLength |> toString), ("regex", widget.regex |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.maxLength, widget.maxLength |> toString), (u.regex, widget.regex |> Maybe.withDefault "")] |> List.sort
         TextAreaWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("minimum-lines", widget.minLines |> toString), ("maximum-lines", widget.maxLines |> toString)] |> List.sort
+            fieldToProperties widget.field ++ [(u.minLines, widget.minLines |> toString), (u.maxLines, widget.maxLines |> toString)] |> List.sort
         MarkdownAreaWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("minimum-lines", widget.minLines |> toString), ("maximum-lines", widget.maxLines |> toString)] |> List.sort
+            fieldToProperties widget.field ++ [(u.minLines, widget.minLines |> toString), (u.maxLines, widget.maxLines |> toString)] |> List.sort
         BoundedRadioWidget widget ->
-            [("id", widget.field.id), ("label", widget.field.label), ("hint", widget.field.hint), ("prominence", widget.field.prominence |> prominenceToString),("query", widget.field.query), ("style", widget.field.style), ("filtering", widget.filtering |> Maybe.withDefault ""), ("sorting", widget.sorting |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")] |> List.sort

@@ -4,9 +4,31 @@ import Test exposing (describe, test, Test)
 import Expect
 import Bubblegum.Outlook exposing (createWidgetModel, widgetModelToPropertyList)
 
+u =
+  {
+    id = "http://flarebyte.github.io/ontologies/2018/user-interface#id"
+    , widgetType = "http://flarebyte.github.io/ontologies/2018/user-interface#widget-type"
+    , position = "http://flarebyte.github.io/ontologies/2018/user-interface#position"
+    , label = "http://flarebyte.github.io/ontologies/2018/user-interface#label"
+    , hint = "http://flarebyte.github.io/ontologies/2018/user-interface#hint"
+    , prominence = "http://flarebyte.github.io/ontologies/2018/user-interface#prominence"
+    , style = "http://flarebyte.github.io/ontologies/2018/user-interface#style"
+    , query = "http://flarebyte.github.io/ontologies/2018/user-interface#query"
+    , regex = "http://flarebyte.github.io/ontologies/2018/user-interface#regex"
+    , maxLength = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length"
+    , minLines = "http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines"
+    , maxLines = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines"
+    , filtering = "http://flarebyte.github.io/ontologies/2018/user-interface#filtering"
+    , sorting = "http://flarebyte.github.io/ontologies/2018/user-interface#sorting"
+    , minimumInt = "http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int"
+    , maximumInt = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int"
+    , stepsInt = "http://flarebyte.github.io/ontologies/2018/user-interface#steps-int"
+    , format = "http://flarebyte.github.io/ontologies/2018/user-interface#format"
+ }
+
 basic: List (String, String)
-basic = [("id", "id123"), ("label", "some label"),("hint", "some hint"),("prominence", "important"),("query", "my query")]
-expectedBasic = ("style","") :: basic
+basic = [(u.id, "id123"), (u.label, "some label"),(u.hint, "some hint"),(u.prominence, "important"),(u.query, "my query")]
+expectedBasic = (u.style,"") :: basic
 
 all : Test
 all =
@@ -15,64 +37,64 @@ all =
             [ test "create a checkbox" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "checkbox"):: ("anything", "some noise") :: basic) |> widgetModelToPropertyList)
+                    (createWidgetModel ((u.widgetType, "checkbox"):: ("anything", "some noise") :: basic) |> widgetModelToPropertyList)
                     (expectedBasic |> List.sort)               
              
            ,  test "create a inc-spinner" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "inc-spinner") :: ("maximum", "15") :: basic) |> widgetModelToPropertyList)
-                   (("maximum","15") :: ("minimum","0") :: ("steps","1") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "inc-spinner") :: (u.maximumInt, "15") :: basic) |> widgetModelToPropertyList)
+                   ((u.maximumInt,"15") :: (u.minimumInt,"0") :: (u.stepsInt,"1") :: expectedBasic |> List.sort)               
               
            ,  test "create a medium-text" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "medium-text") :: ("regex", "[0-9]+")  :: ("max-length", "20") :: basic) |> widgetModelToPropertyList)
-                   (("regex", "[0-9]+") :: ("max-length", "20") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "medium-text") :: (u.regex, "[0-9]+")  :: (u.maxLength, "20") :: basic) |> widgetModelToPropertyList)
+                   ((u.regex, "[0-9]+") :: (u.maxLength, "20") :: expectedBasic |> List.sort)               
               
            ,  test "create a bounded-listbox" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "bounded-listbox") :: ("filtering", "my filter") :: ("sorting", "asc") :: basic) |> widgetModelToPropertyList)
-                   (("filtering", "my filter") :: ("sorting", "asc") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "bounded-listbox") :: (u.filtering, "my filter") :: (u.sorting, "asc") :: basic) |> widgetModelToPropertyList)
+                   ((u.filtering, "my filter") :: (u.sorting, "asc") :: expectedBasic |> List.sort)               
               
            , test "create a unbounded-listbox" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "unbounded-listbox") :: ("filtering", "my filter") :: ("sorting", "asc") :: basic) |> widgetModelToPropertyList)
-                   (("filtering", "my filter") :: ("sorting", "asc") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "unbounded-listbox") :: (u.filtering, "my filter") :: (u.sorting, "asc") :: basic) |> widgetModelToPropertyList)
+                   ((u.filtering, "my filter") :: (u.sorting, "asc") :: expectedBasic |> List.sort)               
               
            ,  test "create a range-slider" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "range-slider") :: ("minimum", "7") :: ("maximum", "13") :: ("steps", "3") :: basic) |> widgetModelToPropertyList)
-                   (("minimum", "7") :: ("maximum", "13") :: ("steps", "3") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "range-slider") :: (u.minimumInt, "7") :: (u.maximumInt, "13") :: (u.stepsInt, "3") :: basic) |> widgetModelToPropertyList)
+                   ((u.minimumInt, "7") :: (u.maximumInt, "13") :: (u.stepsInt, "3") :: expectedBasic |> List.sort)               
               
            ,  test "create a date-viewer" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "date-viewer") :: ("format", "YYYY") :: basic) |> widgetModelToPropertyList)
-                    (("format", "YYYY") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "date-viewer") :: (u.format, "YYYY") :: basic) |> widgetModelToPropertyList)
+                    ((u.format, "YYYY") :: expectedBasic |> List.sort)               
               
            ,  test "create a long-text" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "long-text") :: ("regex", "[0-9]+")  :: ("max-length", "20") :: basic) |> widgetModelToPropertyList)
-                   (("regex", "[0-9]+")  :: ("max-length", "20") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "long-text") :: (u.regex, "[0-9]+")  :: (u.maxLength, "20") :: basic) |> widgetModelToPropertyList)
+                   ((u.regex, "[0-9]+")  :: (u.maxLength, "20") :: expectedBasic |> List.sort)               
             ,  test "create a text-area" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "text-area") :: ("minimum-lines", "12") :: ("maximum-lines", "15") :: basic) |> widgetModelToPropertyList)
-                   (("minimum-lines", "12") :: ("maximum-lines", "15") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "text-area") :: (u.minLines, "12") :: (u.maxLines, "15") :: basic) |> widgetModelToPropertyList)
+                   ((u.minLines, "12") :: (u.maxLines, "15") :: expectedBasic |> List.sort)               
             ,  test "create a markdown-area" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "markdown-area") :: ("minimum-lines", "12") :: ("maximum-lines", "15") :: basic) |> widgetModelToPropertyList)
-                   (("minimum-lines", "12") :: ("maximum-lines", "15") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "markdown-area") :: (u.minLines, "12") :: (u.maxLines, "15") :: basic) |> widgetModelToPropertyList)
+                   ((u.minLines, "12") :: (u.maxLines, "15") :: expectedBasic |> List.sort)               
            ,  test "create a bounded-radio" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel (("type", "bounded-radio") :: ("filtering", "my filter") :: ("sorting", "asc") :: basic) |> widgetModelToPropertyList)
-                   (("filtering", "my filter") :: ("sorting", "asc") :: expectedBasic |> List.sort)               
+                    (createWidgetModel ((u.widgetType, "bounded-radio") :: (u.filtering, "my filter") :: (u.sorting, "asc") :: basic) |> widgetModelToPropertyList)
+                   ((u.filtering, "my filter") :: (u.sorting, "asc") :: expectedBasic |> List.sort)               
              ]
         ]
