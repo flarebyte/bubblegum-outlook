@@ -43,6 +43,17 @@ u =
     , maximumInt = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int"
     , stepsInt = "http://flarebyte.github.io/ontologies/2018/user-interface#steps-int"
     , format = "http://flarebyte.github.io/ontologies/2018/user-interface#format"
+    , checkbox = "http://flarebyte.github.io/ontologies/2018/user-interface#checkbox"
+    , incSpinner = "http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner"
+    , mediumText = "http://flarebyte.github.io/ontologies/2018/user-interface#medium-text"
+    , boundedListbox = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox"
+    , unboundedListbox = "http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox"
+    , rangeSlider = "http://flarebyte.github.io/ontologies/2018/user-interface#range-slider"
+    , dateViewer = "http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer" 
+    , longText = "http://flarebyte.github.io/ontologies/2018/user-interface#long-text"
+    , textArea = "http://flarebyte.github.io/ontologies/2018/user-interface#text-area"
+    , markdownArea = "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area"
+    , boundedradio = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio"
  }
  
 
@@ -291,62 +302,62 @@ createWidgetModel keyValueList =
         fieldModel = createFieldModel keyValueList
     in
         case widgetType of
-            "checkbox" ->
+            "http://flarebyte.github.io/ontologies/2018/user-interface#checkbox" ->
                 CheckboxWidget fieldModel
-            "inc-spinner" ->
+            "http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner" ->
                 IncSpinnerWidget {
                     field = fieldModel
                     , minimum = findProperty u.minimumInt keyValueList |> toIntOrDefault 0
                     , maximum = findProperty u.maximumInt keyValueList |> toIntOrDefault 10
                     , steps = findProperty u.stepsInt keyValueList |> toIntOrDefault 1
                 }
-            "medium-text" ->
+            "http://flarebyte.github.io/ontologies/2018/user-interface#medium-text" ->
                 MediumTextWidget { field = fieldModel
                     , regex = findProperty u.regex keyValueList
                     , maxLength = findProperty u.maxLength keyValueList |> toIntOrDefault 40
                 }
-            "bounded-listbox" ->    
+            "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox" ->    
                 BoundedListBoxWidget {
                     field = fieldModel
                     , filtering = findProperty u.filtering keyValueList
                     , sorting = findProperty u.sorting keyValueList
                 }
-            "unbounded-listbox" ->
+            "http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox" ->
                 UnboundedListBoxWidget {
                     field = fieldModel
                     , filtering = findProperty u.filtering keyValueList
                     , sorting = findProperty u.sorting keyValueList
                 }
-            "range-slider" ->    
+            "http://flarebyte.github.io/ontologies/2018/user-interface#range-slider" ->    
                 RangeSliderWidget {
                     field = fieldModel
                     , minimum = findProperty u.minimumInt keyValueList |> toIntOrDefault 0
                     , maximum = findProperty u.maximumInt keyValueList |> toIntOrDefault 10
                     , steps = findProperty u.stepsInt keyValueList |> toIntOrDefault 1
                 }
-            "date-viewer" ->    
+            "http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer" ->    
                 DateViewerWidget {
                     field = fieldModel
                     , format = findProperty u.format keyValueList |> Maybe.withDefault ""
                 }
-            "long-text" ->
+            "http://flarebyte.github.io/ontologies/2018/user-interface#long-text" ->
                 LongTextWidget { field = fieldModel
                     , regex = findProperty u.regex keyValueList
                     , maxLength = findProperty u.maxLength keyValueList |> toIntOrDefault 80
                 }
-            "text-area" ->
+            "http://flarebyte.github.io/ontologies/2018/user-interface#text-area" ->
                 TextAreaWidget {
                     field = fieldModel
                     , minLines = findProperty u.minLines keyValueList |> toIntOrDefault 3
                     , maxLines = findProperty u.maxLines keyValueList |> toIntOrDefault 10
                 }
-            "markdown-area" ->    
+            "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area" ->    
                 MarkdownAreaWidget {
                     field = fieldModel
                     , minLines = findProperty u.minLines keyValueList |> toIntOrDefault 3
                     , maxLines = findProperty u.maxLines keyValueList |> toIntOrDefault 10
                 }
-            "bounded-radio" ->    
+            "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio" ->    
                 BoundedRadioWidget {
                     field = fieldModel
                     , filtering = findProperty u.filtering keyValueList

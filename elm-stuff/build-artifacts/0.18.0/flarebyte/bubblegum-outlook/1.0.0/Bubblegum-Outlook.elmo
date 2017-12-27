@@ -47,7 +47,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty = F2(
 			}
 		}
 	});
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u = {id: 'http://flarebyte.github.io/ontologies/2018/user-interface#id', widgetType: 'http://flarebyte.github.io/ontologies/2018/user-interface#widget-type', position: 'http://flarebyte.github.io/ontologies/2018/user-interface#position', label: 'http://flarebyte.github.io/ontologies/2018/user-interface#label', hint: 'http://flarebyte.github.io/ontologies/2018/user-interface#hint', prominence: 'http://flarebyte.github.io/ontologies/2018/user-interface#prominence', style: 'http://flarebyte.github.io/ontologies/2018/user-interface#style', query: 'http://flarebyte.github.io/ontologies/2018/user-interface#query', regex: 'http://flarebyte.github.io/ontologies/2018/user-interface#regex', maxLength: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length', minLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines', maxLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines', filtering: 'http://flarebyte.github.io/ontologies/2018/user-interface#filtering', sorting: 'http://flarebyte.github.io/ontologies/2018/user-interface#sorting', minimumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int', maximumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int', stepsInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#steps-int', format: 'http://flarebyte.github.io/ontologies/2018/user-interface#format'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u = {id: 'http://flarebyte.github.io/ontologies/2018/user-interface#id', widgetType: 'http://flarebyte.github.io/ontologies/2018/user-interface#widget-type', position: 'http://flarebyte.github.io/ontologies/2018/user-interface#position', label: 'http://flarebyte.github.io/ontologies/2018/user-interface#label', hint: 'http://flarebyte.github.io/ontologies/2018/user-interface#hint', prominence: 'http://flarebyte.github.io/ontologies/2018/user-interface#prominence', style: 'http://flarebyte.github.io/ontologies/2018/user-interface#style', query: 'http://flarebyte.github.io/ontologies/2018/user-interface#query', regex: 'http://flarebyte.github.io/ontologies/2018/user-interface#regex', maxLength: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length', minLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines', maxLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines', filtering: 'http://flarebyte.github.io/ontologies/2018/user-interface#filtering', sorting: 'http://flarebyte.github.io/ontologies/2018/user-interface#sorting', minimumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int', maximumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int', stepsInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#steps-int', format: 'http://flarebyte.github.io/ontologies/2018/user-interface#format', checkbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#checkbox', incSpinner: 'http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner', mediumText: 'http://flarebyte.github.io/ontologies/2018/user-interface#medium-text', boundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox', unboundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox', rangeSlider: 'http://flarebyte.github.io/ontologies/2018/user-interface#range-slider', dateViewer: 'http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer', longText: 'http://flarebyte.github.io/ontologies/2018/user-interface#long-text', textArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#text-area', markdownArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area', boundedradio: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties = function (field) {
 	return {
 		ctor: '::',
@@ -468,9 +468,9 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 		A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType, keyValueList));
 	var _p16 = widgetType;
 	switch (_p16) {
-		case 'checkbox':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#checkbox':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$CheckboxWidget(fieldModel);
-		case 'inc-spinner':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$IncSpinnerWidget(
 				{
 					field: fieldModel,
@@ -487,7 +487,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 						1,
 						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt, keyValueList))
 				});
-		case 'medium-text':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#medium-text':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$MediumTextWidget(
 				{
 					field: fieldModel,
@@ -497,21 +497,21 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 						40,
 						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength, keyValueList))
 				});
-		case 'bounded-listbox':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$BoundedListBoxWidget(
 				{
 					field: fieldModel,
 					filtering: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering, keyValueList),
 					sorting: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting, keyValueList)
 				});
-		case 'unbounded-listbox':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$UnboundedListBoxWidget(
 				{
 					field: fieldModel,
 					filtering: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering, keyValueList),
 					sorting: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting, keyValueList)
 				});
-		case 'range-slider':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#range-slider':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$RangeSliderWidget(
 				{
 					field: fieldModel,
@@ -528,7 +528,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 						1,
 						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt, keyValueList))
 				});
-		case 'date-viewer':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$DateViewerWidget(
 				{
 					field: fieldModel,
@@ -537,7 +537,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 						'',
 						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.format, keyValueList))
 				});
-		case 'long-text':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#long-text':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$LongTextWidget(
 				{
 					field: fieldModel,
@@ -547,7 +547,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 						80,
 						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength, keyValueList))
 				});
-		case 'text-area':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#text-area':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$TextAreaWidget(
 				{
 					field: fieldModel,
@@ -560,7 +560,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 						10,
 						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines, keyValueList))
 				});
-		case 'markdown-area':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$MarkdownAreaWidget(
 				{
 					field: fieldModel,
@@ -573,7 +573,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = function 
 						10,
 						A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines, keyValueList))
 				});
-		case 'bounded-radio':
+		case 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$BoundedRadioWidget(
 				{
 					field: fieldModel,
