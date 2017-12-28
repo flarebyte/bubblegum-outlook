@@ -410,4 +410,4 @@ widgetModelToPropertyList model =
 -}
 widgetModelToTriple:  String -> WidgetModel -> List Triple
 widgetModelToTriple subject model =
-    widgetModelToPropertyList model |> createListOfTriple subject |> List.sortBy .predicate
+    widgetModelToPropertyList model |> createListOfTriple subject

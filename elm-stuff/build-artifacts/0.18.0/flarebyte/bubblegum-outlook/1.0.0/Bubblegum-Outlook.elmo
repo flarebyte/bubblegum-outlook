@@ -325,14 +325,9 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToTriple = F2(
 	function (subject, model) {
 		return A2(
-			_elm_lang$core$List$sortBy,
-			function (_) {
-				return _.predicate;
-			},
-			A2(
-				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$createListOfTriple,
-				subject,
-				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList(model)));
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$createListOfTriple,
+			subject,
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList(model));
 	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$p = 'http://flarebyte.github.io/ontologies/2018/user-interface#';
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Triple = F3(
