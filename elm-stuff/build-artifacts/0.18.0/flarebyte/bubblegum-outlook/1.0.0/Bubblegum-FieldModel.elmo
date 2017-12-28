@@ -1,0 +1,191 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$settingsToTriples = F2(
+	function (fieldId, settings) {
+		return _elm_lang$core$List$concat(
+			A2(_elm_lang$core$List$map, _flarebyte$bubblegum_outlook$Bubblegum_SettingModel$toTriples, settings));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$toProperties = function (field) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_id,
+				_1: _elm_lang$core$Maybe$Just(field.id)
+			},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_helpInvalid, _1: field.helpInvalid},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_helpValid, _1: field.helpValid},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_hint, _1: field.hint},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_icon, _1: field.icon},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_label, _1: field.label},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_languageSyntax, _1: field.languageSyntax},
+									_1: {
+										ctor: '::',
+										_0: {
+											ctor: '_Tuple2',
+											_0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_maxLength,
+											_1: _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeString(field.maxLength)
+										},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_maxLines,
+												_1: _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeString(field.maxLines)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_minLines,
+													_1: _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeString(field.minLines)
+												},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_placeholder, _1: field.placeholder},
+													_1: {
+														ctor: '::',
+														_0: {
+															ctor: '_Tuple2',
+															_0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_position,
+															_1: _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeString(field.position)
+														},
+														_1: {
+															ctor: '::',
+															_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_prominence, _1: field.prominence},
+															_1: {
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_regex, _1: field.regex},
+																_1: {
+																	ctor: '::',
+																	_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_style, _1: field.style},
+																	_1: {
+																		ctor: '::',
+																		_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_validator, _1: field.validator},
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		A2(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toPropertiesAsTuple, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_traits, field.traits));
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$toTriples = function (model) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		A2(
+			_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$createListOfTriple,
+			model.id,
+			_flarebyte$bubblegum_outlook$Bubblegum_FieldModel$toProperties(model)),
+		A2(_flarebyte$bubblegum_outlook$Bubblegum_FieldModel$settingsToTriples, model.id, model.settings));
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$findSettingsInField = F2(
+	function (fieldId, list) {
+		return _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$unique(
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.subject;
+				},
+				A2(
+					_elm_lang$core$List$filter,
+					function (t) {
+						return _elm_lang$core$Native_Utils.eq(t.predicate, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingOfField) && _elm_lang$core$Native_Utils.eq(t.object, fieldId);
+					},
+					list)));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$fromTriples = F2(
+	function (subject, triples) {
+		return {
+			id: A2(
+				_elm_lang$core$Maybe$withDefault,
+				subject,
+				A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_id, triples)),
+			helpInvalid: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_helpInvalid, triples),
+			helpValid: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_helpValid, triples),
+			hint: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_hint, triples),
+			icon: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_icon, triples),
+			label: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_label, triples),
+			languageSyntax: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_languageSyntax, triples),
+			maxLength: _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeInt(
+				A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_maxLength, triples)),
+			maxLines: _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeInt(
+				A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_maxLines, triples)),
+			minLines: _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeInt(
+				A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_minLines, triples)),
+			placeholder: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_placeholder, triples),
+			position: _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeInt(
+				A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_position, triples)),
+			prominence: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_prominence, triples),
+			regex: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_regex, triples),
+			style: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_style, triples),
+			traits: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_traits, triples),
+			validator: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_validator, triples),
+			settings: A2(
+				_elm_lang$core$List$map,
+				function (setting) {
+					return A2(_flarebyte$bubblegum_outlook$Bubblegum_SettingModel$fromTriples, setting, triples);
+				},
+				A2(_flarebyte$bubblegum_outlook$Bubblegum_FieldModel$findSettingsInField, subject, triples))
+		};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$Model = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return function (l) {
+												return function (m) {
+													return function (n) {
+														return function (o) {
+															return function (p) {
+																return function (q) {
+																	return function (r) {
+																		return {id: a, helpInvalid: b, helpValid: c, hint: d, icon: e, label: f, languageSyntax: g, maxLength: h, maxLines: i, minLines: j, placeholder: k, position: l, prominence: m, regex: n, style: o, traits: p, validator: q, settings: r};
+																	};
+																};
+															};
+														};
+													};
+												};
+											};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};

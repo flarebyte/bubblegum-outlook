@@ -2,110 +2,138 @@ module Tests exposing (..)
 
 import Test exposing (describe, test, Test)
 import Expect
-import Bubblegum.Outlook exposing (createWidgetModel, widgetModelToPropertyList)
+import Bubblegum.WidgetModel as WidgetModel
+import Bubblegum.PanelModel as PanelModel
+import Bubblegum.SectionModel as SectionModel
+import Bubblegum.DivisionModel as DivisionModel
+import Bubblegum.DivisionSelection as DivisionSelection  
+import Bubblegum.Outlook exposing (render)
+import Set exposing (Set, fromList, union, diff)
+import Bubblegum.Vocabulary exposing(..)
 
-u =
-  {
-    id = "http://flarebyte.github.io/ontologies/2018/user-interface#id"
-    , widgetType = "http://flarebyte.github.io/ontologies/2018/user-interface#widget-type"
-    , position = "http://flarebyte.github.io/ontologies/2018/user-interface#position"
-    , label = "http://flarebyte.github.io/ontologies/2018/user-interface#label"
-    , hint = "http://flarebyte.github.io/ontologies/2018/user-interface#hint"
-    , prominence = "http://flarebyte.github.io/ontologies/2018/user-interface#prominence"
-    , style = "http://flarebyte.github.io/ontologies/2018/user-interface#style"
-    , query = "http://flarebyte.github.io/ontologies/2018/user-interface#query"
-    , regex = "http://flarebyte.github.io/ontologies/2018/user-interface#regex"
-    , maxLength = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length"
-    , minLines = "http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines"
-    , maxLines = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines"
-    , filtering = "http://flarebyte.github.io/ontologies/2018/user-interface#filtering"
-    , sorting = "http://flarebyte.github.io/ontologies/2018/user-interface#sorting"
-    , minimumInt = "http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int"
-    , maximumInt = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int"
-    , stepsInt = "http://flarebyte.github.io/ontologies/2018/user-interface#steps-int"
-    , format = "http://flarebyte.github.io/ontologies/2018/user-interface#format"
-    , checkbox = "http://flarebyte.github.io/ontologies/2018/user-interface#checkbox"
-    , incSpinner = "http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner"
-    , mediumText = "http://flarebyte.github.io/ontologies/2018/user-interface#medium-text"
-    , boundedListbox = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox"
-    , unboundedListbox = "http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox"
-    , rangeSlider = "http://flarebyte.github.io/ontologies/2018/user-interface#range-slider"
-    , dateViewer = "http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer" 
-    , longText = "http://flarebyte.github.io/ontologies/2018/user-interface#long-text"
-    , textArea = "http://flarebyte.github.io/ontologies/2018/user-interface#text-area"
-    , markdownArea = "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area"
-    , boundedRadio = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio"
- }
+type alias Triple = { subject : String, predicate : String, object: String }
 
-basic: List (String, String)
-basic = [(u.id, "id123"), (u.label, "some label"),(u.hint, "some hint"),(u.prominence, "important"),(u.query, "my query")]
-expectedBasic = (u.style,"") :: basic
+subjectId = "subject:1234"
+
+t: String -> String -> Triple
+t predicate object = { subject = subjectId, predicate = predicate, object = object }
+
+tt: String -> String -> String -> Triple
+tt subject predicate object = { subject = subject, predicate = predicate, object = object }
+
+
+setting1 = tt "/sett1" ui_id "/sett1" :: tt "/sett1" ui_settingKey "/sorting" :: tt "/sett1" ui_settingValues "asc":: tt "/sett1" ui_settingFacets "alpha" :: tt "/sett1" ui_settingOfField subjectId :: []
+setting2 = tt "/sett2" ui_id "/sett2" :: tt "/sett2" ui_settingKey "/filtering" :: tt "/sett2" ui_settingValues ">=10" :: tt "/sett2" ui_settingValues "<=200" ::tt "/sett2" ui_settingOfField subjectId :: []
+mySettings = setting1 ++ setting2
+
+basic: List Triple
+basic = t ui_id  subjectId :: t ui_label "some label" :: t ui_hint "some hint" :: t ui_prominence "important" :: [] ++ mySettings
+
+createTextWidget: String -> String -> List Triple
+createTextWidget panelId subj = tt subj ui_id  subj :: tt subj ui_partOfPanel panelId :: tt subj  ui_label "some label" :: tt subj  ui_hint "some hint" :: tt subj ui_prominence "important" :: tt subj  ui_style "my style" :: tt subj ui_regex "[0-9]+"  :: tt subj ui_maxLength "20"  :: []
+
+createMetadata: String -> List Triple
+createMetadata subj = tt subj ui_id  subj :: tt subj  ui_label "meta label" :: tt subj  ui_hint "meta hint" :: tt subj ui_prominence "important" :: tt subj  ui_style "meta style"  :: []
+
+panelWidgets: String -> String -> String -> List Triple
+panelWidgets divisionId sectionId panelId = (tt panelId ui_partOfSection sectionId :: tt panelId ui_partOfDivision divisionId :: createMetadata panelId) ++ (createTextWidget panelId "/1") ++ (createTextWidget panelId  "/2") ++ (createTextWidget panelId "/3") ++ (tt panelId ui_id  panelId :: [])
+
+normTriples: List Triple -> Set String
+normTriples triples = List.map (\t -> t.subject ++ "|" ++ t.predicate ++ "|" ++ t.object) triples |> Set.fromList
+
+errDiff: Set String -> Set String -> Set String
+errDiff a b = diff (union a b) b
+
+section: String -> String -> List Triple
+section divisionId sectionId = (createMetadata sectionId) ++ (panelWidgets divisionId sectionId "/p1") ++ (panelWidgets divisionId sectionId "/p2")
+
+division: String -> List Triple
+division divisionId = (createMetadata divisionId) ++ (section divisionId "/s1") ++ (section divisionId "/s2")
+
+myIncSpinner =  t ui_traits "spinner" :: basic
+myMediumText = t ui_placeholder "placeholder" :: t ui_icon "my icon" :: t ui_traits "alpha":: t ui_traits "beta" :: t ui_regex "[0-9]+"  :: t ui_maxLength "20" :: basic
+myBoundedListbox =  t ui_traits "bounded" :: t ui_traits "listbox" :: basic
+myUnboundedListbox =  t ui_traits "unbounded" :: t ui_traits "listbox" :: basic
+myRangeSlider = t ui_traits "range-slider" :: basic
+myTextArea = t ui_traits "text-area" :: t ui_placeholder "placeholder" :: t ui_languageSyntax "markdown" :: t ui_helpInvalid "help invalid" :: t ui_minLines "12" :: t ui_maxLines "15" :: basic
+
+ts = tt ui_mainSelection
+
+mySearchSelection = ts ui_language "en" :: ts ui_divisionId "district13" :: ts ui_searchTerm "search me" :: ts ui_searchFrom "10" :: ts ui_searchTo "20" :: ts ui_searchSelected "id1":: ts ui_searchSelected "id2" :: []
+
+myEditSelection = ts ui_language "en" :: ts ui_viewMode "admin" :: ts ui_divisionId "district13" :: ts ui_searchSelected "/id123"  :: []
+
+tripleEqual: List Triple -> List Triple -> Expect.Expectation
+tripleEqual expected actual =
+     errDiff (expected |> normTriples) (actual |> normTriples) |> Expect.equal Set.empty
 
 all : Test
 all =
     describe "Bubblegum.Outlook"
         [ describe "createWidgetModel" <|
-            [ test "create a checkbox" <|
+            [ test "create a inc-spinner" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.checkbox):: ("anything", "some noise") :: basic) |> widgetModelToPropertyList)
-                    (expectedBasic |> List.sort)               
-             
-           ,  test "create a inc-spinner" <|
-                \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.incSpinner) :: (u.maximumInt, "15") :: basic) |> widgetModelToPropertyList)
-                   ((u.maximumInt,"15") :: (u.minimumInt,"0") :: (u.stepsInt,"1") :: expectedBasic |> List.sort)               
+                    tripleEqual
+                    (WidgetModel.fromTriples subjectId myIncSpinner |> WidgetModel.toTriples)
+                    (myIncSpinner)               
               
            ,  test "create a medium-text" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.mediumText) :: (u.regex, "[0-9]+")  :: (u.maxLength, "20") :: basic) |> widgetModelToPropertyList)
-                   ((u.regex, "[0-9]+") :: (u.maxLength, "20") :: expectedBasic |> List.sort)               
+                    tripleEqual
+                    (WidgetModel.fromTriples subjectId myMediumText |> WidgetModel.toTriples)
+                    (myMediumText)               
               
            ,  test "create a bounded-listbox" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.boundedListbox) :: (u.filtering, "my filter") :: (u.sorting, "asc") :: basic) |> widgetModelToPropertyList)
-                   ((u.filtering, "my filter") :: (u.sorting, "asc") :: expectedBasic |> List.sort)               
-              
-           , test "create a unbounded-listbox" <|
+                    tripleEqual
+                    (WidgetModel.fromTriples subjectId myBoundedListbox |> WidgetModel.toTriples)
+                    (myBoundedListbox)               
+           
+           ,  test "create a unbounded-listbox" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.unboundedListbox) :: (u.filtering, "my filter") :: (u.sorting, "asc") :: basic) |> widgetModelToPropertyList)
-                   ((u.filtering, "my filter") :: (u.sorting, "asc") :: expectedBasic |> List.sort)               
+                    tripleEqual
+                    (WidgetModel.fromTriples subjectId myUnboundedListbox |> WidgetModel.toTriples)
+                    (myUnboundedListbox)               
               
            ,  test "create a range-slider" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.rangeSlider) :: (u.minimumInt, "7") :: (u.maximumInt, "13") :: (u.stepsInt, "3") :: basic) |> widgetModelToPropertyList)
-                   ((u.minimumInt, "7") :: (u.maximumInt, "13") :: (u.stepsInt, "3") :: expectedBasic |> List.sort)               
+                    tripleEqual
+                    (WidgetModel.fromTriples subjectId myRangeSlider |> WidgetModel.toTriples)
+                    (myRangeSlider)               
               
-           ,  test "create a date-viewer" <|
+           ,  test "create a text-area" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.dateViewer) :: (u.format, "YYYY") :: basic) |> widgetModelToPropertyList)
-                    ((u.format, "YYYY") :: expectedBasic |> List.sort)               
-              
-           ,  test "create a long-text" <|
+                    tripleEqual
+                    (WidgetModel.fromTriples subjectId myTextArea |> WidgetModel.toTriples)
+                   (myTextArea)               
+            ]
+        , describe "createPanelModel" <|
+            [ test "create a panel model" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.longText) :: (u.regex, "[0-9]+")  :: (u.maxLength, "20") :: basic) |> widgetModelToPropertyList)
-                   ((u.regex, "[0-9]+")  :: (u.maxLength, "20") :: expectedBasic |> List.sort)               
-            ,  test "create a text-area" <|
+                    tripleEqual
+                    (panelWidgets "/d1" "/s1" "/p1" |> PanelModel.fromTriples "/p1" |> PanelModel.toTriples)
+                    (panelWidgets "/d1" "/s1" "/p1")
+                , test "create a section model" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.textArea) :: (u.minLines, "12") :: (u.maxLines, "15") :: basic) |> widgetModelToPropertyList)
-                   ((u.minLines, "12") :: (u.maxLines, "15") :: expectedBasic |> List.sort)               
-            ,  test "create a markdown-area" <|
+                    tripleEqual
+                    ( section "/d1" "/s1" |> SectionModel.fromTriples "/s1" |> SectionModel.toTriples)
+                    (section "/d1" "/s1")
+                , test "create a division model" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.markdownArea) :: (u.minLines, "12") :: (u.maxLines, "15") :: basic) |> widgetModelToPropertyList)
-                   ((u.minLines, "12") :: (u.maxLines, "15") :: expectedBasic |> List.sort)               
-           ,  test "create a bounded-radio" <|
+                    tripleEqual
+                    (division "/d1" |> DivisionModel.fromTriples "/d1" |> DivisionModel.toTriples) 
+                    (division "/d1")
+            ]
+        , describe "main selection" <|
+            [ test "create  search selection" <|
                 \() ->
-                    Expect.equal
-                    (createWidgetModel ((u.widgetType, u.boundedRadio) :: (u.filtering, "my filter") :: (u.sorting, "asc") :: basic) |> widgetModelToPropertyList)
-                   ((u.filtering, "my filter") :: (u.sorting, "asc") :: expectedBasic |> List.sort)               
-             ]
+                    tripleEqual
+                    (mySearchSelection |> DivisionSelection.fromTriples |> DivisionSelection.toTriples)
+                    (mySearchSelection)
+               , test "create  edit selection" <|              
+                \() ->
+                    tripleEqual
+                    (myEditSelection |> DivisionSelection.fromTriples |> DivisionSelection.toTriples) 
+                    (myEditSelection)
+            ]                 
         ]

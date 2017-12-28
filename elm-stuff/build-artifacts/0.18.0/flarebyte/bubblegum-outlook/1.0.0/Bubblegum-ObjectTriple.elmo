@@ -1,0 +1,108 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$unique = function (list) {
+	return _elm_lang$core$Set$toList(
+		_elm_lang$core$Set$fromList(list));
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toIntOrZero = function (value) {
+	return A2(
+		_elm_lang$core$Result$withDefault,
+		0,
+		_elm_lang$core$String$toInt(value));
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeInt = function (value) {
+	return A2(_elm_lang$core$Maybe$map, _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toIntOrZero, value);
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toMaybeString = function (value) {
+	return A2(_elm_lang$core$Maybe$map, _elm_lang$core$Basics$toString, value);
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$maybeTuple = function (tuple) {
+	var _p0 = _elm_lang$core$Tuple$second(tuple);
+	if (_p0.ctor === 'Nothing') {
+		return _elm_lang$core$Maybe$Nothing;
+	} else {
+		return _elm_lang$core$Maybe$Just(
+			{
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Tuple$first(tuple),
+				_1: _p0._0
+			});
+	}
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$tupleToTriple = F2(
+	function (subject, keyValue) {
+		return {
+			subject: subject,
+			predicate: _elm_lang$core$Tuple$first(keyValue),
+			object: _elm_lang$core$Tuple$second(keyValue)
+		};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$createListOfTriple = F2(
+	function (subject, keyValueList) {
+		return A2(
+			_elm_lang$core$List$map,
+			_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$tupleToTriple(subject),
+			A2(_elm_lang$core$List$filterMap, _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$maybeTuple, keyValueList));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toPropertiesAsTuple = F2(
+	function (predicate, set) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (t) {
+				return {
+					ctor: '_Tuple2',
+					_0: predicate,
+					_1: _elm_lang$core$Maybe$Just(t)
+				};
+			},
+			_elm_lang$core$Set$toList(set));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toProperties = F3(
+	function (subject, predicate, set) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (t) {
+				return {subject: subject, predicate: predicate, object: t};
+			},
+			_elm_lang$core$Set$toList(set));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties = F3(
+	function (subject, predicate, list) {
+		return _elm_lang$core$Set$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.object;
+				},
+				A2(
+					_elm_lang$core$List$filter,
+					function (t) {
+						return _elm_lang$core$Native_Utils.eq(t.subject, subject) && _elm_lang$core$Native_Utils.eq(t.predicate, predicate);
+					},
+					list)));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty = F3(
+	function (subject, name, list) {
+		findProperty:
+		while (true) {
+			var _p1 = list;
+			if (_p1.ctor === '[]') {
+				return _elm_lang$core$Maybe$Nothing;
+			} else {
+				var _p2 = _p1._0;
+				if (_elm_lang$core$Native_Utils.eq(_p2.subject, subject) && _elm_lang$core$Native_Utils.eq(_p2.predicate, name)) {
+					return _elm_lang$core$Maybe$Just(_p2.object);
+				} else {
+					var _v2 = subject,
+						_v3 = name,
+						_v4 = _p1._1;
+					subject = _v2;
+					name = _v3;
+					list = _v4;
+					continue findProperty;
+				}
+			}
+		}
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$Triple = F3(
+	function (a, b, c) {
+		return {subject: a, predicate: b, object: c};
+	});
