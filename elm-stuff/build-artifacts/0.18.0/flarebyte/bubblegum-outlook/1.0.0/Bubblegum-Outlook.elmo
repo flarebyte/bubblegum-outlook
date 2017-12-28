@@ -124,6 +124,12 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties = function 
 		}
 	};
 };
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToTriples = function (model) {
+	return A2(
+		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$createListOfTriple,
+		model.id,
+		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(model));
+};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = function (model) {
 	var _p5 = model;
 	switch (_p5.ctor) {
@@ -363,6 +369,13 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToTriples = functi
 		}(
 			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToFieldModel(model)),
 		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList(model));
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$panelModelToTriples = function (model) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToTriples(model.field),
+		_elm_lang$core$List$concat(
+			A2(_elm_lang$core$List$map, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToTriples, model.widgets)));
 };
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$isWidgetType = function (triple) {
 	return _elm_lang$core$Native_Utils.eq(triple.predicate, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType);

@@ -2,8 +2,8 @@ module Tests exposing (..)
 
 import Test exposing (describe, test, Test)
 import Expect
-import Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples)
-import Set exposing (Set, fromList)
+import Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples)
+import Set exposing (Set, fromList, union, diff)
 
 u =
   {
@@ -36,7 +36,8 @@ u =
     , textArea = "http://flarebyte.github.io/ontologies/2018/user-interface#text-area"
     , markdownArea = "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area"
     , boundedRadio = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio"
- }
+    , partOfPanel = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel"
+    }
 
 type alias Triple = { subject : String, predicate : String, object: String }
 
@@ -45,10 +46,28 @@ subjectId = "subject:1234"
 t: String -> String -> Triple
 t predicate object = { subject = subjectId, predicate = predicate, object = object }
 
+tt: String -> String -> String -> Triple
+tt subject predicate object = { subject = subject, predicate = predicate, object = object }
+
 basic: List Triple
 basic = t u.id  subjectId :: t u.label "some label" :: t u.hint "some hint" :: t u.prominence "important" :: t u.query "my query" :: []
 
 expectedBasic = t u.style "" :: basic
+
+createTextWidget: String -> String -> List Triple
+createTextWidget panelId subj = tt subj u.id  subj :: tt subj u.widgetType u.mediumText :: tt subj u.partOfPanel panelId :: tt subj  u.label "some label" :: tt subj  u.hint "some hint" :: tt subj u.prominence "important" :: tt subj  u.query "my query" :: tt subj  u.style "my style" :: tt subj u.regex "[0-9]+"  :: tt subj u.maxLength "20"  :: []
+
+createMetadata: String -> List Triple
+createMetadata subj = tt subj u.id  subj :: tt subj  u.label "meta label" :: tt subj  u.hint "meta hint" :: tt subj u.prominence "important" :: tt subj  u.query "meta query" :: tt subj  u.style "meta style"  :: []
+
+panelWidgets: String -> List Triple
+panelWidgets panelId = (createMetadata panelId) ++ (createTextWidget panelId "/1") ++ (createTextWidget panelId  "/2") ++ (createTextWidget panelId "/3") ++ (tt panelId u.id  panelId :: [])
+
+normTriples: List Triple -> Set String
+normTriples triples = List.map (\t -> t.subject ++ "|" ++ t.predicate ++ "|" ++ t.object) triples |> Set.fromList
+
+errDiff: Set String -> Set String -> Set String
+errDiff a b = diff (union a b) b
 
 all : Test
 all =
@@ -117,4 +136,11 @@ all =
                     (createWidgetModel subjectId (t u.widgetType u.boundedRadio :: t u.filtering "my filter" :: t u.sorting "asc" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
                    (t u.filtering "my filter" :: t u.sorting "asc" :: expectedBasic |> List.sortBy .predicate)               
              ]
+        , describe "createPanelModel" <|
+            [ test "create a panel model" <|
+                \() ->
+                    Expect.equal
+                    (errDiff (panelWidgets "/p1" |> createPanelModel "/p1" |> panelModelToTriples |> normTriples) (panelWidgets "/p1" |> normTriples))
+                    Set.empty
+            ]       
         ]

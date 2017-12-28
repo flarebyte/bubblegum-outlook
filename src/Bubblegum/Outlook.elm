@@ -1,10 +1,10 @@
-module Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples)
+module Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples)
 
 {-| This library provides an easy way of filtering a list of simplified n-triples.
 More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
 
 # Create the model
-@docs  createWidgetModel, widgetModelToTriples
+@docs  createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples
 
 -}
 import List
@@ -379,7 +379,10 @@ createListOfTriple subject keyValueList =
 fieldToProperties: FieldModel -> List (String, String)
 fieldToProperties field =
     [(u.id, field.id), (u.label, field.label), (u.hint, field.hint), (u.prominence, field.prominence |> prominenceToString),(u.query, field.query), (u.style, field.style)]
- 
+
+fieldToTriples:  FieldModel -> List Triple
+fieldToTriples model = createListOfTriple model.id (model |> fieldToProperties)
+
 widgetModelToPropertyList:  WidgetModel -> List (String, String)
 widgetModelToPropertyList model =
     case model of
@@ -464,9 +467,9 @@ createPanelModel panelId tripleList =
         , widgets = List.map (\w -> createWidgetModel w tripleList) (findWidgetsInPanel panelId tripleList)
     }
 
--- {-| Converts a panel model to a list of triples
--- -}
--- panelModelToTriples: PanelModel -> List Triple
--- panelModelToTriples model =
---     model.field
+{-| Converts a panel model to a list of triples
+-}
+panelModelToTriples: PanelModel -> List Triple
+panelModelToTriples model =
+    fieldToTriples model.field ++ (List.map widgetModelToTriples model.widgets |> List.concat)
        
