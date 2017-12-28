@@ -235,17 +235,17 @@ type alias DivisionValues = {
     , values: List SectionValues
 }
 
-findProperty : String -> List Triple -> Maybe String
-findProperty name list =
+findProperty : String -> String -> List Triple -> Maybe String
+findProperty subject name list =
     case list of
         [] ->
             Nothing
         
         hd::rest ->
-            if hd.predicate == name then
+            if hd.subject == subject && hd.predicate == name then
                 Just (hd.object)
             else
-                findProperty name rest
+                findProperty subject name rest
 
 toIntOrDefault:  Int -> Maybe String -> Int
 toIntOrDefault default str =
@@ -280,26 +280,26 @@ prominenceToString prominence =
         Important -> "important"
 
 
-createFieldModel: List Triple -> FieldModel
-createFieldModel  keyValueList =
+createFieldModel: String -> List Triple -> FieldModel
+createFieldModel  subject keyValueList =
     {
-    id = findProperty u.id keyValueList |> Maybe.withDefault ""
-    , position = findProperty u.position keyValueList |> toIntOrDefault 0
-    , label= findProperty u.label keyValueList |> Maybe.withDefault ""
-    , hint = findProperty u.hint keyValueList |> Maybe.withDefault ""
-    , prominence = findProperty u.prominence keyValueList |> toProminence
-    , style = findProperty u.style keyValueList |> Maybe.withDefault ""
-    , query = findProperty u.query keyValueList |> Maybe.withDefault ""
+    id = findProperty subject u.id keyValueList |> Maybe.withDefault ""
+    , position = findProperty subject u.position keyValueList |> toIntOrDefault 0
+    , label= findProperty subject u.label keyValueList |> Maybe.withDefault ""
+    , hint = findProperty subject u.hint keyValueList |> Maybe.withDefault ""
+    , prominence = findProperty subject u.prominence keyValueList |> toProminence
+    , style = findProperty subject u.style keyValueList |> Maybe.withDefault ""
+    , query = findProperty subject u.query keyValueList |> Maybe.withDefault ""
     }
  
 
 {-| Create a widget model from a list of tuples.
 -}
-createWidgetModel: List Triple -> WidgetModel
-createWidgetModel keyValueList =
+createWidgetModel: String -> List Triple -> WidgetModel
+createWidgetModel subject keyValueList =
     let
-        widgetType = findProperty u.widgetType keyValueList |> Maybe.withDefault "long-text"
-        fieldModel = createFieldModel keyValueList
+        widgetType = findProperty subject u.widgetType keyValueList |> Maybe.withDefault "long-text"
+        fieldModel = createFieldModel subject keyValueList
     in
         case widgetType of
             "http://flarebyte.github.io/ontologies/2018/user-interface#checkbox" ->
@@ -307,66 +307,66 @@ createWidgetModel keyValueList =
             "http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner" ->
                 IncSpinnerWidget {
                     field = fieldModel
-                    , minimum = findProperty u.minimumInt keyValueList |> toIntOrDefault 0
-                    , maximum = findProperty u.maximumInt keyValueList |> toIntOrDefault 10
-                    , steps = findProperty u.stepsInt keyValueList |> toIntOrDefault 1
+                    , minimum = findProperty subject u.minimumInt keyValueList |> toIntOrDefault 0
+                    , maximum = findProperty subject u.maximumInt keyValueList |> toIntOrDefault 10
+                    , steps = findProperty subject u.stepsInt keyValueList |> toIntOrDefault 1
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#medium-text" ->
                 MediumTextWidget { field = fieldModel
-                    , regex = findProperty u.regex keyValueList
-                    , maxLength = findProperty u.maxLength keyValueList |> toIntOrDefault 40
+                    , regex = findProperty subject u.regex keyValueList
+                    , maxLength = findProperty subject u.maxLength keyValueList |> toIntOrDefault 40
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox" ->    
                 BoundedListBoxWidget {
                     field = fieldModel
-                    , filtering = findProperty u.filtering keyValueList
-                    , sorting = findProperty u.sorting keyValueList
+                    , filtering = findProperty subject u.filtering keyValueList
+                    , sorting = findProperty subject u.sorting keyValueList
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox" ->
                 UnboundedListBoxWidget {
                     field = fieldModel
-                    , filtering = findProperty u.filtering keyValueList
-                    , sorting = findProperty u.sorting keyValueList
+                    , filtering = findProperty subject u.filtering keyValueList
+                    , sorting = findProperty subject u.sorting keyValueList
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#range-slider" ->    
                 RangeSliderWidget {
                     field = fieldModel
-                    , minimum = findProperty u.minimumInt keyValueList |> toIntOrDefault 0
-                    , maximum = findProperty u.maximumInt keyValueList |> toIntOrDefault 10
-                    , steps = findProperty u.stepsInt keyValueList |> toIntOrDefault 1
+                    , minimum = findProperty subject u.minimumInt keyValueList |> toIntOrDefault 0
+                    , maximum = findProperty subject u.maximumInt keyValueList |> toIntOrDefault 10
+                    , steps = findProperty subject u.stepsInt keyValueList |> toIntOrDefault 1
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer" ->    
                 DateViewerWidget {
                     field = fieldModel
-                    , format = findProperty u.format keyValueList |> Maybe.withDefault ""
+                    , format = findProperty subject u.format keyValueList |> Maybe.withDefault ""
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#long-text" ->
                 LongTextWidget { field = fieldModel
-                    , regex = findProperty u.regex keyValueList
-                    , maxLength = findProperty u.maxLength keyValueList |> toIntOrDefault 80
+                    , regex = findProperty subject u.regex keyValueList
+                    , maxLength = findProperty subject u.maxLength keyValueList |> toIntOrDefault 80
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#text-area" ->
                 TextAreaWidget {
                     field = fieldModel
-                    , minLines = findProperty u.minLines keyValueList |> toIntOrDefault 3
-                    , maxLines = findProperty u.maxLines keyValueList |> toIntOrDefault 10
+                    , minLines = findProperty subject u.minLines keyValueList |> toIntOrDefault 3
+                    , maxLines = findProperty subject u.maxLines keyValueList |> toIntOrDefault 10
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area" ->    
                 MarkdownAreaWidget {
                     field = fieldModel
-                    , minLines = findProperty u.minLines keyValueList |> toIntOrDefault 3
-                    , maxLines = findProperty u.maxLines keyValueList |> toIntOrDefault 10
+                    , minLines = findProperty subject u.minLines keyValueList |> toIntOrDefault 3
+                    , maxLines = findProperty subject u.maxLines keyValueList |> toIntOrDefault 10
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio" ->    
                 BoundedRadioWidget {
                     field = fieldModel
-                    , filtering = findProperty u.filtering keyValueList
-                    , sorting = findProperty u.sorting keyValueList
+                    , filtering = findProperty subject u.filtering keyValueList
+                    , sorting = findProperty subject u.sorting keyValueList
                 }
             _ ->
                 MediumTextWidget { field = fieldModel
-                    , regex = findProperty u.regex keyValueList
-                    , maxLength = findProperty u.maxLength keyValueList |> toIntOrDefault 40
+                    , regex = findProperty subject u.regex keyValueList
+                    , maxLength = findProperty subject u.maxLength keyValueList |> toIntOrDefault 40
                 }
 
 tupleToTriple: String -> (String, String) -> Triple
@@ -411,3 +411,7 @@ widgetModelToPropertyList model =
 widgetModelToTriple:  String -> WidgetModel -> List Triple
 widgetModelToTriple subject model =
     widgetModelToPropertyList model |> createListOfTriple subject
+
+-- createPanelModel: List Triple -> PanelModel
+-- createPanelModel tripleList =
+    
