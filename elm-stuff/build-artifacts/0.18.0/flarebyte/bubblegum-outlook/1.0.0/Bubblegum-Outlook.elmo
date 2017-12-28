@@ -48,7 +48,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty = F2(
 			} else {
 				var _p3 = _p2._0;
 				if (_elm_lang$core$Native_Utils.eq(_p3.predicate, name)) {
-					return _elm_lang$core$Maybe$Just(_p3.predicate);
+					return _elm_lang$core$Maybe$Just(_p3.object);
 				} else {
 					var _v3 = name,
 						_v4 = _p2._1;
@@ -325,9 +325,13 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToTriple = F2(
 	function (subject, model) {
 		return A2(
-			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$createListOfTriple,
-			subject,
-			_elm_lang$core$List$sort(
+			_elm_lang$core$List$sortBy,
+			function (_) {
+				return _.predicate;
+			},
+			A2(
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$createListOfTriple,
+				subject,
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList(model)));
 	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$p = 'http://flarebyte.github.io/ontologies/2018/user-interface#';

@@ -3,6 +3,7 @@ module Tests exposing (..)
 import Test exposing (describe, test, Test)
 import Expect
 import Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriple)
+import Set exposing (Set, fromList)
 
 u =
   {
@@ -42,7 +43,7 @@ type alias Triple = { subject : String, predicate : String, object: String }
 subjectId = "subject:1234"
 
 t: String -> String -> Triple
-t p o = { subject = subjectId, predicate = p, object = o }
+t predicate object = { subject = subjectId, predicate = predicate, object = object }
 
 basic: List Triple
 basic = t u.id  "id123" :: t u.label "some label" :: t u.hint "some hint" :: t u.prominence "important" :: t u.query "my query" :: []

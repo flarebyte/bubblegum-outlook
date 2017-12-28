@@ -243,7 +243,7 @@ findProperty name list =
         
         hd::rest ->
             if hd.predicate == name then
-                Just (hd.predicate)
+                Just (hd.object)
             else
                 findProperty name rest
 
@@ -410,4 +410,4 @@ widgetModelToPropertyList model =
 -}
 widgetModelToTriple:  String -> WidgetModel -> List Triple
 widgetModelToTriple subject model =
-    widgetModelToPropertyList model |> List.sort |> createListOfTriple subject
+    widgetModelToPropertyList model |> createListOfTriple subject |> List.sortBy .predicate
