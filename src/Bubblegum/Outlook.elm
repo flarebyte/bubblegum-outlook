@@ -1,10 +1,10 @@
-module Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriple)
+module Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples)
 
 {-| This library provides an easy way of filtering a list of simplified n-triples.
 More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
 
 # Create the model
-@docs  createWidgetModel, widgetModelToTriple
+@docs  createWidgetModel, widgetModelToTriples
 
 -}
 import List
@@ -15,7 +15,6 @@ import String
 import Regex exposing (Regex)
 import Result
 import Maybe.Extra exposing(or)
-import Ntriples.Filter exposing (createTriple, filter, FilterExpr(..), FieldComparator(..))
 
 type Prominence = Hidden | ReadOnly| Visible | Important
 
@@ -54,7 +53,8 @@ u =
     , textArea = "http://flarebyte.github.io/ontologies/2018/user-interface#text-area"
     , markdownArea = "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area"
     , boundedradio = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio"
- }
+    , partOfPanel = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel"
+    }
  
 
 {-| The core representation of a field.
@@ -193,7 +193,7 @@ type WidgetModel =
 -}
 type alias PanelModel = {
         field: FieldModel
-        , widgets: Set WidgetModel
+        , widgets: List WidgetModel
     }
 
 {-| A model for a section containing several panels.
@@ -296,10 +296,10 @@ createFieldModel  subject keyValueList =
 {-| Create a widget model from a list of tuples.
 -}
 createWidgetModel: String -> List Triple -> WidgetModel
-createWidgetModel subject keyValueList =
+createWidgetModel subject tripleList =
     let
-        widgetType = findProperty subject u.widgetType keyValueList |> Maybe.withDefault "long-text"
-        fieldModel = createFieldModel subject keyValueList
+        widgetType = findProperty subject u.widgetType tripleList |> Maybe.withDefault "long-text"
+        fieldModel = createFieldModel subject tripleList
     in
         case widgetType of
             "http://flarebyte.github.io/ontologies/2018/user-interface#checkbox" ->
@@ -307,66 +307,66 @@ createWidgetModel subject keyValueList =
             "http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner" ->
                 IncSpinnerWidget {
                     field = fieldModel
-                    , minimum = findProperty subject u.minimumInt keyValueList |> toIntOrDefault 0
-                    , maximum = findProperty subject u.maximumInt keyValueList |> toIntOrDefault 10
-                    , steps = findProperty subject u.stepsInt keyValueList |> toIntOrDefault 1
+                    , minimum = findProperty subject u.minimumInt tripleList |> toIntOrDefault 0
+                    , maximum = findProperty subject u.maximumInt tripleList |> toIntOrDefault 10
+                    , steps = findProperty subject u.stepsInt tripleList |> toIntOrDefault 1
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#medium-text" ->
                 MediumTextWidget { field = fieldModel
-                    , regex = findProperty subject u.regex keyValueList
-                    , maxLength = findProperty subject u.maxLength keyValueList |> toIntOrDefault 40
+                    , regex = findProperty subject u.regex tripleList
+                    , maxLength = findProperty subject u.maxLength tripleList |> toIntOrDefault 40
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox" ->    
                 BoundedListBoxWidget {
                     field = fieldModel
-                    , filtering = findProperty subject u.filtering keyValueList
-                    , sorting = findProperty subject u.sorting keyValueList
+                    , filtering = findProperty subject u.filtering tripleList
+                    , sorting = findProperty subject u.sorting tripleList
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox" ->
                 UnboundedListBoxWidget {
                     field = fieldModel
-                    , filtering = findProperty subject u.filtering keyValueList
-                    , sorting = findProperty subject u.sorting keyValueList
+                    , filtering = findProperty subject u.filtering tripleList
+                    , sorting = findProperty subject u.sorting tripleList
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#range-slider" ->    
                 RangeSliderWidget {
                     field = fieldModel
-                    , minimum = findProperty subject u.minimumInt keyValueList |> toIntOrDefault 0
-                    , maximum = findProperty subject u.maximumInt keyValueList |> toIntOrDefault 10
-                    , steps = findProperty subject u.stepsInt keyValueList |> toIntOrDefault 1
+                    , minimum = findProperty subject u.minimumInt tripleList |> toIntOrDefault 0
+                    , maximum = findProperty subject u.maximumInt tripleList |> toIntOrDefault 10
+                    , steps = findProperty subject u.stepsInt tripleList |> toIntOrDefault 1
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer" ->    
                 DateViewerWidget {
                     field = fieldModel
-                    , format = findProperty subject u.format keyValueList |> Maybe.withDefault ""
+                    , format = findProperty subject u.format tripleList |> Maybe.withDefault ""
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#long-text" ->
                 LongTextWidget { field = fieldModel
-                    , regex = findProperty subject u.regex keyValueList
-                    , maxLength = findProperty subject u.maxLength keyValueList |> toIntOrDefault 80
+                    , regex = findProperty subject u.regex tripleList
+                    , maxLength = findProperty subject u.maxLength tripleList |> toIntOrDefault 80
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#text-area" ->
                 TextAreaWidget {
                     field = fieldModel
-                    , minLines = findProperty subject u.minLines keyValueList |> toIntOrDefault 3
-                    , maxLines = findProperty subject u.maxLines keyValueList |> toIntOrDefault 10
+                    , minLines = findProperty subject u.minLines tripleList |> toIntOrDefault 3
+                    , maxLines = findProperty subject u.maxLines tripleList |> toIntOrDefault 10
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area" ->    
                 MarkdownAreaWidget {
                     field = fieldModel
-                    , minLines = findProperty subject u.minLines keyValueList |> toIntOrDefault 3
-                    , maxLines = findProperty subject u.maxLines keyValueList |> toIntOrDefault 10
+                    , minLines = findProperty subject u.minLines tripleList |> toIntOrDefault 3
+                    , maxLines = findProperty subject u.maxLines tripleList |> toIntOrDefault 10
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio" ->    
                 BoundedRadioWidget {
                     field = fieldModel
-                    , filtering = findProperty subject u.filtering keyValueList
-                    , sorting = findProperty subject u.sorting keyValueList
+                    , filtering = findProperty subject u.filtering tripleList
+                    , sorting = findProperty subject u.sorting tripleList
                 }
             _ ->
                 MediumTextWidget { field = fieldModel
-                    , regex = findProperty subject u.regex keyValueList
-                    , maxLength = findProperty subject u.maxLength keyValueList |> toIntOrDefault 40
+                    , regex = findProperty subject u.regex tripleList
+                    , maxLength = findProperty subject u.maxLength tripleList |> toIntOrDefault 40
                 }
 
 tupleToTriple: String -> (String, String) -> Triple
@@ -406,12 +406,67 @@ widgetModelToPropertyList model =
         BoundedRadioWidget widget ->
             fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")]
 
+widgetModelToFieldModel:  WidgetModel -> FieldModel
+widgetModelToFieldModel model =
+    case model of
+        CheckboxWidget widget ->
+            widget
+        IncSpinnerWidget widget ->
+            widget.field
+        MediumTextWidget widget ->
+           widget.field
+        BoundedListBoxWidget widget ->
+           widget.field
+        UnboundedListBoxWidget widget ->
+           widget.field
+        RangeSliderWidget widget ->
+           widget.field
+        DateViewerWidget widget ->
+           widget.field
+        LongTextWidget widget ->
+           widget.field
+        TextAreaWidget widget ->
+           widget.field
+        MarkdownAreaWidget widget ->
+           widget.field
+        BoundedRadioWidget widget ->
+           widget.field
+
 {-| Convert a widget model to a list of tuples.
 -}
-widgetModelToTriple:  String -> WidgetModel -> List Triple
-widgetModelToTriple subject model =
-    widgetModelToPropertyList model |> createListOfTriple subject
+widgetModelToTriples: WidgetModel -> List Triple
+widgetModelToTriples model =
+    widgetModelToPropertyList model |> createListOfTriple (model |> widgetModelToFieldModel |> .id)
 
--- createPanelModel: List Triple -> PanelModel
--- createPanelModel tripleList =
-    
+isWidgetType: Triple -> Bool
+isWidgetType triple = triple.predicate == u.widgetType
+
+isPartOfPanel: String -> Triple -> Bool
+isPartOfPanel panelId triple = triple.predicate == u.partOfPanel && triple.object == panelId
+
+findWidgets : List Triple -> Set String
+findWidgets list =
+    List.filter isWidgetType list |> List.map .subject |> Set.fromList
+
+unique: List String -> List String
+unique list = list |> Set.fromList |> Set.toList
+
+findWidgetsInPanel: String -> List Triple -> List String
+findWidgetsInPanel panelId list =
+    List.filter (isPartOfPanel panelId) list |> List.map .subject |> unique
+
+{-| Creates a panel model
+-}
+createPanelModel: String -> List Triple -> PanelModel
+createPanelModel panelId tripleList =
+    {
+        field = createFieldModel panelId tripleList
+        , widgets = List.map (\w -> createWidgetModel w tripleList) (findWidgetsInPanel panelId tripleList)
+    }
+
+-- {-| Converts a panel model to a list of triples
+-- -}
+-- panelModelToTriples: PanelModel -> List Triple
+-- panelModelToTriples model =
+--     model.field
+       
