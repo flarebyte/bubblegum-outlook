@@ -1,10 +1,10 @@
-module Bubblegum.Outlook exposing (createWidgetModel, widgetModelToPropertyList)
+module Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriple)
 
 {-| This library provides an easy way of filtering a list of simplified n-triples.
 More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
 
 # Create the model
-@docs  createWidgetModel, widgetModelToPropertyList
+@docs  createWidgetModel, widgetModelToTriple
 
 -}
 import List
@@ -235,15 +235,15 @@ type alias DivisionValues = {
     , values: List SectionValues
 }
 
-findProperty : String -> List (String, String) -> Maybe String
+findProperty : String -> List Triple -> Maybe String
 findProperty name list =
     case list of
         [] ->
             Nothing
         
         hd::rest ->
-            if first(hd) == name then
-                Just (second(hd))
+            if hd.predicate == name then
+                Just (hd.predicate)
             else
                 findProperty name rest
 
@@ -280,7 +280,7 @@ prominenceToString prominence =
         Important -> "important"
 
 
-createFieldModel: List (String, String) -> FieldModel
+createFieldModel: List Triple -> FieldModel
 createFieldModel  keyValueList =
     {
     id = findProperty u.id keyValueList |> Maybe.withDefault ""
@@ -295,7 +295,7 @@ createFieldModel  keyValueList =
 
 {-| Create a widget model from a list of tuples.
 -}
-createWidgetModel: List (String, String) -> WidgetModel
+createWidgetModel: List Triple -> WidgetModel
 createWidgetModel keyValueList =
     let
         widgetType = findProperty u.widgetType keyValueList |> Maybe.withDefault "long-text"
@@ -369,34 +369,45 @@ createWidgetModel keyValueList =
                     , maxLength = findProperty u.maxLength keyValueList |> toIntOrDefault 40
                 }
 
-fieldToProperties: FieldModel ->  List (String, String)
+tupleToTriple: String -> (String, String) -> Triple
+tupleToTriple subject keyValue = {subject= subject, predicate= first(keyValue), object= second(keyValue)}
+
+createListOfTriple: String -> List (String, String) -> List Triple
+createListOfTriple subject keyValueList =
+    List.map (tupleToTriple subject) keyValueList
+
+fieldToProperties: FieldModel -> List (String, String)
 fieldToProperties field =
-          [(u.id, field.id), (u.label, field.label), (u.hint, field.hint), (u.prominence, field.prominence |> prominenceToString),(u.query, field.query), (u.style, field.style)]
+    [(u.id, field.id), (u.label, field.label), (u.hint, field.hint), (u.prominence, field.prominence |> prominenceToString),(u.query, field.query), (u.style, field.style)]
  
-{-| Convert a widget model to a list of tuples.
--}
 widgetModelToPropertyList:  WidgetModel -> List (String, String)
 widgetModelToPropertyList model =
     case model of
         CheckboxWidget widget ->
-            fieldToProperties widget |> List.sort
+            fieldToProperties widget
         IncSpinnerWidget widget ->
-            fieldToProperties widget.field ++ [(u.minimumInt, widget.minimum |> toString), (u.maximumInt, widget.maximum |> toString), (u.stepsInt, widget.steps |> toString)] |> List.sort
+            fieldToProperties widget.field ++ [(u.minimumInt, widget.minimum |> toString), (u.maximumInt, widget.maximum |> toString), (u.stepsInt, widget.steps |> toString)]
         MediumTextWidget widget ->
-            fieldToProperties widget.field ++ [(u.maxLength, widget.maxLength |> toString), (u.regex, widget.regex |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.maxLength, widget.maxLength |> toString), (u.regex, widget.regex |> Maybe.withDefault "")]
         BoundedListBoxWidget widget ->
-            fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")]
         UnboundedListBoxWidget widget ->
-            fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")]
         RangeSliderWidget widget ->
-            fieldToProperties widget.field ++ [(u.minimumInt, widget.minimum |> toString), (u.maximumInt, widget.maximum |> toString), (u.stepsInt, widget.steps |> toString)] |> List.sort
+            fieldToProperties widget.field ++ [(u.minimumInt, widget.minimum |> toString), (u.maximumInt, widget.maximum |> toString), (u.stepsInt, widget.steps |> toString)]
         DateViewerWidget widget ->
-            fieldToProperties widget.field ++ [(u.format, widget.format)] |> List.sort
+            fieldToProperties widget.field ++ [(u.format, widget.format)]
         LongTextWidget widget ->
-            fieldToProperties widget.field ++ [(u.maxLength, widget.maxLength |> toString), (u.regex, widget.regex |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.maxLength, widget.maxLength |> toString), (u.regex, widget.regex |> Maybe.withDefault "")]
         TextAreaWidget widget ->
-            fieldToProperties widget.field ++ [(u.minLines, widget.minLines |> toString), (u.maxLines, widget.maxLines |> toString)] |> List.sort
+            fieldToProperties widget.field ++ [(u.minLines, widget.minLines |> toString), (u.maxLines, widget.maxLines |> toString)]
         MarkdownAreaWidget widget ->
-            fieldToProperties widget.field ++ [(u.minLines, widget.minLines |> toString), (u.maxLines, widget.maxLines |> toString)] |> List.sort
+            fieldToProperties widget.field ++ [(u.minLines, widget.minLines |> toString), (u.maxLines, widget.maxLines |> toString)]
         BoundedRadioWidget widget ->
-            fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")] |> List.sort
+            fieldToProperties widget.field ++ [(u.filtering, widget.filtering |> Maybe.withDefault ""), (u.sorting, widget.sorting |> Maybe.withDefault "")]
+
+{-| Convert a widget model to a list of tuples.
+-}
+widgetModelToTriple:  String -> WidgetModel -> List Triple
+widgetModelToTriple subject model =
+    widgetModelToPropertyList model |> List.sort |> createListOfTriple subject

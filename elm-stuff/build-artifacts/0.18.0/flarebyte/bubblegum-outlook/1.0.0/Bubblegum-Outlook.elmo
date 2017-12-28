@@ -1,3 +1,18 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$tupleToTriple = F2(
+	function (subject, keyValue) {
+		return {
+			subject: subject,
+			predicate: _elm_lang$core$Tuple$first(keyValue),
+			object: _elm_lang$core$Tuple$second(keyValue)
+		};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createListOfTriple = F2(
+	function (subject, keyValueList) {
+		return A2(
+			_elm_lang$core$List$map,
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$tupleToTriple(subject),
+			keyValueList);
+	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString = function (prominence) {
 	var _p0 = prominence;
 	switch (_p0.ctor) {
@@ -32,11 +47,8 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty = F2(
 				return _elm_lang$core$Maybe$Nothing;
 			} else {
 				var _p3 = _p2._0;
-				if (_elm_lang$core$Native_Utils.eq(
-					_elm_lang$core$Tuple$first(_p3),
-					name)) {
-					return _elm_lang$core$Maybe$Just(
-						_elm_lang$core$Tuple$second(_p3));
+				if (_elm_lang$core$Native_Utils.eq(_p3.predicate, name)) {
+					return _elm_lang$core$Maybe$Just(_p3.predicate);
 				} else {
 					var _v3 = name,
 						_v4 = _p2._1;
@@ -83,244 +95,241 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 	var _p4 = model;
 	switch (_p4.ctor) {
 		case 'CheckboxWidget':
-			return _elm_lang$core$List$sort(
-				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p4._0));
+			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p4._0);
 		case 'IncSpinnerWidget':
 			var _p5 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p5.field),
-					{
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p5.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
+						_1: _elm_lang$core$Basics$toString(_p5.minimum)
+					},
+					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
-							_1: _elm_lang$core$Basics$toString(_p5.minimum)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
+							_1: _elm_lang$core$Basics$toString(_p5.maximum)
 						},
 						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
-								_1: _elm_lang$core$Basics$toString(_p5.maximum)
+								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
+								_1: _elm_lang$core$Basics$toString(_p5.steps)
 							},
-							_1: {
-								ctor: '::',
-								_0: {
-									ctor: '_Tuple2',
-									_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
-									_1: _elm_lang$core$Basics$toString(_p5.steps)
-								},
-								_1: {ctor: '[]'}
-							}
+							_1: {ctor: '[]'}
 						}
-					}));
+					}
+				});
 		case 'MediumTextWidget':
 			var _p6 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p6.field),
-					{
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p6.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
+						_1: _elm_lang$core$Basics$toString(_p6.maxLength)
+					},
+					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
-							_1: _elm_lang$core$Basics$toString(_p6.maxLength)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex,
+							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p6.regex)
 						},
-						_1: {
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex,
-								_1: A2(_elm_lang$core$Maybe$withDefault, '', _p6.regex)
-							},
-							_1: {ctor: '[]'}
-						}
-					}));
+						_1: {ctor: '[]'}
+					}
+				});
 		case 'BoundedListBoxWidget':
 			var _p7 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p7.field),
-					{
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p7.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering,
+						_1: A2(_elm_lang$core$Maybe$withDefault, '', _p7.filtering)
+					},
+					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering,
-							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p7.filtering)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting,
+							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p7.sorting)
 						},
-						_1: {
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting,
-								_1: A2(_elm_lang$core$Maybe$withDefault, '', _p7.sorting)
-							},
-							_1: {ctor: '[]'}
-						}
-					}));
+						_1: {ctor: '[]'}
+					}
+				});
 		case 'UnboundedListBoxWidget':
 			var _p8 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p8.field),
-					{
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p8.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering,
+						_1: A2(_elm_lang$core$Maybe$withDefault, '', _p8.filtering)
+					},
+					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering,
-							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p8.filtering)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting,
+							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p8.sorting)
 						},
-						_1: {
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting,
-								_1: A2(_elm_lang$core$Maybe$withDefault, '', _p8.sorting)
-							},
-							_1: {ctor: '[]'}
-						}
-					}));
+						_1: {ctor: '[]'}
+					}
+				});
 		case 'RangeSliderWidget':
 			var _p9 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p9.field),
-					{
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p9.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
+						_1: _elm_lang$core$Basics$toString(_p9.minimum)
+					},
+					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
-							_1: _elm_lang$core$Basics$toString(_p9.minimum)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
+							_1: _elm_lang$core$Basics$toString(_p9.maximum)
 						},
 						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
-								_1: _elm_lang$core$Basics$toString(_p9.maximum)
+								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
+								_1: _elm_lang$core$Basics$toString(_p9.steps)
 							},
-							_1: {
-								ctor: '::',
-								_0: {
-									ctor: '_Tuple2',
-									_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
-									_1: _elm_lang$core$Basics$toString(_p9.steps)
-								},
-								_1: {ctor: '[]'}
-							}
+							_1: {ctor: '[]'}
 						}
-					}));
+					}
+				});
 		case 'DateViewerWidget':
 			var _p10 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p10.field),
-					{
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.format, _1: _p10.format},
-						_1: {ctor: '[]'}
-					}));
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p10.field),
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.format, _1: _p10.format},
+					_1: {ctor: '[]'}
+				});
 		case 'LongTextWidget':
 			var _p11 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p11.field),
-					{
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p11.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
+						_1: _elm_lang$core$Basics$toString(_p11.maxLength)
+					},
+					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
-							_1: _elm_lang$core$Basics$toString(_p11.maxLength)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex,
+							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p11.regex)
 						},
-						_1: {
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex,
-								_1: A2(_elm_lang$core$Maybe$withDefault, '', _p11.regex)
-							},
-							_1: {ctor: '[]'}
-						}
-					}));
+						_1: {ctor: '[]'}
+					}
+				});
 		case 'TextAreaWidget':
 			var _p12 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p12.field),
-					{
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p12.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
+						_1: _elm_lang$core$Basics$toString(_p12.minLines)
+					},
+					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
-							_1: _elm_lang$core$Basics$toString(_p12.minLines)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
+							_1: _elm_lang$core$Basics$toString(_p12.maxLines)
 						},
-						_1: {
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
-								_1: _elm_lang$core$Basics$toString(_p12.maxLines)
-							},
-							_1: {ctor: '[]'}
-						}
-					}));
+						_1: {ctor: '[]'}
+					}
+				});
 		case 'MarkdownAreaWidget':
 			var _p13 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p13.field),
-					{
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p13.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
+						_1: _elm_lang$core$Basics$toString(_p13.minLines)
+					},
+					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
-							_1: _elm_lang$core$Basics$toString(_p13.minLines)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
+							_1: _elm_lang$core$Basics$toString(_p13.maxLines)
 						},
-						_1: {
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
-								_1: _elm_lang$core$Basics$toString(_p13.maxLines)
-							},
-							_1: {ctor: '[]'}
-						}
-					}));
+						_1: {ctor: '[]'}
+					}
+				});
 		default:
 			var _p14 = _p4._0;
-			return _elm_lang$core$List$sort(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p14.field),
-					{
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p14.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering,
+						_1: A2(_elm_lang$core$Maybe$withDefault, '', _p14.filtering)
+					},
+					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering,
-							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p14.filtering)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting,
+							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p14.sorting)
 						},
-						_1: {
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting,
-								_1: A2(_elm_lang$core$Maybe$withDefault, '', _p14.sorting)
-							},
-							_1: {ctor: '[]'}
-						}
-					}));
+						_1: {ctor: '[]'}
+					}
+				});
 	}
 };
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToTriple = F2(
+	function (subject, model) {
+		return A2(
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$createListOfTriple,
+			subject,
+			_elm_lang$core$List$sort(
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList(model)));
+	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$p = 'http://flarebyte.github.io/ontologies/2018/user-interface#';
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Triple = F3(
 	function (a, b, c) {
