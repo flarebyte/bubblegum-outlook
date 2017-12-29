@@ -1,10 +1,10 @@
-module Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples)
+module Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples)
 
 {-| This library provides an easy way of filtering a list of simplified n-triples.
 More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
 
 # Create the model
-@docs  createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples
+@docs  createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples
 
 -}
 import List
@@ -54,7 +54,9 @@ u =
     , markdownArea = "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area"
     , boundedradio = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio"
     , partOfPanel = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel"
-    }
+    , partOfSection = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section"
+    , partOfDivision = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-division"
+   }
  
 
 {-| The core representation of a field.
@@ -200,14 +202,14 @@ type alias PanelModel = {
 -}
 type alias SectionModel = {
         field: FieldModel
-        , panels: Set PanelModel
+        , panels: List PanelModel
     }
 
 {-| A model for a division containing several sections.
 -}
 type alias DivisionModel = {
         field: FieldModel
-        , sections: Set SectionModel
+        , sections: List SectionModel
     }
 
 {-| A widget possibly containing a value.
@@ -441,22 +443,20 @@ widgetModelToTriples: WidgetModel -> List Triple
 widgetModelToTriples model =
     widgetModelToPropertyList model |> createListOfTriple (model |> widgetModelToFieldModel |> .id)
 
-isWidgetType: Triple -> Bool
-isWidgetType triple = triple.predicate == u.widgetType
-
-isPartOfPanel: String -> Triple -> Bool
-isPartOfPanel panelId triple = triple.predicate == u.partOfPanel && triple.object == panelId
-
-findWidgets : List Triple -> Set String
-findWidgets list =
-    List.filter isWidgetType list |> List.map .subject |> Set.fromList
-
 unique: List String -> List String
 unique list = list |> Set.fromList |> Set.toList
 
 findWidgetsInPanel: String -> List Triple -> List String
 findWidgetsInPanel panelId list =
-    List.filter (isPartOfPanel panelId) list |> List.map .subject |> unique
+    List.filter (\t -> t.predicate == u.partOfPanel && t.object == panelId) list |> List.map .subject |> unique
+
+findPanelsInSection: String -> List Triple -> List String
+findPanelsInSection sectionId list =
+    List.filter (\t -> t.predicate == u.partOfSection && t.object == sectionId) list |> List.map .subject |> unique
+
+findSectionsInDivision: String -> List Triple -> List String
+findSectionsInDivision divisionId list =
+    List.filter (\t -> t.predicate == u.partOfDivision && t.object == divisionId) list |> List.map .subject |> unique
 
 {-| Creates a panel model
 -}
@@ -473,3 +473,32 @@ panelModelToTriples: PanelModel -> List Triple
 panelModelToTriples model =
     fieldToTriples model.field ++ (List.map widgetModelToTriples model.widgets |> List.concat)
        
+{-| Creates a section model
+-}
+createSectionModel: String -> List Triple -> SectionModel
+createSectionModel sectionId tripleList =
+    {
+        field = createFieldModel sectionId tripleList
+        , panels = List.map (\p -> createPanelModel p tripleList) (findPanelsInSection sectionId tripleList)
+    }
+
+{-| Converts a section model to a list of triples
+-}
+sectionModelToTriples: SectionModel -> List Triple
+sectionModelToTriples model =
+    fieldToTriples model.field ++ (List.map panelModelToTriples model.panels |> List.concat)
+
+{-| Creates a division model
+-}
+createDivisionModel: String -> List Triple -> DivisionModel
+createDivisionModel divisionId tripleList =
+    {
+        field = createFieldModel divisionId tripleList
+        , sections = List.map (\s -> createSectionModel s tripleList) (findSectionsInDivision divisionId tripleList)
+    }
+
+{-| Converts a division model to a list of triples
+-}
+divisionModelToTriples: DivisionModel -> List Triple
+divisionModelToTriples model =
+    fieldToTriples model.field ++ (List.map sectionModelToTriples model.sections |> List.concat)

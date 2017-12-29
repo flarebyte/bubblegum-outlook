@@ -2,7 +2,7 @@ module Tests exposing (..)
 
 import Test exposing (describe, test, Test)
 import Expect
-import Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples)
+import Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples)
 import Set exposing (Set, fromList, union, diff)
 
 u =
@@ -37,6 +37,8 @@ u =
     , markdownArea = "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area"
     , boundedRadio = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio"
     , partOfPanel = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel"
+    , partOfSection = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section"
+    , partOfDivision = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-division"
     }
 
 type alias Triple = { subject : String, predicate : String, object: String }
@@ -60,14 +62,20 @@ createTextWidget panelId subj = tt subj u.id  subj :: tt subj u.widgetType u.med
 createMetadata: String -> List Triple
 createMetadata subj = tt subj u.id  subj :: tt subj  u.label "meta label" :: tt subj  u.hint "meta hint" :: tt subj u.prominence "important" :: tt subj  u.query "meta query" :: tt subj  u.style "meta style"  :: []
 
-panelWidgets: String -> List Triple
-panelWidgets panelId = (createMetadata panelId) ++ (createTextWidget panelId "/1") ++ (createTextWidget panelId  "/2") ++ (createTextWidget panelId "/3") ++ (tt panelId u.id  panelId :: [])
+panelWidgets: String -> String -> String -> List Triple
+panelWidgets divisionId sectionId panelId = (tt panelId u.partOfSection sectionId :: tt panelId u.partOfDivision divisionId :: createMetadata panelId) ++ (createTextWidget panelId "/1") ++ (createTextWidget panelId  "/2") ++ (createTextWidget panelId "/3") ++ (tt panelId u.id  panelId :: [])
 
 normTriples: List Triple -> Set String
 normTriples triples = List.map (\t -> t.subject ++ "|" ++ t.predicate ++ "|" ++ t.object) triples |> Set.fromList
 
 errDiff: Set String -> Set String -> Set String
 errDiff a b = diff (union a b) b
+
+section: String -> String -> List Triple
+section divisionId sectionId = (createMetadata sectionId) ++ (panelWidgets divisionId sectionId "/p1") ++ (panelWidgets divisionId sectionId "/p2")
+
+division: String -> List Triple
+division divisionId = (createMetadata divisionId) ++ (section divisionId "/s1") ++ (section divisionId "/s2")
 
 all : Test
 all =
@@ -140,7 +148,17 @@ all =
             [ test "create a panel model" <|
                 \() ->
                     Expect.equal
-                    (errDiff (panelWidgets "/p1" |> createPanelModel "/p1" |> panelModelToTriples |> normTriples) (panelWidgets "/p1" |> normTriples))
+                    (errDiff (panelWidgets "/d1" "/s1" "/p1" |> createPanelModel "/p1" |> panelModelToTriples |> normTriples) (panelWidgets "/d1" "/s1" "/p1" |> normTriples))
+                    Set.empty
+                , test "create a section model" <|
+                \() ->
+                    Expect.equal
+                    (errDiff (section "/d1" "/s1" |> createSectionModel "/s1" |> sectionModelToTriples |> normTriples) (section "/d1" "/s1" |> normTriples))
+                    Set.empty
+                , test "create a division model" <|
+                \() ->
+                    Expect.equal
+                    (errDiff (division "/d1" |> createDivisionModel "/d1" |> divisionModelToTriples |> normTriples) (division "/d1" |> normTriples))
                     Set.empty
             ]       
         ]
