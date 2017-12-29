@@ -56,6 +56,10 @@ u =
     , partOfPanel = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel"
     , partOfSection = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section"
     , partOfDivision = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-division"
+    , hidden = "http://flarebyte.github.io/ontologies/2018/user-interface#hidden"
+    , readOnly = "http://flarebyte.github.io/ontologies/2018/user-interface#read-only"
+    , visible = "http://flarebyte.github.io/ontologies/2018/user-interface#visible"
+    , important = "http://flarebyte.github.io/ontologies/2018/user-interface#important"
    }
  
 
@@ -262,13 +266,13 @@ toProminence str =
     case str of
         Nothing ->
             Visible
-        Just "visible" ->
+        Just "http://flarebyte.github.io/ontologies/2018/user-interface#visible" ->
             Visible
-        Just "hidden" ->
+        Just "http://flarebyte.github.io/ontologies/2018/user-interface#hidden" ->
             Hidden
-        Just "read-only" ->
+        Just "http://flarebyte.github.io/ontologies/2018/user-interface#read-only" ->
             ReadOnly
-        Just "important" ->
+        Just "http://flarebyte.github.io/ontologies/2018/user-interface#important" ->
             Important
         Just anything ->
             Visible
@@ -276,10 +280,10 @@ toProminence str =
 prominenceToString: Prominence -> String
 prominenceToString prominence =
     case prominence of
-        Hidden -> "hidden"
-        ReadOnly -> "read-only"
-        Visible -> "visible"
-        Important -> "important"
+        Hidden -> u.hidden
+        ReadOnly -> u.readOnly
+        Visible -> u.visible
+        Important -> u.important
 
 
 createFieldModel: String -> List Triple -> FieldModel

@@ -39,7 +39,11 @@ u =
     , partOfPanel = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel"
     , partOfSection = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section"
     , partOfDivision = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-division"
-    }
+    , hidden = "http://flarebyte.github.io/ontologies/2018/user-interface#hidden"
+    , readOnly = "http://flarebyte.github.io/ontologies/2018/user-interface#read-only"
+    , visible = "http://flarebyte.github.io/ontologies/2018/user-interface#visible"
+    , important = "http://flarebyte.github.io/ontologies/2018/user-interface#important"
+   }
 
 type alias Triple = { subject : String, predicate : String, object: String }
 
@@ -52,15 +56,15 @@ tt: String -> String -> String -> Triple
 tt subject predicate object = { subject = subject, predicate = predicate, object = object }
 
 basic: List Triple
-basic = t u.id  subjectId :: t u.label "some label" :: t u.hint "some hint" :: t u.prominence "important" :: t u.query "my query" :: []
+basic = t u.id  subjectId :: t u.label "some label" :: t u.hint "some hint" :: t u.prominence u.important :: t u.query "my query" :: []
 
 expectedBasic = t u.style "" :: basic
 
 createTextWidget: String -> String -> List Triple
-createTextWidget panelId subj = tt subj u.id  subj :: tt subj u.widgetType u.mediumText :: tt subj u.partOfPanel panelId :: tt subj  u.label "some label" :: tt subj  u.hint "some hint" :: tt subj u.prominence "important" :: tt subj  u.query "my query" :: tt subj  u.style "my style" :: tt subj u.regex "[0-9]+"  :: tt subj u.maxLength "20"  :: []
+createTextWidget panelId subj = tt subj u.id  subj :: tt subj u.widgetType u.mediumText :: tt subj u.partOfPanel panelId :: tt subj  u.label "some label" :: tt subj  u.hint "some hint" :: tt subj u.prominence u.important :: tt subj  u.query "my query" :: tt subj  u.style "my style" :: tt subj u.regex "[0-9]+"  :: tt subj u.maxLength "20"  :: []
 
 createMetadata: String -> List Triple
-createMetadata subj = tt subj u.id  subj :: tt subj  u.label "meta label" :: tt subj  u.hint "meta hint" :: tt subj u.prominence "important" :: tt subj  u.query "meta query" :: tt subj  u.style "meta style"  :: []
+createMetadata subj = tt subj u.id  subj :: tt subj  u.label "meta label" :: tt subj  u.hint "meta hint" :: tt subj u.prominence u.important :: tt subj  u.query "meta query" :: tt subj  u.style "meta style"  :: []
 
 panelWidgets: String -> String -> String -> List Triple
 panelWidgets divisionId sectionId panelId = (tt panelId u.partOfSection sectionId :: tt panelId u.partOfDivision divisionId :: createMetadata panelId) ++ (createTextWidget panelId "/1") ++ (createTextWidget panelId  "/2") ++ (createTextWidget panelId "/3") ++ (tt panelId u.id  panelId :: [])
