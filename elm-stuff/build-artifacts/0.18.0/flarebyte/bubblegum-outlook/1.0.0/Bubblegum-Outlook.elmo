@@ -56,6 +56,21 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault = F2(
 				_elm_lang$core$String$toInt(_p1._0));
 		}
 	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperties = F3(
+	function (subject, predicate, list) {
+		return _elm_lang$core$Set$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.object;
+				},
+				A2(
+					_elm_lang$core$List$filter,
+					function (t) {
+						return _elm_lang$core$Native_Utils.eq(t.subject, subject) && _elm_lang$core$Native_Utils.eq(t.predicate, predicate);
+					},
+					list)));
+	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty = F3(
 	function (subject, name, list) {
 		findProperty:
@@ -79,7 +94,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty = F3(
 			}
 		}
 	});
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u = {id: 'http://flarebyte.github.io/ontologies/2018/user-interface#id', widgetType: 'http://flarebyte.github.io/ontologies/2018/user-interface#widget-type', position: 'http://flarebyte.github.io/ontologies/2018/user-interface#position', label: 'http://flarebyte.github.io/ontologies/2018/user-interface#label', hint: 'http://flarebyte.github.io/ontologies/2018/user-interface#hint', prominence: 'http://flarebyte.github.io/ontologies/2018/user-interface#prominence', style: 'http://flarebyte.github.io/ontologies/2018/user-interface#style', query: 'http://flarebyte.github.io/ontologies/2018/user-interface#query', regex: 'http://flarebyte.github.io/ontologies/2018/user-interface#regex', maxLength: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length', minLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines', maxLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines', filtering: 'http://flarebyte.github.io/ontologies/2018/user-interface#filtering', sorting: 'http://flarebyte.github.io/ontologies/2018/user-interface#sorting', minimumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int', maximumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int', stepsInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#steps-int', format: 'http://flarebyte.github.io/ontologies/2018/user-interface#format', checkbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#checkbox', incSpinner: 'http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner', mediumText: 'http://flarebyte.github.io/ontologies/2018/user-interface#medium-text', boundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox', unboundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox', rangeSlider: 'http://flarebyte.github.io/ontologies/2018/user-interface#range-slider', dateViewer: 'http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer', longText: 'http://flarebyte.github.io/ontologies/2018/user-interface#long-text', textArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#text-area', markdownArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area', boundedradio: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio', partOfPanel: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel', partOfSection: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section', partOfDivision: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-division', hidden: 'http://flarebyte.github.io/ontologies/2018/user-interface#hidden', readOnly: 'http://flarebyte.github.io/ontologies/2018/user-interface#read-only', visible: 'http://flarebyte.github.io/ontologies/2018/user-interface#visible', important: 'http://flarebyte.github.io/ontologies/2018/user-interface#important'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u = {id: 'http://flarebyte.github.io/ontologies/2018/user-interface#id', widgetType: 'http://flarebyte.github.io/ontologies/2018/user-interface#widget-type', position: 'http://flarebyte.github.io/ontologies/2018/user-interface#position', label: 'http://flarebyte.github.io/ontologies/2018/user-interface#label', hint: 'http://flarebyte.github.io/ontologies/2018/user-interface#hint', prominence: 'http://flarebyte.github.io/ontologies/2018/user-interface#prominence', style: 'http://flarebyte.github.io/ontologies/2018/user-interface#style', query: 'http://flarebyte.github.io/ontologies/2018/user-interface#query', regex: 'http://flarebyte.github.io/ontologies/2018/user-interface#regex', maxLength: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length', minLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines', maxLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines', filtering: 'http://flarebyte.github.io/ontologies/2018/user-interface#filtering', sorting: 'http://flarebyte.github.io/ontologies/2018/user-interface#sorting', minimumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int', maximumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int', stepsInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#steps-int', format: 'http://flarebyte.github.io/ontologies/2018/user-interface#format', checkbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#checkbox', incSpinner: 'http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner', mediumText: 'http://flarebyte.github.io/ontologies/2018/user-interface#medium-text', boundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox', unboundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox', rangeSlider: 'http://flarebyte.github.io/ontologies/2018/user-interface#range-slider', dateViewer: 'http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer', longText: 'http://flarebyte.github.io/ontologies/2018/user-interface#long-text', textArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#text-area', markdownArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area', boundedradio: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio', partOfPanel: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel', partOfSection: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section', partOfDivision: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-division', hidden: 'http://flarebyte.github.io/ontologies/2018/user-interface#hidden', readOnly: 'http://flarebyte.github.io/ontologies/2018/user-interface#read-only', visible: 'http://flarebyte.github.io/ontologies/2018/user-interface#visible', required: 'http://flarebyte.github.io/ontologies/2018/user-interface#required', important: 'http://flarebyte.github.io/ontologies/2018/user-interface#important', mainSelection: 'http://flarebyte.github.io/ontologies/2018/user-interface#main-selection', language: 'http://flarebyte.github.io/ontologies/2018/user-interface#language', viewMode: 'http://flarebyte.github.io/ontologies/2018/user-interface#view-mode', divisionId: 'http://flarebyte.github.io/ontologies/2018/user-interface#division-id', instanceId: 'http://flarebyte.github.io/ontologies/2018/user-interface#instance-id', searchTerm: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-term', searchFrom: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-from', searchTo: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-to', searchSelected: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-selected', currentView: 'http://flarebyte.github.io/ontologies/2018/user-interface#current-view', searchView: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-view', editView: 'http://flarebyte.github.io/ontologies/2018/user-interface#edit-view'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString = function (prominence) {
 	var _p4 = prominence;
 	switch (_p4.ctor) {
@@ -89,8 +104,18 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString = function
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.readOnly;
 		case 'Visible':
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.visible;
+		case 'Required':
+			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.required;
 		default:
 			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.important;
+	}
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$currentViewToString = function (currentView) {
+	var _p5 = currentView;
+	if (_p5.ctor === 'SearchView') {
+		return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.searchView;
+	} else {
+		return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.editView;
 	}
 };
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties = function (field) {
@@ -131,42 +156,12 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToTriples = function (mo
 		_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(model));
 };
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = function (model) {
-	var _p5 = model;
-	switch (_p5.ctor) {
+	var _p6 = model;
+	switch (_p6.ctor) {
 		case 'CheckboxWidget':
-			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p5._0);
+			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p6._0);
 		case 'IncSpinnerWidget':
-			var _p6 = _p5._0;
-			return A2(
-				_elm_lang$core$Basics_ops['++'],
-				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p6.field),
-				{
-					ctor: '::',
-					_0: {
-						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
-						_1: _elm_lang$core$Basics$toString(_p6.minimum)
-					},
-					_1: {
-						ctor: '::',
-						_0: {
-							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
-							_1: _elm_lang$core$Basics$toString(_p6.maximum)
-						},
-						_1: {
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
-								_1: _elm_lang$core$Basics$toString(_p6.steps)
-							},
-							_1: {ctor: '[]'}
-						}
-					}
-				});
-		case 'MediumTextWidget':
-			var _p7 = _p5._0;
+			var _p7 = _p6._0;
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p7.field),
@@ -174,21 +169,29 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
-						_1: _elm_lang$core$Basics$toString(_p7.maxLength)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
+						_1: _elm_lang$core$Basics$toString(_p7.minimum)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex,
-							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p7.regex)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
+							_1: _elm_lang$core$Basics$toString(_p7.maximum)
 						},
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
+								_1: _elm_lang$core$Basics$toString(_p7.steps)
+							},
+							_1: {ctor: '[]'}
+						}
 					}
 				});
-		case 'BoundedListBoxWidget':
-			var _p8 = _p5._0;
+		case 'MediumTextWidget':
+			var _p8 = _p6._0;
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p8.field),
@@ -196,21 +199,21 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering,
-						_1: A2(_elm_lang$core$Maybe$withDefault, '', _p8.filtering)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
+						_1: _elm_lang$core$Basics$toString(_p8.maxLength)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting,
-							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p8.sorting)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex,
+							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p8.regex)
 						},
 						_1: {ctor: '[]'}
 					}
 				});
-		case 'UnboundedListBoxWidget':
-			var _p9 = _p5._0;
+		case 'BoundedListBoxWidget':
+			var _p9 = _p6._0;
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p9.field),
@@ -231,8 +234,8 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 						_1: {ctor: '[]'}
 					}
 				});
-		case 'RangeSliderWidget':
-			var _p10 = _p5._0;
+		case 'UnboundedListBoxWidget':
+			var _p10 = _p6._0;
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p10.field),
@@ -240,61 +243,61 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering,
+						_1: A2(_elm_lang$core$Maybe$withDefault, '', _p10.filtering)
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting,
+							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p10.sorting)
+						},
+						_1: {ctor: '[]'}
+					}
+				});
+		case 'RangeSliderWidget':
+			var _p11 = _p6._0;
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p11.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
 						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
-						_1: _elm_lang$core$Basics$toString(_p10.minimum)
+						_1: _elm_lang$core$Basics$toString(_p11.minimum)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
 							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
-							_1: _elm_lang$core$Basics$toString(_p10.maximum)
+							_1: _elm_lang$core$Basics$toString(_p11.maximum)
 						},
 						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
 								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
-								_1: _elm_lang$core$Basics$toString(_p10.steps)
+								_1: _elm_lang$core$Basics$toString(_p11.steps)
 							},
 							_1: {ctor: '[]'}
 						}
 					}
 				});
 		case 'DateViewerWidget':
-			var _p11 = _p5._0;
-			return A2(
-				_elm_lang$core$Basics_ops['++'],
-				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p11.field),
-				{
-					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.format, _1: _p11.format},
-					_1: {ctor: '[]'}
-				});
-		case 'LongTextWidget':
-			var _p12 = _p5._0;
+			var _p12 = _p6._0;
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p12.field),
 				{
 					ctor: '::',
-					_0: {
-						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
-						_1: _elm_lang$core$Basics$toString(_p12.maxLength)
-					},
-					_1: {
-						ctor: '::',
-						_0: {
-							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex,
-							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p12.regex)
-						},
-						_1: {ctor: '[]'}
-					}
+					_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.format, _1: _p12.format},
+					_1: {ctor: '[]'}
 				});
-		case 'TextAreaWidget':
-			var _p13 = _p5._0;
+		case 'LongTextWidget':
+			var _p13 = _p6._0;
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p13.field),
@@ -302,21 +305,21 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
-						_1: _elm_lang$core$Basics$toString(_p13.minLines)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
+						_1: _elm_lang$core$Basics$toString(_p13.maxLength)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
-							_1: _elm_lang$core$Basics$toString(_p13.maxLines)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex,
+							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p13.regex)
 						},
 						_1: {ctor: '[]'}
 					}
 				});
-		case 'MarkdownAreaWidget':
-			var _p14 = _p5._0;
+		case 'TextAreaWidget':
+			var _p14 = _p6._0;
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p14.field),
@@ -337,8 +340,8 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 						_1: {ctor: '[]'}
 					}
 				});
-		default:
-			var _p15 = _p5._0;
+		case 'MarkdownAreaWidget':
+			var _p15 = _p6._0;
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p15.field),
@@ -346,15 +349,37 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
+						_1: _elm_lang$core$Basics$toString(_p15.minLines)
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
+							_1: _elm_lang$core$Basics$toString(_p15.maxLines)
+						},
+						_1: {ctor: '[]'}
+					}
+				});
+		default:
+			var _p16 = _p6._0;
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p16.field),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
 						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering,
-						_1: A2(_elm_lang$core$Maybe$withDefault, '', _p15.filtering)
+						_1: A2(_elm_lang$core$Maybe$withDefault, '', _p16.filtering)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
 							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting,
-							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p15.sorting)
+							_1: A2(_elm_lang$core$Maybe$withDefault, '', _p16.sorting)
 						},
 						_1: {ctor: '[]'}
 					}
@@ -441,6 +466,39 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Triple = F3(
 	function (a, b, c) {
 		return {subject: a, predicate: b, object: c};
 	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$select = _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Triple(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection);
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$mainSelectionToTriples = function (model) {
+	return {
+		ctor: '::',
+		_0: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.language, model.language),
+		_1: {
+			ctor: '::',
+			_0: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.viewMode, model.viewMode),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select,
+					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.currentView,
+					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$currentViewToString(model.currentView)),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select,
+						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.searchFrom,
+						_elm_lang$core$Basics$toString(model.searchSelection.from)),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select,
+							_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.searchTo,
+							_elm_lang$core$Basics$toString(model.searchSelection.to)),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}
+	};
+};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$FieldModel = F7(
 	function (a, b, c, d, e, f, g) {
 		return {id: a, position: b, label: c, hint: d, prominence: e, style: f, query: g};
@@ -477,34 +535,37 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$DivisionModel = F2(
 	function (a, b) {
 		return {field: a, sections: b};
 	});
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$PanelValues = F2(
-	function (a, b) {
-		return {model: a, values: b};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$SearchSelection = F5(
+	function (a, b, c, d, e) {
+		return {divisionId: a, term: b, from: c, to: d, selected: e};
 	});
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$SectionValues = F2(
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$EditSelection = F2(
 	function (a, b) {
-		return {model: a, values: b};
+		return {divisionId: a, instanceId: b};
 	});
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$DivisionValues = F2(
-	function (a, b) {
-		return {model: a, values: b};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$MainSelection = F5(
+	function (a, b, c, d, e) {
+		return {language: a, viewMode: b, currentView: c, searchSelection: d, editSelection: e};
 	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Important = {ctor: 'Important'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Required = {ctor: 'Required'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Visible = {ctor: 'Visible'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$ReadOnly = {ctor: 'ReadOnly'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Hidden = {ctor: 'Hidden'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toProminence = function (str) {
-	var _p16 = str;
-	if (_p16.ctor === 'Nothing') {
+	var _p17 = str;
+	if (_p17.ctor === 'Nothing') {
 		return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Visible;
 	} else {
-		switch (_p16._0) {
+		switch (_p17._0) {
 			case 'http://flarebyte.github.io/ontologies/2018/user-interface#visible':
 				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Visible;
 			case 'http://flarebyte.github.io/ontologies/2018/user-interface#hidden':
 				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Hidden;
 			case 'http://flarebyte.github.io/ontologies/2018/user-interface#read-only':
 				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$ReadOnly;
+			case 'http://flarebyte.github.io/ontologies/2018/user-interface#required':
+				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Required;
 			case 'http://flarebyte.github.io/ontologies/2018/user-interface#important':
 				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Important;
 			default:
@@ -543,6 +604,54 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createFieldModel = F2(
 				A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.query, keyValueList))
 		};
 	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$EditView = {ctor: 'EditView'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$SearchView = {ctor: 'SearchView'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toCurrentView = function (str) {
+	var _p18 = str;
+	if (_p18.ctor === 'Nothing') {
+		return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$SearchView;
+	} else {
+		switch (_p18._0) {
+			case 'http://flarebyte.github.io/ontologies/2018/user-interface#search-view':
+				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$SearchView;
+			case 'http://flarebyte.github.io/ontologies/2018/user-interface#edit-view':
+				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$EditView;
+			default:
+				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$SearchView;
+		}
+	}
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createMainSelection = function (tripleList) {
+	return {
+		language: A2(
+			_elm_lang$core$Maybe$withDefault,
+			'',
+			A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.language, tripleList)),
+		viewMode: A2(
+			_elm_lang$core$Maybe$withDefault,
+			'',
+			A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.viewMode, tripleList)),
+		currentView: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toCurrentView(
+			A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.currentView, tripleList)),
+		searchSelection: {
+			divisionId: A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.divisionId, tripleList),
+			term: A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.searchTerm, tripleList),
+			from: A2(
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
+				0,
+				A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.searchFrom, tripleList)),
+			to: A2(
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$toIntOrDefault,
+				1000,
+				A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.searchTo, tripleList)),
+			selected: A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperties, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.searchSelected, tripleList)
+		},
+		editSelection: {
+			divisionId: A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.divisionId, tripleList),
+			instanceId: A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.instanceId, tripleList)
+		}
+	};
+};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$BoundedRadioWidget = function (a) {
 	return {ctor: 'BoundedRadioWidget', _0: a};
 };
@@ -583,8 +692,8 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createWidgetModel = F2(
 			_elm_lang$core$Maybe$withDefault,
 			'long-text',
 			A3(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType, tripleList));
-		var _p17 = widgetType;
-		switch (_p17) {
+		var _p19 = widgetType;
+		switch (_p19) {
 			case 'http://flarebyte.github.io/ontologies/2018/user-interface#checkbox':
 				return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$CheckboxWidget(fieldModel);
 			case 'http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner':
@@ -745,6 +854,3 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$createDivisionModel = F2(
 				A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findSectionsInDivision, divisionId, tripleList))
 		};
 	});
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Widget = function (a) {
-	return {ctor: 'Widget', _0: a};
-};

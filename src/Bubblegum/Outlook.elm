@@ -12,11 +12,11 @@ import Set exposing (Set)
 import Maybe
 import Tuple exposing(first, second)
 import String
-import Regex exposing (Regex)
 import Result
-import Maybe.Extra exposing(or)
 
-type Prominence = Hidden | ReadOnly| Visible | Important
+type Prominence = Hidden | ReadOnly | Visible | Required| Important
+
+type CurrentView = SearchView | EditView
 
 type alias Triple = { subject : String, predicate : String, object: String }
 
@@ -59,8 +59,21 @@ u =
     , hidden = "http://flarebyte.github.io/ontologies/2018/user-interface#hidden"
     , readOnly = "http://flarebyte.github.io/ontologies/2018/user-interface#read-only"
     , visible = "http://flarebyte.github.io/ontologies/2018/user-interface#visible"
+    , required = "http://flarebyte.github.io/ontologies/2018/user-interface#required"
     , important = "http://flarebyte.github.io/ontologies/2018/user-interface#important"
-   }
+    , mainSelection = "http://flarebyte.github.io/ontologies/2018/user-interface#main-selection"
+    , language = "http://flarebyte.github.io/ontologies/2018/user-interface#language"
+    , viewMode = "http://flarebyte.github.io/ontologies/2018/user-interface#view-mode" --ex: /admin
+    , divisionId = "http://flarebyte.github.io/ontologies/2018/user-interface#division-id" --ex: /character
+    , instanceId = "http://flarebyte.github.io/ontologies/2018/user-interface#instance-id"
+    , searchTerm = "http://flarebyte.github.io/ontologies/2018/user-interface#search-term"
+    , searchFrom = "http://flarebyte.github.io/ontologies/2018/user-interface#search-from"
+    , searchTo = "http://flarebyte.github.io/ontologies/2018/user-interface#search-to"
+    , searchSelected = "http://flarebyte.github.io/ontologies/2018/user-interface#search-selected"
+    , currentView = "http://flarebyte.github.io/ontologies/2018/user-interface#current-view"
+    , searchView = "http://flarebyte.github.io/ontologies/2018/user-interface#search-view"
+    , editView = "http://flarebyte.github.io/ontologies/2018/user-interface#edit-view"
+  }
  
 
 {-| The core representation of a field.
@@ -216,30 +229,32 @@ type alias DivisionModel = {
         , sections: List SectionModel
     }
 
-{-| A widget possibly containing a value.
+{-| A model for the search selection.
 -}
-type WidgetValue = Widget (Maybe String)
+type alias SearchSelection = {
+        divisionId: Maybe String
+        , term: Maybe String
+        , from: Int
+        , to: Int
+        , selected: Set String -- unique instance ids
+    }
 
-{-| A panel possibly containing values.
+{-| A model for the edit selection.
 -}
-type alias PanelValues = {
-    model: PanelModel
-    , values: List WidgetValue
-}
+type alias EditSelection = {
+        divisionId: Maybe String
+        , instanceId: Maybe String
+     }    
 
-{-| A section containing values for panels.
+{-| A model for the main selection.
 -}
-type alias SectionValues = {
-    model: SectionModel
-    , values: List PanelValues
-}
-    
-{-| A division containing values for sections.
--}
-type alias DivisionValues = {
-    model: DivisionModel
-    , values: List SectionValues
-}
+type alias MainSelection = {
+        language: String
+        , viewMode: String
+        , currentView : CurrentView
+        , searchSelection : SearchSelection
+        , editSelection : EditSelection
+    }
 
 findProperty : String -> String -> List Triple -> Maybe String
 findProperty subject name list =
@@ -253,6 +268,10 @@ findProperty subject name list =
             else
                 findProperty subject name rest
 
+findProperties: String -> String -> List Triple -> Set String
+findProperties subject predicate list =
+    List.filter (\t -> t.subject == subject && t.predicate == predicate) list |> List.map .object |> Set.fromList
+
 toIntOrDefault:  Int -> Maybe String -> Int
 toIntOrDefault default str =
     case str of
@@ -260,6 +279,7 @@ toIntOrDefault default str =
             default
         Just s ->
             String.toInt s |> Result.withDefault default
+
 
 toProminence:  Maybe String -> Prominence
 toProminence str =
@@ -272,6 +292,8 @@ toProminence str =
             Hidden
         Just "http://flarebyte.github.io/ontologies/2018/user-interface#read-only" ->
             ReadOnly
+        Just "http://flarebyte.github.io/ontologies/2018/user-interface#required" ->
+            Required
         Just "http://flarebyte.github.io/ontologies/2018/user-interface#important" ->
             Important
         Just anything ->
@@ -283,9 +305,29 @@ prominenceToString prominence =
         Hidden -> u.hidden
         ReadOnly -> u.readOnly
         Visible -> u.visible
+        Required -> u.required
         Important -> u.important
 
 
+toCurrentView:  Maybe String -> CurrentView
+toCurrentView str =
+    case str of
+        Nothing ->
+            SearchView
+        Just "http://flarebyte.github.io/ontologies/2018/user-interface#search-view" ->
+            SearchView
+        Just "http://flarebyte.github.io/ontologies/2018/user-interface#edit-view" ->
+            EditView
+        Just anything ->
+            SearchView
+
+currentViewToString: CurrentView -> String
+currentViewToString currentView =
+    case currentView of
+        SearchView -> u.searchView
+        EditView -> u.editView
+        
+       
 createFieldModel: String -> List Triple -> FieldModel
 createFieldModel  subject keyValueList =
     {
@@ -506,3 +548,40 @@ createDivisionModel divisionId tripleList =
 divisionModelToTriples: DivisionModel -> List Triple
 divisionModelToTriples model =
     fieldToTriples model.field ++ (List.map sectionModelToTriples model.sections |> List.concat)
+
+
+{-| Create the main selection
+-}
+createMainSelection: List Triple -> MainSelection
+createMainSelection tripleList =
+    {
+        language = findProperty u.mainSelection u.language tripleList |> Maybe.withDefault ""
+        , viewMode = findProperty u.mainSelection u.viewMode tripleList |> Maybe.withDefault ""
+        , currentView = findProperty u.mainSelection u.currentView tripleList |> toCurrentView
+        , searchSelection = {
+            divisionId = findProperty u.mainSelection u.divisionId tripleList
+            , term = findProperty u.mainSelection u.searchTerm tripleList
+            , from = findProperty u.mainSelection u.searchFrom tripleList |> toIntOrDefault 0
+            , to = findProperty u.mainSelection u.searchTo tripleList |> toIntOrDefault 1000
+            , selected = findProperties u.mainSelection u.searchSelected tripleList
+        }
+        , editSelection = {
+            divisionId = findProperty u.mainSelection u.divisionId tripleList
+            , instanceId = findProperty u.mainSelection u.instanceId tripleList
+        }
+    }
+
+select = Triple u.mainSelection
+
+{-| Converts a main selection model to a list of triples
+-}
+mainSelectionToTriples: MainSelection -> List Triple
+mainSelectionToTriples model =
+    select u.language model.language 
+    :: select u.viewMode model.viewMode
+    :: select u.currentView (model.currentView |> currentViewToString)
+    -- :: select u.divisionId model.searchSelection.divisionId
+    :: select u.searchFrom (model.searchSelection.from |> toString)
+    :: select u.searchTo (model.searchSelection.to |> toString)  
+    :: []
+   
