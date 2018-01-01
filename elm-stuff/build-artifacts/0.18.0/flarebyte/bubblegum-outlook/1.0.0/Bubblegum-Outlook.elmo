@@ -466,39 +466,6 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Triple = F3(
 	function (a, b, c) {
 		return {subject: a, predicate: b, object: c};
 	});
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$select = _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Triple(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mainSelection);
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$mainSelectionToTriples = function (model) {
-	return {
-		ctor: '::',
-		_0: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.language, model.language),
-		_1: {
-			ctor: '::',
-			_0: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select, _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.viewMode, model.viewMode),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select,
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.currentView,
-					_flarebyte$bubblegum_outlook$Bubblegum_Outlook$currentViewToString(model.currentView)),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select,
-						_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.searchFrom,
-						_elm_lang$core$Basics$toString(model.searchSelection.from)),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_flarebyte$bubblegum_outlook$Bubblegum_Outlook$select,
-							_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.searchTo,
-							_elm_lang$core$Basics$toString(model.searchSelection.to)),
-						_1: {ctor: '[]'}
-					}
-				}
-			}
-		}
-	};
-};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$FieldModel = F7(
 	function (a, b, c, d, e, f, g) {
 		return {id: a, position: b, label: c, hint: d, prominence: e, style: f, query: g};
