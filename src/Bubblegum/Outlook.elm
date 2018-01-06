@@ -33,8 +33,10 @@ u =
     , style = "http://flarebyte.github.io/ontologies/2018/user-interface#style"
     , query = "http://flarebyte.github.io/ontologies/2018/user-interface#query"
     , icon = "http://flarebyte.github.io/ontologies/2018/user-interface#icon"
+    , validator = "http://flarebyte.github.io/ontologies/2018/user-interface#validator" --ex:email
     , helpValid = "http://flarebyte.github.io/ontologies/2018/user-interface#help-valid"
     , helpInvalid = "http://flarebyte.github.io/ontologies/2018/user-interface#help-invalid"
+    , traits = "http://flarebyte.github.io/ontologies/2018/user-interface#traits" -- custom traits of the component
     , regex = "http://flarebyte.github.io/ontologies/2018/user-interface#regex"
     , placeholder = "http://flarebyte.github.io/ontologies/2018/user-interface#placeholder"
     , maxLength = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length"
@@ -101,8 +103,10 @@ type alias FieldModel = {
     , style: Maybe String
     , query: Maybe String
     , icon: Maybe String
+    , validator: Maybe String
     , helpValid: Maybe String
     , helpInvalid: Maybe String
+    , traits: Set String
     }
 
 {-| A model for a single line of text.
@@ -325,7 +329,18 @@ currentViewToString currentView =
         SearchView -> u.searchView
         EditView -> u.editView
         
-       
+toSetOfStrings: Maybe String -> Set String
+toSetOfStrings value =
+    case value of
+        Nothing ->Set.empty
+        Just something -> String.split ";" something |> Set.fromList
+
+fromSetOfStrings: Set String -> Maybe String
+fromSetOfStrings value =
+    case (Set.toList value) of
+        [] -> Nothing
+        list -> list |> String.join ";" |> Just
+
 createFieldModel: String -> List Triple -> FieldModel
 createFieldModel  subject keyValueList =
     {
@@ -337,8 +352,10 @@ createFieldModel  subject keyValueList =
     , style = findProperty subject u.style keyValueList
     , query = findProperty subject u.query keyValueList
     , icon = findProperty subject u.icon keyValueList
+    , validator = findProperty subject u.validator keyValueList
     , helpValid = findProperty subject u.helpValid keyValueList
     , helpInvalid = findProperty subject u.helpInvalid keyValueList
+    , traits = findProperty subject u.traits keyValueList |> toSetOfStrings
    }
  
 
@@ -439,8 +456,10 @@ fieldToProperties field =
     , (u.query, field.query)
     , (u.style, field.style)
     , (u.icon, field.icon)
+    , (u.validator, field.validator)
     , (u.helpValid, field.helpValid)
     , (u.helpInvalid, field.helpInvalid)
+    , (u.traits, field.traits |> fromSetOfStrings)
     ]
 
 fieldToTriples:  FieldModel -> List Triple
