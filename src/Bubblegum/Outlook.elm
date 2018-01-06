@@ -33,6 +33,7 @@ u =
     , style = "http://flarebyte.github.io/ontologies/2018/user-interface#style"
     , query = "http://flarebyte.github.io/ontologies/2018/user-interface#query"
     , regex = "http://flarebyte.github.io/ontologies/2018/user-interface#regex"
+    , placeholder = "http://flarebyte.github.io/ontologies/2018/user-interface#placeholder"
     , maxLength = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length"
     , minLines = "http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines"
     , maxLines = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines"
@@ -103,6 +104,7 @@ type alias FieldModel = {
 type alias TextModel = {
     field: FieldModel
     , regex: Maybe String
+    , placeholder: Maybe String
     , maxLength: Maybe Int
     }
 
@@ -112,6 +114,7 @@ type alias TextAreaModel = {
     field: FieldModel
     , minLines: Maybe Int
     , maxLines: Maybe Int
+    , placeholder: Maybe String
     , languageSyntax: Maybe String
     }
 
@@ -360,6 +363,7 @@ createWidgetModel subject tripleList =
             "http://flarebyte.github.io/ontologies/2018/user-interface#medium-text" ->
                 MediumTextWidget { field = fieldModel
                     , regex = findProperty subject u.regex tripleList
+                    , placeholder = findProperty subject u.placeholder tripleList
                     , maxLength = findProperty subject u.maxLength tripleList |> toMaybeInt
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox" ->    
@@ -389,6 +393,7 @@ createWidgetModel subject tripleList =
             "http://flarebyte.github.io/ontologies/2018/user-interface#long-text" ->
                 LongTextWidget { field = fieldModel
                     , regex = findProperty subject u.regex tripleList
+                    , placeholder = findProperty subject u.placeholder tripleList
                     , maxLength = findProperty subject u.maxLength tripleList |> toMaybeInt
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#text-area" ->
@@ -396,6 +401,7 @@ createWidgetModel subject tripleList =
                     field = fieldModel
                     , minLines = findProperty subject u.minLines tripleList |> toMaybeInt
                     , maxLines = findProperty subject u.maxLines tripleList |> toMaybeInt
+                    , placeholder = findProperty subject u.placeholder tripleList
                     , languageSyntax = findProperty subject u.languageSyntax tripleList
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio" ->    
@@ -407,6 +413,7 @@ createWidgetModel subject tripleList =
             _ ->
                 MediumTextWidget { field = fieldModel
                     , regex = findProperty subject u.regex tripleList
+                    , placeholder = findProperty subject u.placeholder tripleList
                     , maxLength = findProperty subject u.maxLength tripleList |> toMaybeInt
                 }
 
@@ -452,7 +459,7 @@ widgetModelToPropertyList model =
         IncSpinnerWidget widget ->
             fieldToProperties widget.field ++ [(u.widgetType, Just u.incSpinner), (u.minimumInt, widget.minimum |> toMaybeString), (u.maximumInt, widget.maximum |> toMaybeString), (u.stepsInt, widget.steps |> toMaybeString)]
         MediumTextWidget widget ->
-            fieldToProperties widget.field ++ [(u.widgetType, Just u.mediumText), (u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.mediumText), (u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex), (u.placeholder, widget.placeholder)]
         BoundedListBoxWidget widget ->
             fieldToProperties widget.field ++ [(u.widgetType, Just u.boundedListbox), (u.filtering, widget.filtering), (u.sorting, widget.sorting)]
         UnboundedListBoxWidget widget ->
@@ -462,9 +469,9 @@ widgetModelToPropertyList model =
         DateViewerWidget widget ->
             fieldToProperties widget.field ++ [(u.widgetType, Just u.dateViewer), (u.format, Just widget.format)]
         LongTextWidget widget ->
-            fieldToProperties widget.field ++ [(u.widgetType, Just u.longText), (u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.longText), (u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex), (u.placeholder, widget.placeholder)]
         TextAreaWidget widget ->
-            fieldToProperties widget.field ++ [(u.widgetType, Just u.textArea), (u.languageSyntax, widget.languageSyntax), (u.minLines, widget.minLines |> toMaybeString), (u.maxLines, widget.maxLines |> toMaybeString)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.textArea), (u.languageSyntax, widget.languageSyntax), (u.minLines, widget.minLines |> toMaybeString), (u.maxLines, widget.maxLines |> toMaybeString), (u.placeholder, widget.placeholder)]
         BoundedRadioWidget widget ->
             fieldToProperties widget.field ++ [(u.widgetType, Just u.boundedRadio), (u.filtering, widget.filtering), (u.sorting, widget.sorting)]
 
