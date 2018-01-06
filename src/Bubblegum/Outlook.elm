@@ -52,7 +52,7 @@ u =
     , longText = "http://flarebyte.github.io/ontologies/2018/user-interface#long-text"
     , textArea = "http://flarebyte.github.io/ontologies/2018/user-interface#text-area"
     , markdownArea = "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area"
-    , boundedradio = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio"
+    , boundedRadio = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio"
     , partOfPanel = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel"
     , partOfSection = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section"
     , partOfDivision = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-division"
@@ -455,27 +455,27 @@ widgetModelToPropertyList:  WidgetModel -> List (String, Maybe String)
 widgetModelToPropertyList model =
     case model of
         CheckboxWidget widget ->
-            fieldToProperties widget
+            fieldToProperties widget ++ [(u.widgetType, Just u.checkbox)]
         IncSpinnerWidget widget ->
-            fieldToProperties widget.field ++ [(u.minimumInt, widget.minimum |> toMaybeString), (u.maximumInt, widget.maximum |> toMaybeString), (u.stepsInt, widget.steps |> toMaybeString)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.incSpinner), (u.minimumInt, widget.minimum |> toMaybeString), (u.maximumInt, widget.maximum |> toMaybeString), (u.stepsInt, widget.steps |> toMaybeString)]
         MediumTextWidget widget ->
-            fieldToProperties widget.field ++ [(u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.mediumText), (u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex)]
         BoundedListBoxWidget widget ->
-            fieldToProperties widget.field ++ [(u.filtering, widget.filtering), (u.sorting, widget.sorting)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.boundedListbox), (u.filtering, widget.filtering), (u.sorting, widget.sorting)]
         UnboundedListBoxWidget widget ->
-            fieldToProperties widget.field ++ [(u.filtering, widget.filtering), (u.sorting, widget.sorting)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.unboundedListbox), (u.filtering, widget.filtering), (u.sorting, widget.sorting)]
         RangeSliderWidget widget ->
-            fieldToProperties widget.field ++ [(u.minimumInt, widget.minimum |> toMaybeString), (u.maximumInt, widget.maximum |> toMaybeString), (u.stepsInt, widget.steps |> toMaybeString)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.rangeSlider), (u.minimumInt, widget.minimum |> toMaybeString), (u.maximumInt, widget.maximum |> toMaybeString), (u.stepsInt, widget.steps |> toMaybeString)]
         DateViewerWidget widget ->
-            fieldToProperties widget.field ++ [(u.format, Just widget.format)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.dateViewer), (u.format, Just widget.format)]
         LongTextWidget widget ->
-            fieldToProperties widget.field ++ [(u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.longText), (u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex)]
         TextAreaWidget widget ->
-            fieldToProperties widget.field ++ [(u.minLines, widget.minLines |> toMaybeString), (u.maxLines, widget.maxLines |> toMaybeString)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.textArea), (u.minLines, widget.minLines |> toMaybeString), (u.maxLines, widget.maxLines |> toMaybeString)]
         MarkdownAreaWidget widget ->
-            fieldToProperties widget.field ++ [(u.minLines, widget.minLines |> toMaybeString), (u.maxLines, widget.maxLines |> toMaybeString)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.markdownArea), (u.minLines, widget.minLines |> toMaybeString), (u.maxLines, widget.maxLines |> toMaybeString)]
         BoundedRadioWidget widget ->
-            fieldToProperties widget.field ++ [(u.filtering, widget.filtering), (u.sorting, widget.sorting)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.boundedRadio), (u.filtering, widget.filtering), (u.sorting, widget.sorting)]
 
 widgetModelToFieldModel:  WidgetModel -> FieldModel
 widgetModelToFieldModel model =

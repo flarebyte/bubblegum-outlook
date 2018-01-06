@@ -119,7 +119,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findProperty = F3(
 			}
 		}
 	});
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u = {id: 'http://flarebyte.github.io/ontologies/2018/user-interface#id', widgetType: 'http://flarebyte.github.io/ontologies/2018/user-interface#widget-type', position: 'http://flarebyte.github.io/ontologies/2018/user-interface#position', label: 'http://flarebyte.github.io/ontologies/2018/user-interface#label', hint: 'http://flarebyte.github.io/ontologies/2018/user-interface#hint', prominence: 'http://flarebyte.github.io/ontologies/2018/user-interface#prominence', style: 'http://flarebyte.github.io/ontologies/2018/user-interface#style', query: 'http://flarebyte.github.io/ontologies/2018/user-interface#query', regex: 'http://flarebyte.github.io/ontologies/2018/user-interface#regex', maxLength: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length', minLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines', maxLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines', filtering: 'http://flarebyte.github.io/ontologies/2018/user-interface#filtering', sorting: 'http://flarebyte.github.io/ontologies/2018/user-interface#sorting', minimumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int', maximumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int', stepsInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#steps-int', format: 'http://flarebyte.github.io/ontologies/2018/user-interface#format', checkbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#checkbox', incSpinner: 'http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner', mediumText: 'http://flarebyte.github.io/ontologies/2018/user-interface#medium-text', boundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox', unboundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox', rangeSlider: 'http://flarebyte.github.io/ontologies/2018/user-interface#range-slider', dateViewer: 'http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer', longText: 'http://flarebyte.github.io/ontologies/2018/user-interface#long-text', textArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#text-area', markdownArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area', boundedradio: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio', partOfPanel: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel', partOfSection: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section', partOfDivision: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-division', hidden: 'http://flarebyte.github.io/ontologies/2018/user-interface#hidden', readOnly: 'http://flarebyte.github.io/ontologies/2018/user-interface#read-only', visible: 'http://flarebyte.github.io/ontologies/2018/user-interface#visible', required: 'http://flarebyte.github.io/ontologies/2018/user-interface#required', important: 'http://flarebyte.github.io/ontologies/2018/user-interface#important', mainSelection: 'http://flarebyte.github.io/ontologies/2018/user-interface#main-selection', language: 'http://flarebyte.github.io/ontologies/2018/user-interface#language', viewMode: 'http://flarebyte.github.io/ontologies/2018/user-interface#view-mode', divisionId: 'http://flarebyte.github.io/ontologies/2018/user-interface#division-id', instanceId: 'http://flarebyte.github.io/ontologies/2018/user-interface#instance-id', searchTerm: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-term', searchFrom: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-from', searchTo: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-to', searchSelected: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-selected', currentView: 'http://flarebyte.github.io/ontologies/2018/user-interface#current-view', searchView: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-view', editView: 'http://flarebyte.github.io/ontologies/2018/user-interface#edit-view'};
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u = {id: 'http://flarebyte.github.io/ontologies/2018/user-interface#id', widgetType: 'http://flarebyte.github.io/ontologies/2018/user-interface#widget-type', position: 'http://flarebyte.github.io/ontologies/2018/user-interface#position', label: 'http://flarebyte.github.io/ontologies/2018/user-interface#label', hint: 'http://flarebyte.github.io/ontologies/2018/user-interface#hint', prominence: 'http://flarebyte.github.io/ontologies/2018/user-interface#prominence', style: 'http://flarebyte.github.io/ontologies/2018/user-interface#style', query: 'http://flarebyte.github.io/ontologies/2018/user-interface#query', regex: 'http://flarebyte.github.io/ontologies/2018/user-interface#regex', maxLength: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length', minLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines', maxLines: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines', filtering: 'http://flarebyte.github.io/ontologies/2018/user-interface#filtering', sorting: 'http://flarebyte.github.io/ontologies/2018/user-interface#sorting', minimumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int', maximumInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#maximum-int', stepsInt: 'http://flarebyte.github.io/ontologies/2018/user-interface#steps-int', format: 'http://flarebyte.github.io/ontologies/2018/user-interface#format', checkbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#checkbox', incSpinner: 'http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner', mediumText: 'http://flarebyte.github.io/ontologies/2018/user-interface#medium-text', boundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox', unboundedListbox: 'http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox', rangeSlider: 'http://flarebyte.github.io/ontologies/2018/user-interface#range-slider', dateViewer: 'http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer', longText: 'http://flarebyte.github.io/ontologies/2018/user-interface#long-text', textArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#text-area', markdownArea: 'http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area', boundedRadio: 'http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio', partOfPanel: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel', partOfSection: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section', partOfDivision: 'http://flarebyte.github.io/ontologies/2018/user-interface#part-of-division', hidden: 'http://flarebyte.github.io/ontologies/2018/user-interface#hidden', readOnly: 'http://flarebyte.github.io/ontologies/2018/user-interface#read-only', visible: 'http://flarebyte.github.io/ontologies/2018/user-interface#visible', required: 'http://flarebyte.github.io/ontologies/2018/user-interface#required', important: 'http://flarebyte.github.io/ontologies/2018/user-interface#important', mainSelection: 'http://flarebyte.github.io/ontologies/2018/user-interface#main-selection', language: 'http://flarebyte.github.io/ontologies/2018/user-interface#language', viewMode: 'http://flarebyte.github.io/ontologies/2018/user-interface#view-mode', divisionId: 'http://flarebyte.github.io/ontologies/2018/user-interface#division-id', instanceId: 'http://flarebyte.github.io/ontologies/2018/user-interface#instance-id', searchTerm: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-term', searchFrom: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-from', searchTo: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-to', searchSelected: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-selected', currentView: 'http://flarebyte.github.io/ontologies/2018/user-interface#current-view', searchView: 'http://flarebyte.github.io/ontologies/2018/user-interface#search-view', editView: 'http://flarebyte.github.io/ontologies/2018/user-interface#edit-view'};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$prominenceToString = function (prominence) {
 	var _p5 = prominence;
 	switch (_p5.ctor) {
@@ -197,7 +197,18 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 	var _p7 = model;
 	switch (_p7.ctor) {
 		case 'CheckboxWidget':
-			return _flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p7._0);
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p7._0),
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.checkbox)
+					},
+					_1: {ctor: '[]'}
+				});
 		case 'IncSpinnerWidget':
 			var _p8 = _p7._0;
 			return A2(
@@ -207,24 +218,32 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
-						_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p8.minimum)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.incSpinner)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
-							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p8.maximum)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
+							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p8.minimum)
 						},
 						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
-								_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p8.steps)
+								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
+								_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p8.maximum)
 							},
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p8.steps)
+								},
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				});
@@ -237,13 +256,21 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
-						_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p9.maxLength)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.mediumText)
 					},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex, _1: _p9.regex},
-						_1: {ctor: '[]'}
+						_0: {
+							ctor: '_Tuple2',
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
+							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p9.maxLength)
+						},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex, _1: _p9.regex},
+							_1: {ctor: '[]'}
+						}
 					}
 				});
 		case 'BoundedListBoxWidget':
@@ -253,11 +280,19 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p10.field),
 				{
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering, _1: _p10.filtering},
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.boundedListbox)
+					},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting, _1: _p10.sorting},
-						_1: {ctor: '[]'}
+						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering, _1: _p10.filtering},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting, _1: _p10.sorting},
+							_1: {ctor: '[]'}
+						}
 					}
 				});
 		case 'UnboundedListBoxWidget':
@@ -267,11 +302,19 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p11.field),
 				{
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering, _1: _p11.filtering},
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.unboundedListbox)
+					},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting, _1: _p11.sorting},
-						_1: {ctor: '[]'}
+						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering, _1: _p11.filtering},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting, _1: _p11.sorting},
+							_1: {ctor: '[]'}
+						}
 					}
 				});
 		case 'RangeSliderWidget':
@@ -283,24 +326,32 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
-						_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p12.minimum)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.rangeSlider)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
-							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p12.maximum)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minimumInt,
+							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p12.minimum)
 						},
 						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
-								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
-								_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p12.steps)
+								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maximumInt,
+								_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p12.maximum)
 							},
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.stepsInt,
+									_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p12.steps)
+								},
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				});
@@ -313,10 +364,18 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.format,
-						_1: _elm_lang$core$Maybe$Just(_p13.format)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.dateViewer)
 					},
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.format,
+							_1: _elm_lang$core$Maybe$Just(_p13.format)
+						},
+						_1: {ctor: '[]'}
+					}
 				});
 		case 'LongTextWidget':
 			var _p14 = _p7._0;
@@ -327,13 +386,21 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
-						_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p14.maxLength)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.longText)
 					},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex, _1: _p14.regex},
-						_1: {ctor: '[]'}
+						_0: {
+							ctor: '_Tuple2',
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLength,
+							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p14.maxLength)
+						},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.regex, _1: _p14.regex},
+							_1: {ctor: '[]'}
+						}
 					}
 				});
 		case 'TextAreaWidget':
@@ -345,17 +412,25 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
-						_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p15.minLines)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.textArea)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
-							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p15.maxLines)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
+							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p15.minLines)
 						},
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
+								_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p15.maxLines)
+							},
+							_1: {ctor: '[]'}
+						}
 					}
 				});
 		case 'MarkdownAreaWidget':
@@ -367,17 +442,25 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
-						_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p16.minLines)
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.markdownArea)
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple2',
-							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
-							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p16.maxLines)
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.minLines,
+							_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p16.minLines)
 						},
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.maxLines,
+								_1: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$toMaybeString(_p16.maxLines)
+							},
+							_1: {ctor: '[]'}
+						}
 					}
 				});
 		default:
@@ -387,11 +470,19 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$widgetModelToPropertyList = f
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$fieldToProperties(_p17.field),
 				{
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering, _1: _p17.filtering},
+					_0: {
+						ctor: '_Tuple2',
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.widgetType,
+						_1: _elm_lang$core$Maybe$Just(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.boundedRadio)
+					},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting, _1: _p17.sorting},
-						_1: {ctor: '[]'}
+						_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.filtering, _1: _p17.filtering},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: _flarebyte$bubblegum_outlook$Bubblegum_Outlook$u.sorting, _1: _p17.sorting},
+							_1: {ctor: '[]'}
+						}
 					}
 				});
 	}

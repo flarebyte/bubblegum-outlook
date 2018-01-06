@@ -79,6 +79,19 @@ section divisionId sectionId = (createMetadata sectionId) ++ (panelWidgets divis
 division: String -> List Triple
 division divisionId = (createMetadata divisionId) ++ (section divisionId "/s1") ++ (section divisionId "/s2")
 
+myCheckbox = t u.widgetType u.checkbox :: basic
+myIncSpinner = t u.widgetType u.incSpinner :: t u.maximumInt "15" :: basic
+myMediumText = t u.widgetType u.mediumText :: t u.regex "[0-9]+"  :: t u.maxLength "20" :: basic
+myBoundedListbox = t u.widgetType u.boundedListbox :: t u.filtering "my filter" :: t u.sorting "asc" :: basic
+myUnboundedListbox = t u.widgetType u.unboundedListbox :: t u.filtering "my filter" :: t u.sorting "asc" :: basic
+myRangeSlider = t u.widgetType u.rangeSlider :: t u.minimumInt "7" :: t u.maximumInt "13" :: t u.stepsInt "3" :: basic
+myDateViewer = t u.widgetType u.dateViewer :: t u.format "YYYY" :: basic
+myLongText = t u.widgetType u.longText :: t u.regex "[0-9]+"  :: t u.maxLength "20" :: basic
+myTextArea = t u.widgetType u.textArea :: t u.minLines "12" :: t u.maxLines "15" :: basic
+myMarkdownArea = t u.widgetType u.markdownArea :: t u.minLines "12" :: t u.maxLines "15" :: basic
+myBoundedRadio =  t u.widgetType u.boundedRadio :: t u.filtering "my filter" :: t u.sorting "asc" :: basic
+
+
 all : Test
 all =
     describe "Bubblegum.Outlook"
@@ -86,65 +99,65 @@ all =
             [ test "create a checkbox" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId ( t u.widgetType u.checkbox :: t "anything" "some noise" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                    (basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId ( t "anything" "some noise" :: myCheckbox) |> widgetModelToTriples |> List.sortBy .predicate)
+                    (myCheckbox |> List.sortBy .predicate)               
              
            ,  test "create a inc-spinner" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.incSpinner :: t u.maximumInt "15" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                   (t u.maximumInt "15" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myIncSpinner |> widgetModelToTriples |> List.sortBy .predicate)
+                    (myIncSpinner |> List.sortBy .predicate)               
               
            ,  test "create a medium-text" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.mediumText :: t u.regex "[0-9]+"  :: t u.maxLength "20" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                   (t u.regex "[0-9]+" :: t u.maxLength "20" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myMediumText |> widgetModelToTriples |> List.sortBy .predicate)
+                    (myMediumText |> List.sortBy .predicate)               
               
            ,  test "create a bounded-listbox" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.boundedListbox :: t u.filtering "my filter" :: t u.sorting "asc" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                   (t u.filtering "my filter" :: t u.sorting "asc" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myBoundedListbox |> widgetModelToTriples |> List.sortBy .predicate)
+                    (myBoundedListbox |> List.sortBy .predicate)               
               
            , test "create a unbounded-listbox" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.unboundedListbox :: t u.filtering "my filter" :: t u.sorting "asc" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                   (t u.filtering "my filter" :: t u.sorting "asc" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myUnboundedListbox |> widgetModelToTriples |> List.sortBy .predicate)
+                    (myUnboundedListbox |> List.sortBy .predicate)               
               
            ,  test "create a range-slider" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.rangeSlider :: t u.minimumInt "7" :: t u.maximumInt "13" :: t u.stepsInt "3" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                   (t u.minimumInt "7" :: t u.maximumInt "13" :: t u.stepsInt "3" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myRangeSlider |> widgetModelToTriples |> List.sortBy .predicate)
+                    (myRangeSlider |> List.sortBy .predicate)               
               
            ,  test "create a date-viewer" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.dateViewer :: t u.format "YYYY" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                    (t u.format "YYYY" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myDateViewer |> widgetModelToTriples |> List.sortBy .predicate)
+                    (myDateViewer |> List.sortBy .predicate)               
               
            ,  test "create a long-text" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.longText :: t u.regex "[0-9]+"  :: t u.maxLength "20" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                   ( t u.regex "[0-9]+"  :: t u.maxLength "20" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myLongText |> widgetModelToTriples |> List.sortBy .predicate)
+                   ( myLongText |> List.sortBy .predicate)               
             ,  test "create a text-area" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.textArea :: t u.minLines "12" :: t u.maxLines "15" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                   (t u.minLines "12" :: t u.maxLines "15" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myTextArea |> widgetModelToTriples |> List.sortBy .predicate)
+                   (myTextArea |> List.sortBy .predicate)               
             ,  test "create a markdown-area" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.markdownArea :: t u.minLines "12" :: t u.maxLines "15" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                   (t u.minLines "12" :: t u.maxLines "15" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myMarkdownArea |> widgetModelToTriples |> List.sortBy .predicate)
+                   (myMarkdownArea |> List.sortBy .predicate)               
            ,  test "create a bounded-radio" <|
                 \() ->
                     Expect.equal
-                    (createWidgetModel subjectId (t u.widgetType u.boundedRadio :: t u.filtering "my filter" :: t u.sorting "asc" :: basic) |> widgetModelToTriples |> List.sortBy .predicate)
-                   (t u.filtering "my filter" :: t u.sorting "asc" :: basic |> List.sortBy .predicate)               
+                    (createWidgetModel subjectId myBoundedRadio|> widgetModelToTriples |> List.sortBy .predicate)
+                   (myBoundedRadio |> List.sortBy .predicate)               
              ]
         , describe "createPanelModel" <|
             [ test "create a panel model" <|
