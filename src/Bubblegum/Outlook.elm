@@ -1,10 +1,10 @@
-module Bubblegum.Outlook exposing (createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples)
+module Bubblegum.Outlook exposing (vocabulary, createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples)
 
 {-| This library provides an easy way of filtering a list of simplified n-triples.
 More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
 
 # Create the model
-@docs  createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples
+@docs  vocabulary, createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples
 
 -}
 import List
@@ -36,6 +36,7 @@ u =
     , maxLength = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length"
     , minLines = "http://flarebyte.github.io/ontologies/2018/user-interface#minimum-lines"
     , maxLines = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-lines"
+    , languageSyntax = "http://flarebyte.github.io/ontologies/2018/user-interface#language-syntax"
     , filtering = "http://flarebyte.github.io/ontologies/2018/user-interface#filtering"
     , sorting = "http://flarebyte.github.io/ontologies/2018/user-interface#sorting"
     , minimumInt = "http://flarebyte.github.io/ontologies/2018/user-interface#minimum-int"
@@ -51,7 +52,6 @@ u =
     , dateViewer = "http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer" 
     , longText = "http://flarebyte.github.io/ontologies/2018/user-interface#long-text"
     , textArea = "http://flarebyte.github.io/ontologies/2018/user-interface#text-area"
-    , markdownArea = "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area"
     , boundedRadio = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio"
     , partOfPanel = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-panel"
     , partOfSection = "http://flarebyte.github.io/ontologies/2018/user-interface#part-of-section"
@@ -75,6 +75,9 @@ u =
     , editView = "http://flarebyte.github.io/ontologies/2018/user-interface#edit-view"
   }
  
+{-| The vocabulary (ontology) supported by the library
+-}
+vocabulary = u
 
 {-| The core representation of a field.
     id: unique id for the field
@@ -109,6 +112,7 @@ type alias TextAreaModel = {
     field: FieldModel
     , minLines: Maybe Int
     , maxLines: Maybe Int
+    , languageSyntax: Maybe String
     }
 
 {-| A model for field representing a relation to a different collection of data.
@@ -183,11 +187,6 @@ A widget representing a multiple lines text area.
 
     TextAreaWidget textAreaModel
 
-## MarkdownAreaWidget
-A widget representing a markdown text area.
-
-    MarkdownAreaWidget textAreaModel
-
 ## BoundedRadioWidget
 A widget representing a radio button.
 
@@ -205,7 +204,6 @@ type WidgetModel =
     | DateViewerWidget DateViewerModel
     | LongTextWidget TextModel
     | TextAreaWidget TextAreaModel
-    | MarkdownAreaWidget TextAreaModel
     | BoundedRadioWidget LinkedFieldModel
 
 {-| A model for a panel containing several widgets.
@@ -398,12 +396,7 @@ createWidgetModel subject tripleList =
                     field = fieldModel
                     , minLines = findProperty subject u.minLines tripleList |> toMaybeInt
                     , maxLines = findProperty subject u.maxLines tripleList |> toMaybeInt
-                }
-            "http://flarebyte.github.io/ontologies/2018/user-interface#markdown-area" ->    
-                MarkdownAreaWidget {
-                    field = fieldModel
-                    , minLines = findProperty subject u.minLines tripleList |> toMaybeInt
-                    , maxLines = findProperty subject u.maxLines tripleList |> toMaybeInt
+                    , languageSyntax = findProperty subject u.languageSyntax tripleList
                 }
             "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-radio" ->    
                 BoundedRadioWidget {
@@ -471,9 +464,7 @@ widgetModelToPropertyList model =
         LongTextWidget widget ->
             fieldToProperties widget.field ++ [(u.widgetType, Just u.longText), (u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex)]
         TextAreaWidget widget ->
-            fieldToProperties widget.field ++ [(u.widgetType, Just u.textArea), (u.minLines, widget.minLines |> toMaybeString), (u.maxLines, widget.maxLines |> toMaybeString)]
-        MarkdownAreaWidget widget ->
-            fieldToProperties widget.field ++ [(u.widgetType, Just u.markdownArea), (u.minLines, widget.minLines |> toMaybeString), (u.maxLines, widget.maxLines |> toMaybeString)]
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.textArea), (u.languageSyntax, widget.languageSyntax), (u.minLines, widget.minLines |> toMaybeString), (u.maxLines, widget.maxLines |> toMaybeString)]
         BoundedRadioWidget widget ->
             fieldToProperties widget.field ++ [(u.widgetType, Just u.boundedRadio), (u.filtering, widget.filtering), (u.sorting, widget.sorting)]
 
@@ -497,8 +488,6 @@ widgetModelToFieldModel model =
         LongTextWidget widget ->
            widget.field
         TextAreaWidget widget ->
-           widget.field
-        MarkdownAreaWidget widget ->
            widget.field
         BoundedRadioWidget widget ->
            widget.field
