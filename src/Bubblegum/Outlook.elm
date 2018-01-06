@@ -232,8 +232,8 @@ type alias DivisionModel = {
 type alias SearchSelection = {
         divisionId: Maybe String
         , term: Maybe String
-        , from: Int
-        , to: Int
+        , from: Maybe Int
+        , to: Maybe Int
         , selected: Set String -- unique instance ids
     }
 
@@ -570,8 +570,8 @@ createMainSelection tripleList =
         , searchSelection = {
             divisionId = findProperty u.mainSelection u.divisionId tripleList
             , term = findProperty u.mainSelection u.searchTerm tripleList
-            , from = findProperty u.mainSelection u.searchFrom tripleList |> toIntOrDefault 0
-            , to = findProperty u.mainSelection u.searchTo tripleList |> toIntOrDefault 1000
+            , from = findProperty u.mainSelection u.searchFrom tripleList |>toMaybeInt
+            , to = findProperty u.mainSelection u.searchTo tripleList |>toMaybeInt
             , selected = findProperties u.mainSelection u.searchSelected tripleList
         }
         , editSelection = {
