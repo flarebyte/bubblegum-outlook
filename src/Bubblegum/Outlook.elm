@@ -32,6 +32,9 @@ u =
     , prominence = "http://flarebyte.github.io/ontologies/2018/user-interface#prominence"
     , style = "http://flarebyte.github.io/ontologies/2018/user-interface#style"
     , query = "http://flarebyte.github.io/ontologies/2018/user-interface#query"
+    , icon = "http://flarebyte.github.io/ontologies/2018/user-interface#icon"
+    , helpValid = "http://flarebyte.github.io/ontologies/2018/user-interface#help-valid"
+    , helpInvalid = "http://flarebyte.github.io/ontologies/2018/user-interface#help-invalid"
     , regex = "http://flarebyte.github.io/ontologies/2018/user-interface#regex"
     , placeholder = "http://flarebyte.github.io/ontologies/2018/user-interface#placeholder"
     , maxLength = "http://flarebyte.github.io/ontologies/2018/user-interface#maximum-length"
@@ -91,12 +94,15 @@ vocabulary = u
 -}
 type alias FieldModel = {
     id: String
-    , position: Int
     , label: String
     , hint: String
     , prominence: Prominence
+    , position: Maybe Int
     , style: Maybe String
     , query: Maybe String
+    , icon: Maybe String
+    , helpValid: Maybe String
+    , helpInvalid: Maybe String
     }
 
 {-| A model for a single line of text.
@@ -273,15 +279,6 @@ findProperties: String -> String -> List Triple -> Set String
 findProperties subject predicate list =
     List.filter (\t -> t.subject == subject && t.predicate == predicate) list |> List.map .object |> Set.fromList
 
-toIntOrDefault:  Int -> Maybe String -> Int
-toIntOrDefault default str =
-    case str of
-        Nothing ->
-            default
-        Just s ->
-            String.toInt s |> Result.withDefault default
-
-
 toProminence:  Maybe String -> Prominence
 toProminence str =
     case str of
@@ -333,13 +330,16 @@ createFieldModel: String -> List Triple -> FieldModel
 createFieldModel  subject keyValueList =
     {
     id = findProperty subject u.id keyValueList |> Maybe.withDefault ""
-    , position = findProperty subject u.position keyValueList |> toIntOrDefault 0
+    , position = findProperty subject u.position keyValueList |> toMaybeInt
     , label= findProperty subject u.label keyValueList |> Maybe.withDefault ""
     , hint = findProperty subject u.hint keyValueList |> Maybe.withDefault ""
     , prominence = findProperty subject u.prominence keyValueList |> toProminence
     , style = findProperty subject u.style keyValueList
     , query = findProperty subject u.query keyValueList
-    }
+    , icon = findProperty subject u.icon keyValueList
+    , helpValid = findProperty subject u.helpValid keyValueList
+    , helpInvalid = findProperty subject u.helpInvalid keyValueList
+   }
  
 
 {-| Create a widget model from a list of tuples.
@@ -437,7 +437,11 @@ fieldToProperties field =
     , (u.hint, Just field.hint)
     , (u.prominence , field.prominence |> prominenceToString |> Just)
     , (u.query, field.query)
-    , (u.style, field.style)]
+    , (u.style, field.style)
+    , (u.icon, field.icon)
+    , (u.helpValid, field.helpValid)
+    , (u.helpInvalid, field.helpInvalid)
+    ]
 
 fieldToTriples:  FieldModel -> List Triple
 fieldToTriples model = createListOfTriple model.id (model |> fieldToProperties)
