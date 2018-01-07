@@ -43,7 +43,7 @@ division divisionId = (createMetadata divisionId) ++ (section divisionId "/s1") 
 
 myCheckbox = t u.widgetType u.checkbox :: basic
 myIncSpinner = t u.widgetType u.incSpinner :: t u.maximumInt "15" :: basic
-myMediumText = t u.widgetType u.mediumText :: t u.placeholder "placeholder" :: t u.icon "my icon" :: t u.traits "alpha;beta" :: t u.regex "[0-9]+"  :: t u.maxLength "20" :: basic
+myMediumText = t u.widgetType u.mediumText :: t u.placeholder "placeholder" :: t u.icon "my icon" :: t u.traits "alpha":: t u.traits "beta" :: t u.regex "[0-9]+"  :: t u.maxLength "20" :: basic
 myBoundedListbox = t u.widgetType u.boundedListbox :: t u.filtering "my filter" :: t u.sorting "asc" :: basic
 myBoundedMultipleSelect = t u.widgetType u.boundedMultipleSelect :: t u.filtering "my filter" :: t u.sorting "asc" :: basic
 myUnboundedListbox = t u.widgetType u.unboundedListbox :: t u.filtering "my filter" :: t u.sorting "asc" :: basic

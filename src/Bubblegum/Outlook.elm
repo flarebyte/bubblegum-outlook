@@ -296,6 +296,10 @@ toProperties: String -> String -> Set String -> List Triple
 toProperties subject predicate set =
     set |> Set.toList |> List.map (\t -> { subject = subject , predicate = predicate, object = t })
 
+toPropertiesAsTuple: String -> Set String -> List (String , Maybe String)
+toPropertiesAsTuple predicate set =
+    set |> Set.toList |> List.map (\t -> ( predicate,  Just t ))
+
 toProminence:  Maybe String -> Prominence
 toProminence str =
     case str of
@@ -340,18 +344,6 @@ currentViewToString currentView =
         SearchView -> u.searchView
         EditView -> u.editView
         
-toSetOfStrings: Maybe String -> Set String
-toSetOfStrings value =
-    case value of
-        Nothing ->Set.empty
-        Just something -> String.split ";" something |> Set.fromList
-
-fromSetOfStrings: Set String -> Maybe String
-fromSetOfStrings value =
-    case (Set.toList value) of
-        [] -> Nothing
-        list -> list |> String.join ";" |> Just
-
 createFieldModel: String -> List Triple -> FieldModel
 createFieldModel  subject keyValueList =
     {
@@ -366,7 +358,7 @@ createFieldModel  subject keyValueList =
     , validator = findProperty subject u.validator keyValueList
     , helpValid = findProperty subject u.helpValid keyValueList
     , helpInvalid = findProperty subject u.helpInvalid keyValueList
-    , traits = findProperty subject u.traits keyValueList |> toSetOfStrings
+    , traits = findProperties subject u.traits keyValueList
    }
  
 
@@ -476,8 +468,7 @@ fieldToProperties field =
     , (u.validator, field.validator)
     , (u.helpValid, field.helpValid)
     , (u.helpInvalid, field.helpInvalid)
-    , (u.traits, field.traits |> fromSetOfStrings)
-    ]
+    ] ++ (toPropertiesAsTuple u.traits field.traits)
 
 fieldToTriples:  FieldModel -> List Triple
 fieldToTriples model = createListOfTriple model.id (model |> fieldToProperties)
