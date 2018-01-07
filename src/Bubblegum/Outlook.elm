@@ -292,6 +292,10 @@ findProperties: String -> String -> List Triple -> Set String
 findProperties subject predicate list =
     List.filter (\t -> t.subject == subject && t.predicate == predicate) list |> List.map .object |> Set.fromList
 
+toProperties: String -> String -> Set String -> List Triple
+toProperties subject predicate set =
+    set |> Set.toList |> List.map (\t -> { subject = subject , predicate = predicate, object = t })
+
 toProminence:  Maybe String -> Prominence
 toProminence str =
     case str of
@@ -640,6 +644,6 @@ mainSelectionToTriples model =
         ,(u.searchTerm, model.searchSelection.term)
         ,(u.searchFrom, (model.searchSelection.from |> Maybe.map toString))
         ,(u.searchTo, (model.searchSelection.to |> Maybe.map toString))
-        ,(u.searchSelected, (model.searchSelection.selected |> fromSetOfStrings)) 
-    ] |> createListOfTriple u.mainSelection
+    ]  |> createListOfTriple u.mainSelection 
+    |> (++) (toProperties u.mainSelection u.searchSelected model.searchSelection.selected)
    

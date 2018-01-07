@@ -55,7 +55,7 @@ myBoundedRadio =  t u.widgetType u.boundedRadio :: t u.filtering "my filter" :: 
 
 ts = tt u.mainSelection
 
-mySearchSelection = ts u.language "en" :: ts u.viewMode "admin" :: ts u.currentView u.searchView :: ts u.divisionId "district13" :: ts u.searchTerm "search me" :: ts u.searchFrom "10" :: ts u.searchTo "20" :: ts u.searchSelected "id12;id123" :: []
+mySearchSelection = ts u.language "en" :: ts u.viewMode "admin" :: ts u.currentView u.searchView :: ts u.divisionId "district13" :: ts u.searchTerm "search me" :: ts u.searchFrom "10" :: ts u.searchTo "20" :: ts u.searchSelected "id1":: ts u.searchSelected "id2" :: []
 
 myEditSelection = ts u.language "en" :: ts u.viewMode "admin" :: ts u.currentView u.editView :: ts u.divisionId "district13" :: ts u.instanceId "/id123"  :: []
 
