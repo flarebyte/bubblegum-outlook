@@ -2,7 +2,7 @@ module Tests exposing (..)
 
 import Test exposing (describe, test, Test)
 import Expect
-import Bubblegum.Outlook exposing (vocabulary, createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples)
+import Bubblegum.Outlook exposing (vocabulary, createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples, createMainSelection, mainSelectionToTriples)
 import Set exposing (Set, fromList, union, diff)
 
 u = vocabulary
@@ -52,6 +52,12 @@ myDateViewer = t u.widgetType u.dateViewer :: t u.format "YYYY" :: t u.traits "a
 myLongText = t u.widgetType u.longText :: t u.placeholder "placeholder" :: t u.helpValid "help valid" :: t u.validator "my validator" :: t u.regex "[0-9]+"  :: t u.maxLength "20" :: basic
 myTextArea = t u.widgetType u.textArea :: t u.placeholder "placeholder" :: t u.languageSyntax "markdown" :: t u.helpInvalid "help invalid" :: t u.minLines "12" :: t u.maxLines "15" :: basic
 myBoundedRadio =  t u.widgetType u.boundedRadio :: t u.filtering "my filter" :: t u.sorting "asc" :: basic
+
+ts = tt u.mainSelection
+
+mySearchSelection = ts u.language "en" :: ts u.viewMode "admin" :: ts u.currentView u.searchView :: ts u.divisionId "district13" :: ts u.searchTerm "search me" :: ts u.searchFrom "10" :: ts u.searchTo "20" :: ts u.searchSelected "id12;id123" :: []
+
+myEditSelection = ts u.language "en" :: ts u.viewMode "admin" :: ts u.currentView u.editView :: ts u.divisionId "district13" :: ts u.instanceId "/id123"  :: []
 
 
 all : Test
@@ -138,5 +144,17 @@ all =
                     Expect.equal
                     (errDiff (division "/d1" |> createDivisionModel "/d1" |> divisionModelToTriples |> normTriples) (division "/d1" |> normTriples))
                     Set.empty
-            ]       
+            ]
+        , describe "main selection" <|
+            [ test "create  search selection" <|
+                \() ->
+                    Expect.equal
+                    (errDiff (mySearchSelection |> createMainSelection |> mainSelectionToTriples |> normTriples) (mySearchSelection |> normTriples))
+                    Set.empty
+               , test "create  edit selection" <|              
+                \() ->
+                    Expect.equal
+                    (errDiff (myEditSelection |> createMainSelection |> mainSelectionToTriples |> normTriples) (myEditSelection |> normTriples))
+                    Set.empty
+            ]                 
         ]

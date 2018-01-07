@@ -1,4 +1,4 @@
-module Bubblegum.Outlook exposing (vocabulary, createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples)
+module Bubblegum.Outlook exposing (vocabulary, createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples, createMainSelection, mainSelectionToTriples)
 
 {-| This library provides an easy way of filtering a list of simplified n-triples.
 More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
@@ -6,6 +6,8 @@ More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
 # Create the model
 @docs  vocabulary, createWidgetModel, widgetModelToTriples, createPanelModel, panelModelToTriples, createSectionModel, sectionModelToTriples, createDivisionModel, divisionModelToTriples
 
+# Selection
+@docs createMainSelection, mainSelectionToTriples
 -}
 import List
 import Set exposing (Set)
@@ -267,9 +269,9 @@ type alias EditSelection = {
 {-| A model for the main selection.
 -}
 type alias MainSelection = {
-        language: String
-        , viewMode: String
-        , currentView : CurrentView
+        language: Maybe String
+        , viewMode: Maybe String
+        , currentView : Maybe CurrentView
         , searchSelection : SearchSelection
         , editSelection : EditSelection
     }
@@ -318,16 +320,14 @@ prominenceToString prominence =
         Important -> u.important
 
 
-toCurrentView:  Maybe String -> CurrentView
+toCurrentView:  String -> CurrentView
 toCurrentView str =
     case str of
-        Nothing ->
+        "http://flarebyte.github.io/ontologies/2018/user-interface#search-view" ->
             SearchView
-        Just "http://flarebyte.github.io/ontologies/2018/user-interface#search-view" ->
-            SearchView
-        Just "http://flarebyte.github.io/ontologies/2018/user-interface#edit-view" ->
+        "http://flarebyte.github.io/ontologies/2018/user-interface#edit-view" ->
             EditView
-        Just anything ->
+        anything ->
             SearchView
 
 currentViewToString: CurrentView -> String
@@ -611,9 +611,9 @@ divisionModelToTriples model =
 createMainSelection: List Triple -> MainSelection
 createMainSelection tripleList =
     {
-        language = findProperty u.mainSelection u.language tripleList |> Maybe.withDefault ""
-        , viewMode = findProperty u.mainSelection u.viewMode tripleList |> Maybe.withDefault ""
-        , currentView = findProperty u.mainSelection u.currentView tripleList |> toCurrentView
+        language = findProperty u.mainSelection u.language tripleList
+        , viewMode = findProperty u.mainSelection u.viewMode tripleList --ex: admin
+        , currentView = findProperty u.mainSelection u.currentView tripleList |> Maybe.map toCurrentView
         , searchSelection = {
             divisionId = findProperty u.mainSelection u.divisionId tripleList
             , term = findProperty u.mainSelection u.searchTerm tripleList
@@ -627,17 +627,19 @@ createMainSelection tripleList =
         }
     }
 
--- select = Triple u.mainSelection
 
--- {-| Converts a main selection model to a list of triples
--- -}
--- mainSelectionToTriples: MainSelection -> List Triple
--- mainSelectionToTriples model =
---     select u.language model.language 
---     :: select u.viewMode model.viewMode
---     :: select u.currentView (model.currentView |> currentViewToString)
---     -- :: select u.divisionId model.searchSelection.divisionId
---     :: select u.searchFrom (model.searchSelection.from |> toString)
---     :: select u.searchTo (model.searchSelection.to |> toString)  
---     :: []
+{-| Converts a main selection model to a list of triples
+-}
+mainSelectionToTriples: MainSelection -> List Triple
+mainSelectionToTriples model =
+    [
+        (u.language, model.language) 
+        ,(u.viewMode, model.viewMode)
+        ,(u.currentView, (model.currentView |> Maybe.map currentViewToString))
+        ,(u.divisionId, model.searchSelection.divisionId)
+        ,(u.searchTerm, model.searchSelection.term)
+        ,(u.searchFrom, (model.searchSelection.from |> Maybe.map toString))
+        ,(u.searchTo, (model.searchSelection.to |> Maybe.map toString))
+        ,(u.searchSelected, (model.searchSelection.selected |> fromSetOfStrings)) 
+    ] |> createListOfTriple u.mainSelection
    
