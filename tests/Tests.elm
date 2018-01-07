@@ -45,6 +45,7 @@ myCheckbox = t u.widgetType u.checkbox :: basic
 myIncSpinner = t u.widgetType u.incSpinner :: t u.maximumInt "15" :: basic
 myMediumText = t u.widgetType u.mediumText :: t u.placeholder "placeholder" :: t u.icon "my icon" :: t u.traits "alpha;beta" :: t u.regex "[0-9]+"  :: t u.maxLength "20" :: basic
 myBoundedListbox = t u.widgetType u.boundedListbox :: t u.filtering "my filter" :: t u.sorting "asc" :: basic
+myBoundedMultipleSelect = t u.widgetType u.boundedMultipleSelect :: t u.filtering "my filter" :: t u.sorting "asc" :: basic
 myUnboundedListbox = t u.widgetType u.unboundedListbox :: t u.filtering "my filter" :: t u.sorting "asc" :: basic
 myRangeSlider = t u.widgetType u.rangeSlider :: t u.minimumInt "7" :: t u.maximumInt "13" :: t u.stepsInt "3" :: basic
 myDateViewer = t u.widgetType u.dateViewer :: t u.format "YYYY" :: t u.traits "alpha":: basic
@@ -80,6 +81,12 @@ all =
                     Expect.equal
                     (createWidgetModel subjectId myBoundedListbox |> widgetModelToTriples |> List.sortBy .predicate)
                     (myBoundedListbox |> List.sortBy .predicate)               
+           
+           ,  test "create a bounded-multipe-select" <|
+                \() ->
+                    Expect.equal
+                    (createWidgetModel subjectId myBoundedMultipleSelect |> widgetModelToTriples |> List.sortBy .predicate)
+                    (myBoundedMultipleSelect |> List.sortBy .predicate)               
               
            , test "create a unbounded-listbox" <|
                 \() ->

@@ -53,6 +53,7 @@ u =
     , incSpinner = "http://flarebyte.github.io/ontologies/2018/user-interface#inc-spinner"
     , mediumText = "http://flarebyte.github.io/ontologies/2018/user-interface#medium-text"
     , boundedListbox = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-listbox"
+    , boundedMultipleSelect = "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-multiple-select"
     , unboundedListbox = "http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox"
     , rangeSlider = "http://flarebyte.github.io/ontologies/2018/user-interface#range-slider"
     , dateViewer = "http://flarebyte.github.io/ontologies/2018/user-interface#date-viewer" 
@@ -175,6 +176,11 @@ A widget representing a listbox with a bounded list of items.
 
     BoundedListBoxWidget linkedFieldModel
 
+## BoundedMultipleSelectWidget
+A widget representing a bounded listbox with multiple selection
+
+    BoundedMultipleSelectWidget linkedFieldModel
+
 ## UnboundedListBoxWidget
 A widget representing a listbox with an unlimited list of items.
 
@@ -212,6 +218,7 @@ type WidgetModel =
     | IncSpinnerWidget IncSpinnerModel
     | MediumTextWidget TextModel
     | BoundedListBoxWidget LinkedFieldModel
+    | BoundedMultipleSelectWidget LinkedFieldModel
     | UnboundedListBoxWidget LinkedFieldModel
     | RangeSliderWidget IncSpinnerModel
     | DateViewerWidget DateViewerModel
@@ -389,6 +396,12 @@ createWidgetModel subject tripleList =
                     , filtering = findProperty subject u.filtering tripleList
                     , sorting = findProperty subject u.sorting tripleList
                 }
+            "http://flarebyte.github.io/ontologies/2018/user-interface#bounded-multiple-select" ->    
+                BoundedMultipleSelectWidget {
+                    field = fieldModel
+                    , filtering = findProperty subject u.filtering tripleList
+                    , sorting = findProperty subject u.sorting tripleList
+                }
             "http://flarebyte.github.io/ontologies/2018/user-interface#unbounded-listbox" ->
                 UnboundedListBoxWidget {
                     field = fieldModel
@@ -485,6 +498,8 @@ widgetModelToPropertyList model =
             fieldToProperties widget.field ++ [(u.widgetType, Just u.mediumText), (u.maxLength, widget.maxLength |> toMaybeString), (u.regex, widget.regex), (u.placeholder, widget.placeholder)]
         BoundedListBoxWidget widget ->
             fieldToProperties widget.field ++ [(u.widgetType, Just u.boundedListbox), (u.filtering, widget.filtering), (u.sorting, widget.sorting)]
+        BoundedMultipleSelectWidget widget ->
+            fieldToProperties widget.field ++ [(u.widgetType, Just u.boundedMultipleSelect), (u.filtering, widget.filtering), (u.sorting, widget.sorting)]
         UnboundedListBoxWidget widget ->
             fieldToProperties widget.field ++ [(u.widgetType, Just u.unboundedListbox), (u.filtering, widget.filtering), (u.sorting, widget.sorting)]
         RangeSliderWidget widget ->
@@ -508,6 +523,8 @@ widgetModelToFieldModel model =
         MediumTextWidget widget ->
            widget.field
         BoundedListBoxWidget widget ->
+           widget.field
+        BoundedMultipleSelectWidget widget ->
            widget.field
         UnboundedListBoxWidget widget ->
            widget.field
