@@ -10,6 +10,7 @@ import Bubblegum.DivisionSelection as DivisionSelection
 import Bubblegum.Outlook exposing (render)
 import Set exposing (Set, fromList, union, diff)
 import Bubblegum.Vocabulary exposing(..)
+import Bubblegum.Bulma.TextWidget exposing (fromModel)
 
 type alias Triple = { subject : String, predicate : String, object: String }
 

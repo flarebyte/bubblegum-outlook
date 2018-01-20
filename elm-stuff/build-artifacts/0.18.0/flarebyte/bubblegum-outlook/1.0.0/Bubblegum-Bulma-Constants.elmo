@@ -1,0 +1,20 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$maybeToList = function (maybe) {
+	var _p0 = maybe;
+	if (_p0.ctor === 'Nothing') {
+		return {ctor: '[]'};
+	} else {
+		return {
+			ctor: '::',
+			_0: _p0._0,
+			_1: {ctor: '[]'}
+		};
+	}
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_input_is_danger = _elm_lang$html$Html_Attributes$class('input is-danger');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_input_is_warning = _elm_lang$html$Html_Attributes$class('input is-warning');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_input_is_succces = _elm_lang$html$Html_Attributes$class('input is-success');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_input_is_info = _elm_lang$html$Html_Attributes$class('input is-info');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_input_is_primary = _elm_lang$html$Html_Attributes$class('input is-primary');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$type_text = _elm_lang$html$Html_Attributes$type_('text');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_control = _elm_lang$html$Html_Attributes$class('control');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_field = _elm_lang$html$Html_Attributes$class('field');

@@ -1,4 +1,0 @@
-var _flarebyte$bubblegum_outlook$Main$Triple = F3(
-	function (a, b, c) {
-		return {subject: a, predicate: b, object: c};
-	});
