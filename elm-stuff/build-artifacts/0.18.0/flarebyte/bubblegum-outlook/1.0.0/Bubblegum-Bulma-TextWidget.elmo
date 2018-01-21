@@ -1,16 +1,26 @@
 var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_TextWidget$fromModel = F2(
 	function (msg, fieldModel) {
-		var btnAttrsOpt = _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$maybeToList(
+		var placeholderOpt = _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$maybeToList(
 			A2(_elm_lang$core$Maybe$map, _elm_lang$html$Html_Attributes$placeholder, fieldModel.placeholder));
+		var styles = A4(
+			_flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$toStyle,
+			{
+				ctor: '::',
+				_0: 'input',
+				_1: {ctor: '[]'}
+			},
+			fieldModel.prominence,
+			fieldModel.styles,
+			fieldModel.icons);
 		var btnAttrs = {
 			ctor: '::',
-			_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$type_text,
+			_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$type_text,
 			_1: {
 				ctor: '::',
 				_0: _elm_lang$html$Html_Events$onInput(msg),
 				_1: {
 					ctor: '::',
-					_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_input_is_primary,
+					_0: _elm_lang$html$Html_Attributes$class(styles),
 					_1: {ctor: '[]'}
 				}
 			}
@@ -19,7 +29,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_TextWidget$fromModel = F2(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_field,
+				_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_field,
 				_1: {ctor: '[]'}
 			},
 			{
@@ -28,14 +38,14 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_TextWidget$fromModel = F2(
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Constants$class_control,
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_control,
 						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$input,
-							A2(_elm_lang$core$Basics_ops['++'], btnAttrs, btnAttrsOpt),
+							A2(_elm_lang$core$Basics_ops['++'], btnAttrs, placeholderOpt),
 							{ctor: '[]'}),
 						_1: {ctor: '[]'}
 					}),

@@ -1,4 +1,4 @@
-module Bubblegum.Bulma.Constants exposing(..)
+module Bubblegum.Bulma.Utils exposing(..)
 {-| This module exposes the rdf vocabulary for Bubblegum.
 More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
 
@@ -11,18 +11,19 @@ which should be abbreviated as the curie ui:
 -}
 
 import Html.Attributes exposing (class, type_)
+import Set exposing(Set, toList, union)
+import List exposing(append)
 
 class_field = class "field"
 class_control = class "control"
 type_text = type_ "text"
-class_input_is_primary = class "input is-primary"
-class_input_is_info = class "input is-info"
-class_input_is_succces = class "input is-success"
-class_input_is_warning = class "input is-warning"
-class_input_is_danger = class "input is-danger"
 
 maybeToList : Maybe a -> List a
 maybeToList maybe =
     case maybe of
         Nothing -> []
         Just something -> [something]
+
+toStyle: List String -> Set String -> Set String -> Set String -> String
+toStyle base prominence styles icons =
+    prominence |> Set.union styles |> Set.union icons |> Set.toList |> List.sort |> List.append base |> String.join " "

@@ -1,0 +1,30 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$toStyle = F4(
+	function (base, prominence, styles, icons) {
+		return A2(
+			_elm_lang$core$String$join,
+			' ',
+			A2(
+				_elm_lang$core$List$append,
+				base,
+				_elm_lang$core$List$sort(
+					_elm_lang$core$Set$toList(
+						A2(
+							_elm_lang$core$Set$union,
+							icons,
+							A2(_elm_lang$core$Set$union, styles, prominence))))));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$maybeToList = function (maybe) {
+	var _p0 = maybe;
+	if (_p0.ctor === 'Nothing') {
+		return {ctor: '[]'};
+	} else {
+		return {
+			ctor: '::',
+			_0: _p0._0,
+			_1: {ctor: '[]'}
+		};
+	}
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$type_text = _elm_lang$html$Html_Attributes$type_('text');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_control = _elm_lang$html$Html_Attributes$class('control');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_field = _elm_lang$html$Html_Attributes$class('field');

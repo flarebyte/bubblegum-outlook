@@ -18,7 +18,7 @@ type alias Model = {
     , helpInvalid: Maybe String
     , helpValid: Maybe String
     , hint: Maybe String
-    , icon: Maybe String
+    , icons: Set String
     , label: Maybe String
     , languageSyntax: Maybe String --same as date format
     , maxLength: Maybe Int
@@ -26,9 +26,9 @@ type alias Model = {
     , minLines: Maybe Int
     , placeholder: Maybe String
     , position: Maybe Int
-    , prominence: Maybe String
+    , prominence: Set String
     , regex: Maybe String
-    , style: Maybe String
+    , styles: Set String
     , traits: Set String
     , validator: Maybe String
     , settings: List SettingModel.Model
@@ -46,7 +46,7 @@ fromTriples  subject triples =
     , helpInvalid = findProperty subject ui_helpInvalid triples
     , helpValid = findProperty subject ui_helpValid triples
     , hint = findProperty subject ui_hint triples
-    , icon = findProperty subject ui_icon triples
+    , icons = findProperties subject ui_icon triples
     , label= findProperty subject ui_label triples
     , languageSyntax= findProperty subject ui_languageSyntax triples
     , maxLength = findProperty subject ui_maxLength triples |> toMaybeInt
@@ -54,9 +54,9 @@ fromTriples  subject triples =
     , minLines = findProperty subject ui_minLines triples |> toMaybeInt
     , placeholder = findProperty subject ui_placeholder triples
     , position = findProperty subject ui_position triples |> toMaybeInt
-    , prominence = findProperty subject ui_prominence triples
+    , prominence = findProperties subject ui_prominence triples
     , regex = findProperty subject ui_regex triples
-    , style = findProperty subject ui_style triples
+    , styles = findProperties subject ui_style triples
     , traits = findProperties subject ui_traits triples
     , validator = findProperty subject ui_validator triples
     , settings = findSettingsInField subject triples |> List.map (\setting-> SettingModel.fromTriples setting triples)
@@ -68,7 +68,6 @@ toProperties field =
     , (ui_helpInvalid, field.helpInvalid)
     , (ui_helpValid, field.helpValid)
     , (ui_hint, field.hint)
-    , (ui_icon, field.icon)
     , (ui_label, field.label)
     , (ui_languageSyntax, field.languageSyntax)
     , (ui_maxLength , field.maxLength |> toMaybeString)
@@ -76,11 +75,12 @@ toProperties field =
     , (ui_minLines , field.minLines |> toMaybeString)
     , (ui_placeholder, field.placeholder)
     , (ui_position , field.position |> toMaybeString)
-    , (ui_prominence , field.prominence)
     , (ui_regex, field.regex)
-    , (ui_style, field.style)
     , (ui_validator, field.validator)
-    ] ++ (toPropertiesAsTuple ui_traits field.traits)
+    ] ++ (toPropertiesAsTuple ui_traits field.traits) 
+    ++ (toPropertiesAsTuple ui_prominence field.prominence)
+    ++ (toPropertiesAsTuple ui_style field.styles)
+     ++ (toPropertiesAsTuple ui_icon field.icons)
 
 
 settingsToTriples: String -> List SettingModel.Model -> List Triple
