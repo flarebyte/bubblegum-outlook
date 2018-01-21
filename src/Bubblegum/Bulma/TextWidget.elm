@@ -7,7 +7,7 @@ module Bubblegum.Bulma.TextWidget exposing (fromModel)
 -}
 
 import Html exposing (Html, text, div, input, label, p)
-import Html.Attributes exposing (class, placeholder, type_)
+import Html.Attributes exposing (class, placeholder, type_, readonly)
 import Html.Events exposing (onInput)
 import Bubblegum.FieldModel as FieldModel
 import Bubblegum.Bulma.Utils exposing(..)
@@ -20,12 +20,13 @@ fromModel msg fieldModel =
         placeholderOpt = Maybe.map placeholder fieldModel.placeholder |> maybeToList
         labelText = fieldModel.label |> Maybe.withDefault fieldModel.id
         helpParag = Maybe.map text fieldModel.hint |> maybeToList
+        readOnlyOpt = if (hasReadOnlyTrait fieldModel.traits) then [readonly True] else []
      in       
         div [ class_field ]
         [ label [ class_label ]
             [ text labelText ]
         , div [ class_control ]
-            [ input ( btnAttrs ++ placeholderOpt)
+            [ input ( btnAttrs ++ placeholderOpt ++ readOnlyOpt)
                 []
             ]
         , p [ class_help ]

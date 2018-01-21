@@ -1,5 +1,10 @@
 var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_TextWidget$fromModel = F2(
 	function (msg, fieldModel) {
+		var readOnlyOpt = _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$hasReadOnlyTrait(fieldModel.traits) ? {
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$readonly(true),
+			_1: {ctor: '[]'}
+		} : {ctor: '[]'};
 		var helpParag = _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$maybeToList(
 			A2(_elm_lang$core$Maybe$map, _elm_lang$html$Html$text, fieldModel.hint));
 		var labelText = A2(_elm_lang$core$Maybe$withDefault, fieldModel.id, fieldModel.label);
@@ -62,7 +67,10 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_TextWidget$fromModel = F2(
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$input,
-								A2(_elm_lang$core$Basics_ops['++'], btnAttrs, placeholderOpt),
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									btnAttrs,
+									A2(_elm_lang$core$Basics_ops['++'], placeholderOpt, readOnlyOpt)),
 								{ctor: '[]'}),
 							_1: {ctor: '[]'}
 						}),

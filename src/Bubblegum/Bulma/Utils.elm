@@ -11,7 +11,7 @@ which should be abbreviated as the curie ui:
 -}
 
 import Html.Attributes exposing (class, type_)
-import Set exposing(Set, toList, union)
+import Set exposing(Set, toList, union, member)
 import List exposing(append)
 
 class_field = class "field"
@@ -29,3 +29,7 @@ maybeToList maybe =
 toStyle: List String -> Set String -> Set String -> Set String -> String
 toStyle base prominence styles icons =
     prominence |> Set.union styles |> Set.union icons |> Set.toList |> List.sort |> List.append base |> String.join " "
+
+hasReadOnlyTrait: Set String -> Bool
+hasReadOnlyTrait traits =
+    Set.member "readonly" traits

@@ -1,3 +1,6 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$hasReadOnlyTrait = function (traits) {
+	return A2(_elm_lang$core$Set$member, 'readonly', traits);
+};
 var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$toStyle = F4(
 	function (base, prominence, styles, icons) {
 		return A2(
