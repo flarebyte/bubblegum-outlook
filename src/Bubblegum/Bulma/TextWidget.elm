@@ -6,7 +6,7 @@ module Bubblegum.Bulma.TextWidget exposing (fromModel)
 
 -}
 
-import Html exposing (Html, text, div, input)
+import Html exposing (Html, text, div, input, label, p)
 import Html.Attributes exposing (class, placeholder, type_)
 import Html.Events exposing (onInput)
 import Bubblegum.FieldModel as FieldModel
@@ -18,9 +18,16 @@ fromModel msg fieldModel =
         styles =  toStyle ["input"] fieldModel.prominence fieldModel.styles fieldModel.icons   
         btnAttrs = [ type_text , onInput msg, class styles]
         placeholderOpt = Maybe.map placeholder fieldModel.placeholder |> maybeToList
+        labelText = fieldModel.label |> Maybe.withDefault fieldModel.id
+        helpParag = Maybe.map text fieldModel.hint |> maybeToList
      in       
         div [ class_field ]
-        [ div [ class_control ]
-            [ input ( btnAttrs ++ placeholderOpt) []
+        [ label [ class_label ]
+            [ text labelText ]
+        , div [ class_control ]
+            [ input ( btnAttrs ++ placeholderOpt)
+                []
             ]
+        , p [ class_help ]
+            helpParag
         ]

@@ -1,5 +1,8 @@
 var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_TextWidget$fromModel = F2(
 	function (msg, fieldModel) {
+		var helpParag = _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$maybeToList(
+			A2(_elm_lang$core$Maybe$map, _elm_lang$html$Html$text, fieldModel.hint));
+		var labelText = A2(_elm_lang$core$Maybe$withDefault, fieldModel.id, fieldModel.label);
 		var placeholderOpt = _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$maybeToList(
 			A2(_elm_lang$core$Maybe$map, _elm_lang$html$Html_Attributes$placeholder, fieldModel.placeholder));
 		var styles = A4(
@@ -35,20 +38,46 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_TextWidget$fromModel = F2(
 			{
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$div,
+					_elm_lang$html$Html$label,
 					{
 						ctor: '::',
-						_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_control,
+						_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_label,
 						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$input,
-							A2(_elm_lang$core$Basics_ops['++'], btnAttrs, placeholderOpt),
-							{ctor: '[]'}),
+						_0: _elm_lang$html$Html$text(labelText),
 						_1: {ctor: '[]'}
 					}),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_control,
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$input,
+								A2(_elm_lang$core$Basics_ops['++'], btnAttrs, placeholderOpt),
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$p,
+							{
+								ctor: '::',
+								_0: _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_help,
+								_1: {ctor: '[]'}
+							},
+							helpParag),
+						_1: {ctor: '[]'}
+					}
+				}
 			});
 	});

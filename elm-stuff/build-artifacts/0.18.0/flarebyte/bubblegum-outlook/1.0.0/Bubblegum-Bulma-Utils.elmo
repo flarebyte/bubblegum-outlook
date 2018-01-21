@@ -26,5 +26,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$maybeToList = function (m
 	}
 };
 var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$type_text = _elm_lang$html$Html_Attributes$type_('text');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_help = _elm_lang$html$Html_Attributes$class('help');
 var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_control = _elm_lang$html$Html_Attributes$class('control');
+var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_label = _elm_lang$html$Html_Attributes$class('label');
 var _flarebyte$bubblegum_outlook$Bubblegum_Bulma_Utils$class_field = _elm_lang$html$Html_Attributes$class('field');

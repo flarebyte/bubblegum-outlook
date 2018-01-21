@@ -15,7 +15,9 @@ import Set exposing(Set, toList, union)
 import List exposing(append)
 
 class_field = class "field"
+class_label = class "label"
 class_control = class "control"
+class_help = class "help"
 type_text = type_ "text"
 
 maybeToList : Maybe a -> List a
