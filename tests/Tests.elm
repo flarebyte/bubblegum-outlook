@@ -23,21 +23,51 @@ tt: String -> String -> String -> Triple
 tt subject predicate object = { subject = subject, predicate = predicate, object = object }
 
 
-setting1 = tt "/sett1" ui_id "/sett1" :: tt "/sett1" ui_settingKey "/sorting" :: tt "/sett1" ui_settingValue "asc":: tt "/sett1" ui_settingFacet "alpha" :: tt "/sett1" ui_settingOfField subjectId :: []
-setting2 = tt "/sett2" ui_id "/sett2" :: tt "/sett2" ui_settingKey "/filtering" :: tt "/sett2" ui_settingValue ">=10" :: tt "/sett2" ui_settingValue "<=200" ::tt "/sett2" ui_settingOfField subjectId :: []
+setting1 = tt "/sett1" ui_id "/sett1" 
+    :: tt "/sett1" ui_settingKey "/sorting" 
+    :: tt "/sett1" ui_settingValue "asc"
+    :: tt "/sett1" ui_settingFacet "alpha" 
+    :: tt "/sett1" ui_settingOfField subjectId 
+    :: []
+
+setting2 = tt "/sett2" ui_id "/sett2" 
+    :: tt "/sett2" ui_settingKey "/filtering" 
+    :: tt "/sett2" ui_settingValue ">=10" 
+    :: tt "/sett2" ui_settingValue "<=200" 
+    :: tt "/sett2" ui_settingOfField subjectId 
+    :: []
+
 mySettings = setting1 ++ setting2
 
 basic: List Triple
 basic = t ui_id  subjectId :: t ui_label "some label" :: t ui_hint "some hint" :: t ui_prominence "important" :: [] ++ mySettings
 
 createTextWidget: String -> String -> List Triple
-createTextWidget panelId subj = tt subj ui_id  subj :: tt subj ui_partOfPanel panelId :: tt subj  ui_label "some label" :: tt subj  ui_hint "some hint" :: tt subj ui_prominence "important" :: tt subj  ui_style "my style" :: tt subj ui_regex "[0-9]+"  :: tt subj ui_maxLength "20"  :: []
+createTextWidget panelId subj = tt subj ui_id  subj 
+    :: tt subj ui_partOfPanel panelId 
+    :: tt subj  ui_label "some label" 
+    :: tt subj  ui_hint "some hint" 
+    :: tt subj ui_prominence "important" 
+    :: tt subj  ui_style "my style" 
+    :: tt subj ui_regex "[0-9]+"  
+    :: tt subj ui_maxLength "20"  
+    :: tt subj ui_minItems "2"
+    :: tt subj ui_maxItems "6"   
+    :: []
 
 createMetadata: String -> List Triple
-createMetadata subj = tt subj ui_id  subj :: tt subj  ui_label "meta label" :: tt subj  ui_hint "meta hint" :: tt subj ui_prominence "important" :: tt subj  ui_style "meta style"  :: []
+createMetadata subj = tt subj ui_id  subj 
+    :: tt subj  ui_label "meta label" 
+    :: tt subj  ui_hint "meta hint" 
+    :: tt subj ui_prominence "important" 
+    :: tt subj  ui_style "meta style"  
+    :: []
 
 panelWidgets: String -> String -> String -> List Triple
-panelWidgets divisionId sectionId panelId = (tt panelId ui_partOfSection sectionId :: tt panelId ui_partOfDivision divisionId :: createMetadata panelId) ++ (createTextWidget panelId "/1") ++ (createTextWidget panelId  "/2") ++ (createTextWidget panelId "/3") ++ (tt panelId ui_id  panelId :: [])
+panelWidgets divisionId sectionId panelId = (tt panelId ui_partOfSection sectionId 
+    :: tt panelId ui_partOfDivision divisionId :: createMetadata panelId) 
+    ++ (createTextWidget panelId "/1") ++ (createTextWidget panelId  "/2") 
+    ++ (createTextWidget panelId "/3") ++ (tt panelId ui_id  panelId :: [])
 
 normTriples: List Triple -> Set String
 normTriples triples = List.map (\t -> t.subject ++ "|" ++ t.predicate ++ "|" ++ t.object) triples |> Set.fromList
