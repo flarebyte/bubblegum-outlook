@@ -20,7 +20,7 @@ type alias Model = {
 
 findSectionsInDivision: String -> List Triple -> List String
 findSectionsInDivision divisionId list =
-    List.filter (\t -> t.predicate == ui_partOfDivision && t.object == divisionId) list |> List.map .subject |> unique
+    List.filter (\t -> t.predicate == ui_partOfComponent && t.object == divisionId) list |> List.map .subject |> unique
  
 {-| Creates a division model
 -}

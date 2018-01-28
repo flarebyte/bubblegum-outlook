@@ -20,7 +20,7 @@ type alias Model = {
 
 findWidgetsInPanel: String -> List Triple -> List String
 findWidgetsInPanel panelId list =
-    List.filter (\t -> t.predicate == ui_partOfPanel && t.object == panelId) list |> List.map .subject |> unique
+    List.filter (\t -> t.predicate == ui_partOfComponent && t.object == panelId) list |> List.map .subject |> unique
 
 
 {-| Creates a panel model

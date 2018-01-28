@@ -44,11 +44,11 @@ basic = t ui_id  subjectId :: t ui_label "some label" :: t ui_hint "some hint" :
 
 createTextWidget: String -> String -> List Triple
 createTextWidget panelId subj = tt subj ui_id  subj 
-    :: tt subj ui_partOfPanel panelId 
-    :: tt subj  ui_label "some label" 
-    :: tt subj  ui_hint "some hint" 
+    :: tt subj ui_partOfComponent panelId 
+    :: tt subj ui_label "some label" 
+    :: tt subj ui_hint "some hint" 
     :: tt subj ui_prominence "important" 
-    :: tt subj  ui_style "my style" 
+    :: tt subj ui_style "my style" 
     :: tt subj ui_regex "[0-9]+"  
     :: tt subj ui_maxLength "20"  
     :: tt subj ui_minItems "2"
@@ -64,8 +64,8 @@ createMetadata subj = tt subj ui_id  subj
     :: []
 
 panelWidgets: String -> String -> String -> List Triple
-panelWidgets divisionId sectionId panelId = (tt panelId ui_partOfSection sectionId 
-    :: tt panelId ui_partOfDivision divisionId :: createMetadata panelId) 
+panelWidgets divisionId sectionId panelId = (tt panelId ui_partOfComponent sectionId 
+    :: tt panelId ui_partOfComponent divisionId :: createMetadata panelId) 
     ++ (createTextWidget panelId "/1") ++ (createTextWidget panelId  "/2") 
     ++ (createTextWidget panelId "/3") ++ (tt panelId ui_id  panelId :: [])
 

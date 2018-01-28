@@ -1,0 +1,38 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_ContainerModel$toTriples = function (model) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_flarebyte$bubblegum_outlook$Bubblegum_FieldModel$toTriples(model.field),
+		_elm_lang$core$List$concat(
+			A2(_elm_lang$core$List$map, _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$toTriples, model.children)));
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_ContainerModel$findChildren = F2(
+	function (componentId, list) {
+		return _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$unique(
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.subject;
+				},
+				A2(
+					_elm_lang$core$List$filter,
+					function (t) {
+						return _elm_lang$core$Native_Utils.eq(t.predicate, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_partOfComponent) && _elm_lang$core$Native_Utils.eq(t.object, componentId);
+					},
+					list)));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_ContainerModel$fromTriples = F2(
+	function (componentId, tripleList) {
+		return {
+			field: A2(_flarebyte$bubblegum_outlook$Bubblegum_FieldModel$fromTriples, componentId, tripleList),
+			children: A2(
+				_elm_lang$core$List$map,
+				function (w) {
+					return A2(_flarebyte$bubblegum_outlook$Bubblegum_FieldModel$fromTriples, w, tripleList);
+				},
+				A2(_flarebyte$bubblegum_outlook$Bubblegum_ContainerModel$findChildren, componentId, tripleList))
+		};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_ContainerModel$Model = F2(
+	function (a, b) {
+		return {field: a, children: b};
+	});

@@ -20,7 +20,7 @@ type alias Model = {
 
 findPanelsInSection: String -> List Triple -> List String
 findPanelsInSection sectionId list =
-    List.filter (\t -> t.predicate == ui_partOfSection && t.object == sectionId) list |> List.map .subject |> unique
+    List.filter (\t -> t.predicate == ui_partOfComponent && t.object == sectionId) list |> List.map .subject |> unique
 
 {-| Creates a section model
 -}

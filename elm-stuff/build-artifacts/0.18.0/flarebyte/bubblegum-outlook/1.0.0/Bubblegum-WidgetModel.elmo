@@ -1,0 +1,12 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_WidgetModel$toTriples = function (model) {
+	return _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$toTriples(model.field);
+};
+var _flarebyte$bubblegum_outlook$Bubblegum_WidgetModel$fromTriples = F2(
+	function (subject, tripleList) {
+		return {
+			field: A2(_flarebyte$bubblegum_outlook$Bubblegum_FieldModel$fromTriples, subject, tripleList)
+		};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_WidgetModel$Model = function (a) {
+	return {field: a};
+};
