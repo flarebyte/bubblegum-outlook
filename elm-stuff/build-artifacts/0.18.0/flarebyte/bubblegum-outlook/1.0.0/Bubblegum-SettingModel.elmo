@@ -24,8 +24,8 @@ var _flarebyte$bubblegum_outlook$Bubblegum_SettingModel$toProperties = function 
 		},
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toPropertiesAsTuple, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingValues, field.values),
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toPropertiesAsTuple, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingFacets, field.facets)));
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toPropertiesAsTuple, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingValue, field.values),
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toPropertiesAsTuple, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingFacet, field.facets)));
 };
 var _flarebyte$bubblegum_outlook$Bubblegum_SettingModel$toTriples = function (model) {
 	return A2(
@@ -45,8 +45,8 @@ var _flarebyte$bubblegum_outlook$Bubblegum_SettingModel$fromTriples = F2(
 				'!!fieldId?',
 				A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingOfField, keyValueList)),
 			key: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingKey, keyValueList),
-			values: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingValues, keyValueList),
-			facets: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingFacets, keyValueList)
+			values: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingValue, keyValueList),
+			facets: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_settingFacet, keyValueList)
 		};
 	});
 var _flarebyte$bubblegum_outlook$Bubblegum_SettingModel$Model = F5(

@@ -23,8 +23,8 @@ tt: String -> String -> String -> Triple
 tt subject predicate object = { subject = subject, predicate = predicate, object = object }
 
 
-setting1 = tt "/sett1" ui_id "/sett1" :: tt "/sett1" ui_settingKey "/sorting" :: tt "/sett1" ui_settingValues "asc":: tt "/sett1" ui_settingFacets "alpha" :: tt "/sett1" ui_settingOfField subjectId :: []
-setting2 = tt "/sett2" ui_id "/sett2" :: tt "/sett2" ui_settingKey "/filtering" :: tt "/sett2" ui_settingValues ">=10" :: tt "/sett2" ui_settingValues "<=200" ::tt "/sett2" ui_settingOfField subjectId :: []
+setting1 = tt "/sett1" ui_id "/sett1" :: tt "/sett1" ui_settingKey "/sorting" :: tt "/sett1" ui_settingValue "asc":: tt "/sett1" ui_settingFacet "alpha" :: tt "/sett1" ui_settingOfField subjectId :: []
+setting2 = tt "/sett2" ui_id "/sett2" :: tt "/sett2" ui_settingKey "/filtering" :: tt "/sett2" ui_settingValue ">=10" :: tt "/sett2" ui_settingValue "<=200" ::tt "/sett2" ui_settingOfField subjectId :: []
 mySettings = setting1 ++ setting2
 
 basic: List Triple
@@ -51,12 +51,12 @@ section divisionId sectionId = (createMetadata sectionId) ++ (panelWidgets divis
 division: String -> List Triple
 division divisionId = (createMetadata divisionId) ++ (section divisionId "/s1") ++ (section divisionId "/s2")
 
-myIncSpinner =  t ui_traits "spinner" :: basic
-myMediumText = t ui_placeholder "placeholder" :: t ui_icon "my icon" :: t ui_traits "alpha":: t ui_traits "beta" :: t ui_regex "[0-9]+"  :: t ui_maxLength "20" :: basic
-myBoundedListbox =  t ui_traits "bounded" :: t ui_traits "listbox" :: basic
-myUnboundedListbox =  t ui_traits "unbounded" :: t ui_traits "listbox" :: basic
-myRangeSlider = t ui_traits "range-slider" :: basic
-myTextArea = t ui_traits "text-area" :: t ui_placeholder "placeholder" :: t ui_languageSyntax "markdown" :: t ui_helpInvalid "help invalid" :: t ui_minLines "12" :: t ui_maxLines "15" :: basic
+myIncSpinner =  t ui_trait "spinner" :: basic
+myMediumText = t ui_placeholder "placeholder" :: t ui_icon "my icon" :: t ui_trait "alpha":: t ui_trait "beta" :: t ui_regex "[0-9]+"  :: t ui_maxLength "20" :: basic
+myBoundedListbox =  t ui_trait "bounded" :: t ui_trait "listbox" :: basic
+myUnboundedListbox =  t ui_trait "unbounded" :: t ui_trait "listbox" :: basic
+myRangeSlider = t ui_trait "range-slider" :: basic
+myTextArea = t ui_trait "text-area" :: t ui_placeholder "placeholder" :: t ui_languageSyntax "markdown" :: t ui_helpInvalid "help invalid" :: t ui_minLines "12" :: t ui_maxLines "15" :: basic
 
 ts = tt ui_mainSelection
 

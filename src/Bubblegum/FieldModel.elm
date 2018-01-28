@@ -57,7 +57,7 @@ fromTriples  subject triples =
     , prominence = findProperties subject ui_prominence triples
     , regex = findProperty subject ui_regex triples
     , styles = findProperties subject ui_style triples
-    , traits = findProperties subject ui_traits triples
+    , traits = findProperties subject ui_trait triples
     , validator = findProperty subject ui_validator triples
     , settings = findSettingsInField subject triples |> List.map (\setting-> SettingModel.fromTriples setting triples)
    }
@@ -77,7 +77,7 @@ toProperties field =
     , (ui_position , field.position |> toMaybeString)
     , (ui_regex, field.regex)
     , (ui_validator, field.validator)
-    ] ++ (toPropertiesAsTuple ui_traits field.traits) 
+    ] ++ (toPropertiesAsTuple ui_trait field.traits) 
     ++ (toPropertiesAsTuple ui_prominence field.prominence)
     ++ (toPropertiesAsTuple ui_style field.styles)
      ++ (toPropertiesAsTuple ui_icon field.icons)

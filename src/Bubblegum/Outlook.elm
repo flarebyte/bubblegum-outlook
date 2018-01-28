@@ -9,4 +9,7 @@ More about RDF n-triples: https://en.wikipedia.org/wiki/N-Triples
 -}
 import List
 
+{-| Render.
+-}
+render: String
 render = ""

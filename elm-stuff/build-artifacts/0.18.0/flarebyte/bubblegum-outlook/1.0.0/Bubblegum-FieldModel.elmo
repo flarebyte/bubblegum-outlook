@@ -81,7 +81,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$toProperties = function (f
 		},
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			A2(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toPropertiesAsTuple, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_traits, field.traits),
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toPropertiesAsTuple, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_trait, field.traits),
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				A2(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toPropertiesAsTuple, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_prominence, field.prominence),
@@ -139,7 +139,7 @@ var _flarebyte$bubblegum_outlook$Bubblegum_FieldModel$fromTriples = F2(
 			prominence: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_prominence, triples),
 			regex: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_regex, triples),
 			styles: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_style, triples),
-			traits: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_traits, triples),
+			traits: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperties, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_trait, triples),
 			validator: A3(_flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findProperty, subject, _flarebyte$bubblegum_outlook$Bubblegum_Vocabulary$ui_validator, triples),
 			settings: A2(
 				_elm_lang$core$List$map,
