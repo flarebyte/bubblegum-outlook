@@ -34,6 +34,7 @@ type alias Model = {
     , styles: Set String
     , traits: Set String
     , validator: Maybe String
+    , partOf: Maybe String
  }
 
 findSettingsInField: String -> List Triple -> List String
@@ -48,6 +49,7 @@ fromTriples  subject triples =
     , helpInvalid = findProperty subject ui_helpInvalid triples
     , helpValid = findProperty subject ui_helpValid triples
     , hint = findProperty subject ui_hint triples
+    , partOf = findProperty subject ui_partOfComponent triples
     , icons = findProperties subject ui_icon triples
     , label= findProperty subject ui_label triples
     , languageSyntax= findProperty subject ui_languageSyntax triples
@@ -72,6 +74,7 @@ toProperties field =
     , (ui_helpInvalid, field.helpInvalid)
     , (ui_helpValid, field.helpValid)
     , (ui_hint, field.hint)
+    , (ui_partOfComponent, field.partOf)
     , (ui_label, field.label)
     , (ui_languageSyntax, field.languageSyntax)
     , (ui_maxItems , field.maxItems |> toMaybeString)
