@@ -64,3 +64,7 @@ toMaybeInt value = Maybe.map toIntOrZero value
 
 unique: List String -> List String
 unique list = list |> Set.fromList |> Set.toList
+
+findSubjects: String -> String -> List Triple -> List String
+findSubjects predicate obj list =
+    List.filter (\t -> t.predicate == predicate && t.object == obj) list |> List.map .subject |> unique

@@ -17,10 +17,6 @@ type alias Model = {
         field: FieldModel.Model
         , sections: List SectionModel.Model
     }
-
-findSectionsInDivision: String -> List Triple -> List String
-findSectionsInDivision divisionId list =
-    List.filter (\t -> t.predicate == ui_partOfComponent && t.object == divisionId) list |> List.map .subject |> unique
  
 {-| Creates a division model
 -}
@@ -28,7 +24,7 @@ fromTriples: String -> List Triple -> Model
 fromTriples divisionId tripleList =
     {
         field = FieldModel.fromTriples divisionId tripleList
-        , sections = List.map (\s -> SectionModel.fromTriples s tripleList) (findSectionsInDivision divisionId tripleList)
+        , sections = findSubjects ui_partOfComponent divisionId tripleList |> List.map (\s -> SectionModel.fromTriples s tripleList)
     }
 
 {-| Converts a division model to a list of triples

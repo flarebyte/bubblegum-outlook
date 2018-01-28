@@ -18,18 +18,13 @@ type alias Model = {
         , widgets: List WidgetModel.Model
     }
 
-findWidgetsInPanel: String -> List Triple -> List String
-findWidgetsInPanel panelId list =
-    List.filter (\t -> t.predicate == ui_partOfComponent && t.object == panelId) list |> List.map .subject |> unique
-
-
 {-| Creates a panel model
 -}
 fromTriples: String -> List Triple -> Model
 fromTriples panelId tripleList =
     {
         field = FieldModel.fromTriples panelId tripleList
-        , widgets = List.map (\w -> WidgetModel.fromTriples w tripleList) (findWidgetsInPanel panelId tripleList)
+        , widgets = findSubjects ui_partOfComponent panelId tripleList |> List.map (\w -> WidgetModel.fromTriples w tripleList)
     }
 
 {-| Converts a panel model to a list of triples

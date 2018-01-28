@@ -18,17 +18,13 @@ type alias Model = {
         , panels: List PanelModel.Model
     }
 
-findPanelsInSection: String -> List Triple -> List String
-findPanelsInSection sectionId list =
-    List.filter (\t -> t.predicate == ui_partOfComponent && t.object == sectionId) list |> List.map .subject |> unique
-
 {-| Creates a section model
 -}
 fromTriples: String -> List Triple -> Model
 fromTriples sectionId tripleList =
     {
         field = FieldModel.fromTriples sectionId tripleList
-        , panels = List.map (\p -> PanelModel.fromTriples p tripleList) (findPanelsInSection sectionId tripleList)
+        , panels = findSubjects ui_partOfComponent sectionId tripleList |> List.map (\p -> PanelModel.fromTriples p tripleList)
     }
 
 {-| Converts a section model to a list of triples

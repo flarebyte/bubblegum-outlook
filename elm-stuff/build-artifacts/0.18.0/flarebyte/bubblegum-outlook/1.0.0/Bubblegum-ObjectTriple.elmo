@@ -2,6 +2,21 @@ var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$unique = function (list)
 	return _elm_lang$core$Set$toList(
 		_elm_lang$core$Set$fromList(list));
 };
+var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$findSubjects = F3(
+	function (predicate, obj, list) {
+		return _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$unique(
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.subject;
+				},
+				A2(
+					_elm_lang$core$List$filter,
+					function (t) {
+						return _elm_lang$core$Native_Utils.eq(t.predicate, predicate) && _elm_lang$core$Native_Utils.eq(t.object, obj);
+					},
+					list)));
+	});
 var _flarebyte$bubblegum_outlook$Bubblegum_ObjectTriple$toIntOrZero = function (value) {
 	return A2(
 		_elm_lang$core$Result$withDefault,
