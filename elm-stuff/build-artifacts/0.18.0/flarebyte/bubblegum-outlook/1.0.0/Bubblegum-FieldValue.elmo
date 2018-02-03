@@ -1,0 +1,7 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Model = F3(
+	function (a, b, c) {
+		return {path: a, result: b, status: c};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Disabled = {ctor: 'Disabled'};
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Invisible = {ctor: 'Invisible'};
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Visible = {ctor: 'Visible'};

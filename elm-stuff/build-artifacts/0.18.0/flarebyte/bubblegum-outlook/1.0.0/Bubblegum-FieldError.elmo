@@ -1,0 +1,3 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldError$Model = function (a) {
+	return {message: a};
+};

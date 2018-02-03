@@ -1,0 +1,4 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldEdge$Model = F3(
+	function (a, b, c) {
+		return {from: a, to: b, tags: c};
+	});
