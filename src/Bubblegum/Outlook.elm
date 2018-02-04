@@ -77,10 +77,27 @@ findDestFieldModelByEdgeId: Model -> String -> Maybe FieldModel.Model
 findDestFieldModelByEdgeId model edgeId =
     findFieldEdge model edgeId |> Maybe.map .to |> Maybe.andThen (findFieldModel model)
 
+surelyHead: List String -> String
+surelyHead list = List.head list |> Maybe.withDefault "/?"
 
-findPathsFromSources: Model -> List String -> List ((String, List String))
-findPathsFromSources model fieldIds =
-    List.map (findDestinationsBySourceAsTuple model) fieldIds
+matchLength: Int -> List String -> Bool
+matchLength length list=
+    (List.length list) == length
+
+-- algorithm:
+-- child to parent is left to right
+-- all processes the longest path
+--  [a]
+--  add [b, a] add [c, a]
+--  add [e, b, a] add [f, b , a] add [g, c, a]
+findPathsFromSources: Model -> Int -> List (List String) -> List (List String)
+findPathsFromSources model pathLength startingList =
+    let
+        sources = List.filter (matchLength pathLength) startingList |>  List.map surelyHead
+        List.map (findDestinationsBySource model) sources
+    in
+
+    -- List.map (findDestinationsBySourceAsTuple model) fieldIds
 
 -- findPathsFromSource: Model -> String -> List (List String)
 -- findPathsFromSource model rootFieldId =
