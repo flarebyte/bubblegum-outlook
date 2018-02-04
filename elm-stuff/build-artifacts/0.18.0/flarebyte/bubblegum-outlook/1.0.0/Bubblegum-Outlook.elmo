@@ -10,6 +10,41 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldValue = F2(
 				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchPath(path),
 				model.values));
 	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchEdgeSource = F2(
+	function (id, field) {
+		return _elm_lang$core$Native_Utils.eq(field.from, id);
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldEdgesBySource = F2(
+	function (model, id) {
+		return A2(
+			_elm_lang$core$List$filter,
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchEdgeSource(id),
+			model.edges);
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findDestinationsBySource = F2(
+	function (model, id) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (_) {
+				return _.to;
+			},
+			A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldEdgesBySource, model, id));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findDestinationsBySourceAsTuple = F2(
+	function (model, id) {
+		return {
+			ctor: '_Tuple2',
+			_0: id,
+			_1: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findDestinationsBySource, model, id)
+		};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findPathsFromSources = F2(
+	function (model, fieldIds) {
+		return A2(
+			_elm_lang$core$List$map,
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findDestinationsBySourceAsTuple(model),
+			fieldIds);
+	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchEdgeId = F2(
 	function (id, field) {
 		return _elm_lang$core$Native_Utils.eq(field.id, id);

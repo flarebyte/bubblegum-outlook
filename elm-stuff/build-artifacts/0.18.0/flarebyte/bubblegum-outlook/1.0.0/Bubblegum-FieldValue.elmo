@@ -1,7 +1,12 @@
-var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Model = F3(
-	function (a, b, c) {
-		return {path: a, result: b, status: c};
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Model = F4(
+	function (a, b, c, d) {
+		return {path: a, values: b, status: c, error: d};
 	});
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Warning = {ctor: 'Warning'};
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Reset = {ctor: 'Reset'};
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$resetValue = function (path) {
+	return {path: path, values: _elm_lang$core$Set$empty, status: _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Reset, error: _elm_lang$core$Maybe$Nothing};
+};
 var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Disabled = {ctor: 'Disabled'};
 var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Invisible = {ctor: 'Invisible'};
 var _flarebyte$bubblegum_outlook$Bubblegum_FieldValue$Visible = {ctor: 'Visible'};

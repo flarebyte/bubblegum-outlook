@@ -26,7 +26,7 @@ type alias Model = {
     , edges: List FieldEdge.Model
     , values: List FieldValue.Model
     , states: Set String
-}
+ }
 
 matchFieldId: String -> FieldModel.Model -> Bool
 matchFieldId id field = field.id == id
@@ -41,6 +41,21 @@ matchEdgeId id field = field.id == id
 findFieldEdge: Model -> String -> Maybe FieldEdge.Model
 findFieldEdge model id =
   model.edges |> List.filter (matchEdgeId id)|> List.head
+
+matchEdgeSource: String -> FieldEdge.Model -> Bool
+matchEdgeSource id field = field.from == id
+
+findFieldEdgesBySource: Model -> String -> List FieldEdge.Model
+findFieldEdgesBySource model id =
+  model.edges |> List.filter (matchEdgeSource id)
+
+findDestinationsBySource: Model -> String -> List String
+findDestinationsBySource model id =
+  findFieldEdgesBySource model id |> List.map .to
+
+findDestinationsBySourceAsTuple: Model -> String -> (String, List String)
+findDestinationsBySourceAsTuple model id =
+  (id, (findDestinationsBySource model id))
 
 findFieldEdges: Model -> List String -> List (Maybe FieldEdge.Model)
 findFieldEdges model path =
@@ -62,6 +77,11 @@ findDestFieldModelByEdgeId: Model -> String -> Maybe FieldModel.Model
 findDestFieldModelByEdgeId model edgeId =
     findFieldEdge model edgeId |> Maybe.map .to |> Maybe.andThen (findFieldModel model)
 
--- createEmptyValues: Model -> List FieldValue.Model
--- createEmptyValues model =
 
+findPathsFromSources: Model -> List String -> List ((String, List String))
+findPathsFromSources model fieldIds =
+    List.map (findDestinationsBySourceAsTuple model) fieldIds
+
+-- findPathsFromSource: Model -> String -> List (List String)
+-- findPathsFromSource model rootFieldId =
+--     findDestinationsBySource model rootFieldId
