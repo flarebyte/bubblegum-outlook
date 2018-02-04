@@ -1,4 +1,4 @@
-var _flarebyte$bubblegum_outlook$Bubblegum_WorkspaceModel$Model = F3(
-	function (a, b, c) {
-		return {fields: a, edges: b, values: c};
+var _flarebyte$bubblegum_outlook$Bubblegum_WorkspaceModel$Model = F4(
+	function (a, b, c, d) {
+		return {fields: a, edges: b, values: c, states: d};
 	});

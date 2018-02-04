@@ -1,1 +1,72 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchPath = F2(
+	function (path, value) {
+		return _elm_lang$core$Native_Utils.eq(value.path, path);
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldValue = F2(
+	function (model, path) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchPath(path),
+				model.values));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchEdgeId = F2(
+	function (id, field) {
+		return _elm_lang$core$Native_Utils.eq(field.id, id);
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldEdge = F2(
+	function (model, id) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchEdgeId(id),
+				model.edges));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldEdges = F2(
+	function (model, path) {
+		return A2(
+			_elm_lang$core$List$map,
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldEdge(model),
+			path);
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchFieldId = F2(
+	function (id, field) {
+		return _elm_lang$core$Native_Utils.eq(field.id, id);
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldModel = F2(
+	function (model, id) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchFieldId(id),
+				model.fields));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findSourceFieldModelByEdgeId = F2(
+	function (model, edgeId) {
+		return A2(
+			_elm_lang$core$Maybe$andThen,
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldModel(model),
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_) {
+					return _.from;
+				},
+				A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldEdge, model, edgeId)));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findDestFieldModelByEdgeId = F2(
+	function (model, edgeId) {
+		return A2(
+			_elm_lang$core$Maybe$andThen,
+			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldModel(model),
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_) {
+					return _.to;
+				},
+				A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findFieldEdge, model, edgeId)));
+	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$render = '';
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Model = F4(
+	function (a, b, c, d) {
+		return {fields: a, edges: b, values: c, states: d};
+	});

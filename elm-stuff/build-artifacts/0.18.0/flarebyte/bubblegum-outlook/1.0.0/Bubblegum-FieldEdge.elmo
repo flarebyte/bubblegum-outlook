@@ -1,4 +1,4 @@
-var _flarebyte$bubblegum_outlook$Bubblegum_FieldEdge$Model = F3(
-	function (a, b, c) {
-		return {from: a, to: b, tags: c};
+var _flarebyte$bubblegum_outlook$Bubblegum_FieldEdge$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {id: a, activations: b, from: c, maxItems: d, minItems: e, to: f, traits: g};
 	});

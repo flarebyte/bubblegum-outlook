@@ -15,7 +15,7 @@ type Status = Visible | Invisible | Disabled
 {-| The core representation of a value.
 -}
 type alias Model = {
-    path: List String
+    path: List String -- edge ids
     , result: Result FieldError.Model (Set String)
     , status: Status
 }
