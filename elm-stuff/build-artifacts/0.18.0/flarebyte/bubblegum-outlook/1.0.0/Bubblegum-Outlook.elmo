@@ -1,3 +1,9 @@
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$surelyHead = function (list) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		'/?',
+		_elm_lang$core$List$head(list));
+};
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchPath = F2(
 	function (path, value) {
 		return _elm_lang$core$Native_Utils.eq(value.path, path);
@@ -38,12 +44,29 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findDestinationsBySourceAsTup
 			_1: A2(_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findDestinationsBySource, model, id)
 		};
 	});
-var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findPathsFromSources = F2(
-	function (model, fieldIds) {
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$expandDestinations = F2(
+	function (model, path) {
 		return A2(
 			_elm_lang$core$List$map,
-			_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findDestinationsBySourceAsTuple(model),
-			fieldIds);
+			function (p) {
+				return {ctor: '::', _0: p, _1: path};
+			},
+			A2(
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$findDestinationsBySource,
+				model,
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$surelyHead(path)));
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$findPathsFromSources = F2(
+	function (model, stack) {
+		var toExpandNext = _elm_lang$core$List$concat(
+			A2(
+				_elm_lang$core$List$map,
+				_flarebyte$bubblegum_outlook$Bubblegum_Outlook$expandDestinations(model),
+				stack.toExpand));
+		return {
+			toExpand: toExpandNext,
+			total: A2(_elm_lang$core$Basics_ops['++'], toExpandNext, stack.total)
+		};
 	});
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$matchEdgeId = F2(
 	function (id, field) {
@@ -104,4 +127,8 @@ var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$render = '';
 var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$Model = F4(
 	function (a, b, c, d) {
 		return {fields: a, edges: b, values: c, states: d};
+	});
+var _flarebyte$bubblegum_outlook$Bubblegum_Outlook$TempPathStack = F2(
+	function (a, b) {
+		return {total: a, toExpand: b};
 	});

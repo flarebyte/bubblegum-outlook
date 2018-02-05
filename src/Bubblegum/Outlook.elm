@@ -80,25 +80,26 @@ findDestFieldModelByEdgeId model edgeId =
 surelyHead: List String -> String
 surelyHead list = List.head list |> Maybe.withDefault "/?"
 
-matchLength: Int -> List String -> Bool
-matchLength length list=
-    (List.length list) == length
+-- [b, a] -> return [e, b, a] and [f, b , a]
+expandDestinations: Model -> List String -> List (List String)
+expandDestinations model path =
+    surelyHead path |> findDestinationsBySource model |> List.map (\p -> p :: path)
 
+
+type alias TempPathStack = {
+    total:  List (List String)
+    , toExpand:  List (List String)
+}
 -- algorithm:
 -- child to parent is left to right
 -- all processes the longest path
 --  [a]
 --  add [b, a] add [c, a]
 --  add [e, b, a] add [f, b , a] add [g, c, a]
-findPathsFromSources: Model -> Int -> List (List String) -> List (List String)
-findPathsFromSources model pathLength startingList =
+findPathsFromSources: Model -> TempPathStack -> TempPathStack
+findPathsFromSources model stack  =
     let
-        sources = List.filter (matchLength pathLength) startingList |>  List.map surelyHead
-        List.map (findDestinationsBySource model) sources
+         toExpandNext = stack.toExpand |>  List.map (expandDestinations model) |> List.concat      
     in
-
-    -- List.map (findDestinationsBySourceAsTuple model) fieldIds
-
--- findPathsFromSource: Model -> String -> List (List String)
--- findPathsFromSource model rootFieldId =
---     findDestinationsBySource model rootFieldId
+        { toExpand = toExpandNext , total = toExpandNext ++ stack.total }
+ 
